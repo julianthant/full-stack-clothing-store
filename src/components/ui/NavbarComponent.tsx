@@ -17,16 +17,18 @@ import {
   Button,
   User,
   Input,
-  Avatar,
 } from '@nextui-org/react';
 import Link from 'next/link';
 import { ChevronDown, SearchIcon } from './Icons';
 import { gabarito } from './Fonts';
 import { ShoppingCartIcon, User2Icon, Search } from 'lucide-react';
 
-interface NavbarComponentProps {}
+interface NavbarComponentProps {
+  session: any;
+  status: boolean;
+}
 
-const NavbarComponent: FC<NavbarComponentProps> = ({}) => {
+const NavbarComponent: FC<NavbarComponentProps> = ({ session, status }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = ['Shop', 'On Sale', 'New Arrivals', 'Brands'];
@@ -35,7 +37,7 @@ const NavbarComponent: FC<NavbarComponentProps> = ({}) => {
   };
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} isBlurred={false} maxWidth="xl">
+    <Navbar onMenuOpenChange={setIsMenuOpen} isBlurred={false} maxWidth="2xl">
       <NavbarContent className="flex max-w-min">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -47,7 +49,7 @@ const NavbarComponent: FC<NavbarComponentProps> = ({}) => {
             href="/"
             className={`font-black text-inherit text-4xl ${gabarito.className} drop-shadow-lg`}
           >
-            SHOP.CO
+            CLOTHES.CO
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -154,7 +156,7 @@ const NavbarComponent: FC<NavbarComponentProps> = ({}) => {
         >
           <DropdownTrigger>
             <Button className="bg-transparent p-0 h-[26px] min-w-[26px]">
-              <User2Icon size={26} />
+              <User2Icon size={26} height={26} />
             </Button>
           </DropdownTrigger>
           <DropdownMenu
@@ -182,24 +184,30 @@ const NavbarComponent: FC<NavbarComponentProps> = ({}) => {
                 className="h-14 gap-2 opacity-100"
               >
                 <User
-                  name="Junior Garcia"
-                  description="@jrgarciadev"
+                  name={session?.user?.name}
+                  description={session?.user?.email}
                   classNames={{
                     name: 'text-default-600',
                     description: 'text-default-500',
                   }}
                   avatarProps={{
                     size: 'sm',
-                    src: 'https://avatars.githubusercontent.com/u/30373425?v=4',
+                    src: session?.user?.image,
                   }}
                 />
               </DropdownItem>
-              <DropdownItem key="dashboard">Dashboard</DropdownItem>
-              <DropdownItem key="orders">Orders</DropdownItem>
+              <DropdownItem key="dashboard" href="/dashboard/profile">
+                Dashboard
+              </DropdownItem>
+              <DropdownItem key="orders" href="/dashboard/orders">
+                Orders
+              </DropdownItem>
             </DropdownSection>
 
             <DropdownSection aria-label="Preferences" showDivider>
-              <DropdownItem key="settings">Settings</DropdownItem>
+              <DropdownItem key="settings" href="dashboard/settings">
+                Settings
+              </DropdownItem>
               <DropdownItem
                 isReadOnly
                 key="theme"
@@ -221,7 +229,7 @@ const NavbarComponent: FC<NavbarComponentProps> = ({}) => {
             </DropdownSection>
 
             <DropdownSection aria-label="Help & Feedback">
-              <DropdownItem key="help_and_feedback">
+              <DropdownItem key="help_and_feedback" href="/customer_support">
                 Help & Feedback
               </DropdownItem>
               <DropdownItem key="logout">Log Out</DropdownItem>
