@@ -89,90 +89,92 @@ export function PhoneNumberEdit({
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid">
-            <FormField
-              control={form.control}
-              name="code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="sr-only" htmlFor="email">
-                    Email
-                  </FormLabel>
+          <div className="grid gap-1">
+            <div className="grid">
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="sr-only" htmlFor="email">
+                      Email
+                    </FormLabel>
 
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue="United States of America-1"
-                  >
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue="United States of America-1"
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="United States of America (+1)" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Countries</SelectLabel>
+                          {phoneCodes
+                            .sort((a, b) => a.name.localeCompare(b.name))
+                            .map((phoneCode) => (
+                              <SelectItem
+                                value={`${phoneCode.name}-${phoneCode.dialCode}`}
+                                key={`${phoneCode.name}-${phoneCode.dialCode}`}
+                              >
+                                {phoneCode.name} (+{phoneCode.dialCode})
+                              </SelectItem>
+                            ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="number"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="sr-only" htmlFor="email">
+                      Phone Number
+                    </FormLabel>
+
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="United States of America (+1)" />
-                      </SelectTrigger>
+                      <Input
+                        key="inside"
+                        {...field}
+                        variant="bordered"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        autoCorrect="off"
+                        placeholder="(000)-000-0000"
+                        radius="sm"
+                        disabled={isPending}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          const formatted = formatPhoneNumber(value);
+                          field.onChange(formatted);
+                        }}
+                      />
                     </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Countries</SelectLabel>
-                        {phoneCodes
-                          .sort((a, b) => a.name.localeCompare(b.name))
-                          .map((phoneCode) => (
-                            <SelectItem
-                              value={`${phoneCode.name}-${phoneCode.dialCode}`}
-                              key={`${phoneCode.name}-${phoneCode.dialCode}`}
-                            >
-                              {phoneCode.name} (+{phoneCode.dialCode})
-                            </SelectItem>
-                          ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
 
-                  <FormMessage />
-                </FormItem>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormError message={error} />
+            <FormSuccess message={success} />
+
+            <Button disabled={isPending} className="mt-2 w-full" type="submit">
+              {isPending && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-            />
-
-            <FormField
-              control={form.control}
-              name="number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="sr-only" htmlFor="email">
-                    Phone Number
-                  </FormLabel>
-
-                  <FormControl>
-                    <Input
-                      key="inside"
-                      {...field}
-                      variant="bordered"
-                      autoCapitalize="none"
-                      autoComplete="email"
-                      autoCorrect="off"
-                      placeholder="(000)-000-0000"
-                      radius="sm"
-                      disabled={isPending}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const formatted = formatPhoneNumber(value);
-                        field.onChange(formatted);
-                      }}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              Set Phone Number
+            </Button>
           </div>
-
-          <FormError message={error} />
-          <FormSuccess message={success} />
-
-          <Button disabled={isPending} className="mt-4 w-full" type="submit">
-            {isPending && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Set Phone Number
-          </Button>
         </form>
       </Form>
     </div>
