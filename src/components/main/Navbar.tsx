@@ -24,6 +24,7 @@ import { gabarito } from '../utils/Fonts';
 import { ShoppingCartIcon, User2Icon, Search } from 'lucide-react';
 import { SignOut } from '@/actions/signout';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { AvatarFallback } from '../utils/Avatar';
 
 interface NavbarComponentProps {}
 
@@ -148,7 +149,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
 
         <NavbarItem>
           <Link href={'/cart'}>
-            <Button isIconOnly className="bg-transparent">
+            <Button isIconOnly className="bg-transparent hover:bg-gray-100/80">
               <ShoppingCartIcon size={26} height={26} />
             </Button>
           </Link>
@@ -163,7 +164,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
           placement="bottom-end"
         >
           <DropdownTrigger>
-            <Button isIconOnly className="bg-transparent">
+            <Button isIconOnly className="bg-transparent hover:bg-gray-100/80">
               <User2Icon size={26} height={26} />
             </Button>
           </DropdownTrigger>
@@ -188,10 +189,10 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
               <DropdownItem
                 isReadOnly
                 key="profile"
-                className="h-14 gap-2 opacity-100"
+                className="h-12 gap-2 opacity-100"
               >
                 <User
-                  name={user?.name}
+                  name={user?.name || 'Guest'}
                   description={user?.email}
                   classNames={{
                     name: 'text-default-600',
@@ -199,7 +200,8 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
                   }}
                   avatarProps={{
                     size: 'sm',
-                    src: user?.image as string | undefined,
+                    src: user?.image as string,
+                    fallback: <AvatarFallback />,
                   }}
                 />
               </DropdownItem>
@@ -240,19 +242,27 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
                 Help & Feedback
               </DropdownItem>
               <DropdownItem key="logout" className="p-0">
-                <form
-                  onSubmit={async (event) => {
-                    event.preventDefault();
-                    await SignOut();
-                  }}
-                >
-                  <button
-                    className="px-2 py-1.5 w-full text-left"
-                    type="submit"
+                {!!user ? (
+                  <form
+                    onSubmit={async (event) => {
+                      event.preventDefault();
+                      await SignOut();
+                    }}
                   >
-                    Sign Out
-                  </button>
-                </form>
+                    <button
+                      className="px-2 py-1.5 w-full text-left"
+                      type="submit"
+                    >
+                      Sign Out
+                    </button>
+                  </form>
+                ) : (
+                  <Link href="/auth/login">
+                    <button className="px-2 py-1.5 w-full text-left">
+                      Sign In
+                    </button>
+                  </Link>
+                )}
               </DropdownItem>
             </DropdownSection>
           </DropdownMenu>
