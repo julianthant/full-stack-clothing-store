@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Authentication',
+  title: 'Authentication | Clothes.co',
   description: 'Authentication forms built using the components.',
 };
 
@@ -30,7 +30,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
-            <Link href="/">CLOTHES.CO</Link>
+            CLOTHES.CO
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
@@ -47,7 +47,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
             {children}
             <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{' '}
+              By using clothes.co, you agree to our{' '}
               <Link
                 href="/terms"
                 className="underline underline-offset-4 hover:text-primary"
