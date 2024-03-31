@@ -53,6 +53,18 @@ export const newEmailVerification = async (token: string) => {
     return { error: 'Missing token!' };
   }
 
+  const user = await currentUser();
+
+  if (!user || !user.id) {
+    return { error: 'Unauthorized' };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: 'Unauthorized' };
+  }
+
   const existingToken = await getVerificationTokenByToken(token);
 
   if (!existingToken) {
@@ -65,14 +77,8 @@ export const newEmailVerification = async (token: string) => {
     return { error: 'Token has expired!' };
   }
 
-  const existingUser = await getUserByEmail(existingToken.email);
-
-  if (!existingUser) {
-    return { error: 'Email does not exist!' };
-  }
-
   await db.user.update({
-    where: { id: existingUser.id },
+    where: { id: dbUser.id },
     data: { emailVerified: new Date(), email: existingToken.email },
   });
 
