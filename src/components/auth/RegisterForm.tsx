@@ -171,15 +171,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
             <FormError message={error} />
             <FormSuccess message={success} />
 
-            <Link
-              href="/auth/new-password"
-              size="sm"
-              className="text-blue-500 text-center ml-auto my-2"
-            >
-              Forgot Password?
-            </Link>
-
-            <Button disabled={isPending} className="mt-1" type="submit">
+            <Button disabled={isPending} className="mt-5" type="submit">
               {isPending && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
