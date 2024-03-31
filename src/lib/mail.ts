@@ -12,7 +12,7 @@ export const sendTwoFAEmail = async (email: string, token: string) => {
 };
 
 export const sendVerficationEmail = async (email: string, token: string) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+  const confirmLink = `${process.env.APP_URL}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: 'onoarding@resend.dev',
@@ -23,7 +23,7 @@ export const sendVerficationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordEmail = async (email: string, token: string) => {
-  const resendLink = `http://localhost:3000/auth/new-password?token=${token}`;
+  const resendLink = `${process.env.APP_URL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: 'onoarding@resend.dev',
@@ -37,7 +37,7 @@ export const sendLoggedInPasswordEmail = async (
   email: string,
   token: string
 ) => {
-  const resendLink = `http://localhost:3000/settings/edit/new-password?token=${token}`;
+  const resendLink = `${process.env.APP_URL}/settings/edit/new-password?token=${token}`;
 
   await resend.emails.send({
     from: 'onoarding@resend.dev',
@@ -51,7 +51,7 @@ export const sendLoggedInVerficationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000/settings/edit/verify-email?token=${token}`;
+  const confirmLink = `${process.env.APP_URL}/settings/edit/verify-email?token=${token}`;
 
   await resend.emails.send({
     from: 'onoarding@resend.dev',
