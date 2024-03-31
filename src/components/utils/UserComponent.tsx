@@ -1,5 +1,5 @@
 import { User } from '@nextui-org/user';
-
+import { AvatarFallback } from './Avatar';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 export const UserComponent = () => {
@@ -15,7 +15,8 @@ export const UserComponent = () => {
       }}
       avatarProps={{
         size: 'sm',
-        src: user?.image as string | undefined,
+        src: user?.image as string,
+        fallback: <AvatarFallback />,
       }}
     />
   );
