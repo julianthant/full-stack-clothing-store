@@ -4,7 +4,7 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: 'Shop.co',
+  title: 'Clothes.co',
   description: 'Buy your favorite clothes here',
 };
 
