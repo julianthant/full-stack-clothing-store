@@ -17,6 +17,10 @@ const config = {
       padding: '24px',
     },
     extend: {
+      backgroundImage: {
+        'dark-overlay':
+          'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
