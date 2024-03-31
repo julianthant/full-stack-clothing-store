@@ -4,7 +4,8 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
-  editRoutes,
+  invalidRoutes,
+  prefixRoutes,
   publicRoutes,
 } from '@/routes/route';
 
@@ -18,7 +19,7 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isEditRoute = editRoutes.includes(nextUrl.pathname);
+  const isEditRoute = invalidRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
     return;
@@ -29,6 +30,10 @@ export default auth((req) => {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
 
+    return;
+  }
+
+  if (nextUrl.pathname.startsWith(prefixRoutes[0])) {
     return;
   }
 
