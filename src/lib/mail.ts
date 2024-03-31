@@ -12,18 +12,18 @@ export const sendTwoFAEmail = async (email: string, token: string) => {
 };
 
 export const sendVerficationEmail = async (email: string, token: string) => {
-  const confirmLink = `${process.env.APP_URL}/auth/new-verification?token=${token}`;
+  const confirmLink = `https://${process.env.APP_URL}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
     to: email,
     subject: 'Verify your email',
-    html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`,
+    html: `<p>Click <a href="${confirmLink}">here</a> to verify email.</p>`,
   });
 };
 
 export const sendPasswordEmail = async (email: string, token: string) => {
-  const resendLink = `${process.env.APP_URL}/auth/new-password?token=${token}`;
+  const resendLink = `https://${process.env.APP_URL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -37,7 +37,7 @@ export const sendLoggedInPasswordEmail = async (
   email: string,
   token: string
 ) => {
-  const resendLink = `${process.env.APP_URL}/settings/edit/new-password?token=${token}`;
+  const resendLink = `https://${process.env.APP_URL}/settings/edit/new-password?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -51,12 +51,12 @@ export const sendLoggedInVerficationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `${process.env.APP_URL}/settings/edit/verify-email?token=${token}`;
+  const confirmLink = `https://${process.env.APP_URL}/settings/edit/verify-email?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
     to: email,
     subject: 'Verify your email',
-    html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`,
+    html: `<p>Click <a href="${confirmLink}">here</a> to verify email.</p>`,
   });
 };
