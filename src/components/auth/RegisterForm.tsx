@@ -1,131 +1,193 @@
 'use client';
 
+import * as z from 'zod';
 import * as React from 'react';
 
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { Register } from '@/actions/register';
+import { RegisterSchema } from '@/schemas';
+
+import { FormError } from '../utils/FormError';
+import { FormSuccess } from '../utils/Form.Success';
+
 import { cn } from '@/lib/utils';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../utils/Icons';
 import { Button } from '../ui/button';
-import { Input } from '@nextui-org/react';
-import { Label } from '../ui/label';
+import { Input, Link } from '@nextui-org/react';
+
 import {
-  GoogleIcon,
-  FacebookIcon,
-  EyeFilledIcon,
-  EyeSlashFilledIcon,
-} from '../ui/Icons';
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 interface RegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function RegisterForm({ className, ...props }: RegisterFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isPending, startTransition] = React.useTransition();
   const [isVisible, setIsVisible] = React.useState(false);
+  const [error, setError] = React.useState<string | undefined>('');
+  const [success, setSuccess] = React.useState<string | undefined>('');
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      name: '',
+    },
+  });
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setError('');
+    setSuccess('');
+
+    startTransition(() => {
+      Register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
+  };
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Email
-            </Label>
-            <Input
-              key="inside"
-              type="email"
-              variant="bordered"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              placeholder="name@example.com"
-              radius="sm"
-              disabled={isLoading}
-            />
-          </div>
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="password">
-              Password
-            </Label>
-            <Input
-              key="inside"
-              type={isVisible ? 'text' : 'password'}
-              variant="bordered"
-              autoCapitalize="none"
-              autoComplete="password"
-              autoCorrect="off"
-              disabled={isLoading}
-              placeholder="password"
-              radius="sm"
-              endContent={
-                <button
-                  className="focus:outline-none"
-                  type="button"
-                  onClick={toggleVisibility}
-                >
-                  {isVisible ? (
-                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                  ) : (
-                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                  )}
-                </button>
-              }
-            />
-          </div>
-          <Button disabled={isLoading} className="mt-1">
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Sign Up with Email
-          </Button>
-        </div>
-      </form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
+      <div className="flex flex-col space-y-2 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Create an account
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Enter your email below to create your account
+        </p>
       </div>
-      <div className="flex gap-4">
-        <Button
-          variant="outline"
-          type="button"
-          disabled={isLoading}
-          className="w-full"
-        >
-          {isLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <GoogleIcon />
-          )}{' '}
-          Google
-        </Button>
-        <Button
-          variant="outline"
-          type="button"
-          disabled={isLoading}
-          className="w-full"
-        >
-          {isLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <FacebookIcon />
-          )}{' '}
-          Facebook
-        </Button>
-      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="sr-only" htmlFor="name">
+                    Name
+                  </FormLabel>
+
+                  <FormControl>
+                    <Input
+                      key="inside"
+                      {...field}
+                      type="name"
+                      variant="bordered"
+                      autoCapitalize="none"
+                      autoComplete="name"
+                      autoCorrect="off"
+                      placeholder="John Doe"
+                      radius="sm"
+                      disabled={isPending}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="sr-only" htmlFor="email">
+                    Email
+                  </FormLabel>
+
+                  <FormControl>
+                    <Input
+                      key="inside"
+                      {...field}
+                      type="email"
+                      variant="bordered"
+                      autoCapitalize="none"
+                      autoComplete="email"
+                      autoCorrect="off"
+                      placeholder="name@example.com"
+                      radius="sm"
+                      disabled={isPending}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="sr-only" htmlFor="password">
+                    Password
+                  </FormLabel>
+
+                  <FormControl>
+                    <Input
+                      key="inside"
+                      {...field}
+                      type={isVisible ? 'text' : 'password'}
+                      variant="bordered"
+                      autoCapitalize="none"
+                      autoComplete="password"
+                      autoCorrect="off"
+                      disabled={isPending}
+                      placeholder="Password"
+                      radius="sm"
+                      endContent={
+                        <button
+                          className="focus:outline-none"
+                          type="button"
+                          onClick={toggleVisibility}
+                        >
+                          {isVisible ? (
+                            <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
+                      }
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormError message={error} />
+            <FormSuccess message={success} />
+
+            <Link
+              href="/auth/new-password"
+              size="sm"
+              className="text-blue-500 text-center ml-auto my-2"
+            >
+              Forgot Password?
+            </Link>
+
+            <Button disabled={isPending} className="mt-1" type="submit">
+              {isPending && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Sign Up with Email
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
