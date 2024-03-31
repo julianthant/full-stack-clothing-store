@@ -9,7 +9,13 @@ export const publicRoutes = ['/', '/auth/new-verification'];
  * An array of routes that cannot be accessed
  * @type {string[]}
  */
-export const editRoutes = ['/settings/edit'];
+export const invalidRoutes = ['/settings/edit'];
+
+/**
+ * An array of routes that can be accessed if the pathname starts with this prefix
+ * @type {string[]}
+ */
+export const prefixRoutes = ['/shop'];
 
 /**
  * An array of routes that are used for authentication
