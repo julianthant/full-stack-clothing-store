@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { SignOut } from '@/actions/signout';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { AvatarFallback } from '../utils/Avatar';
+import { NavUserComponent } from './NavUserComponent';
 
 import {
   Dropdown,
@@ -55,21 +55,9 @@ export const AccountDropdown = () => {
           <DropdownItem
             isReadOnly
             key="profile"
-            className="h-12 gap-2 opacity-100"
+            className="h-14 gap-2 opacity-100"
           >
-            <User
-              name={user?.name || 'Guest'}
-              description={user?.email}
-              classNames={{
-                name: 'text-default-600',
-                description: 'text-default-500',
-              }}
-              avatarProps={{
-                size: 'sm',
-                src: user?.image as string,
-                fallback: <AvatarFallback />,
-              }}
-            />
+            <NavUserComponent />
           </DropdownItem>
           <DropdownItem key="dashboard" href="/settings?menu=Account">
             Account
