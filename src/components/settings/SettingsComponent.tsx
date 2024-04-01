@@ -25,9 +25,7 @@ export const SettingsComponent = () => {
     <div className="space-y-5">
       <div className="border rounded-[20px] min-h-[650px] flex">
         <div className="w-[230px]">
-          <div className="pb-2 p-3">
-            <UserComponent />
-          </div>
+          <UserComponent />
 
           <Divider />
 
