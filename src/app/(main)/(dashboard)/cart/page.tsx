@@ -1,4 +1,3 @@
-import { CartComponent } from '@/components/settings/cart/CartComponent';
 import { Metadata } from 'next';
 
 interface cartProps {}
@@ -8,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const cart = () => {
-  return <CartComponent />;
+  return <div>Cart</div>;
 };
 
 export default cart;
