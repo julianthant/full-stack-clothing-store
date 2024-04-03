@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-
+import { CardEditSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import {
   Card,
   CardContent,
@@ -26,6 +29,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 export const PaymentComponent = () => {
   const user = useCurrentUser();
@@ -37,21 +48,32 @@ export const PaymentComponent = () => {
       Cardholder: 'Julian Hein',
       BankName: 'Bank of America Visa Debit Card',
       Number: '7037',
+      Expiry: '12/2024',
       Image: CreditCardImage,
     },
     {
       Cardholder: 'Eric Dong',
       BankName: 'Bank of America Visa Credit Card',
       Number: '9023',
+      Expiry: '2/2025',
       Image: CreditCardImage,
     },
     {
       Cardholder: 'Shwe Kyone',
       BankName: 'Bank of America Visa Debit Card',
       Number: '3453',
+      Expiry: '3/2027',
       Image: CreditCardImage,
     },
   ];
+
+  const form = useForm<z.infer<typeof CardEditSchema>>({
+    resolver: zodResolver(CardEditSchema),
+  });
+
+  const onSubmit = (values: z.infer<typeof CardEditSchema>) => {
+    console.log(values);
+  };
 
   return (
     <div className="sm:flex grid gap-4">
@@ -108,63 +130,114 @@ export const PaymentComponent = () => {
           <CardDescription>{cards[selectedCard].BankName}</CardDescription>
         </CardHeader>
 
-        <CardContent className="grid gap-4">
+        <CardContent className="grid gap-3">
           <Image
             src={cards[selectedCard].Image}
             alt={cards[selectedCard].Cardholder + "'s Card"}
             width={300}
           />
 
-          <div className="grid gap-2">
-            <Label htmlFor="name">Name on Card</Label>
-            <Input id="name" type="name" placeholder="John Doe" required />
-          </div>
+          <Form {...form}>
+            <form className="space-y-1" onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="name">Name</FormLabel>
 
-          <div className="grid grid-cols-3 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="month">Expires</Label>
-              <Select>
-                <SelectTrigger id="month">
-                  <SelectValue placeholder="Month" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">January</SelectItem>
-                  <SelectItem value="2">February</SelectItem>
-                  <SelectItem value="3">March</SelectItem>
-                  <SelectItem value="4">April</SelectItem>
-                  <SelectItem value="5">May</SelectItem>
-                  <SelectItem value="6">June</SelectItem>
-                  <SelectItem value="7">July</SelectItem>
-                  <SelectItem value="8">August</SelectItem>
-                  <SelectItem value="9">September</SelectItem>
-                  <SelectItem value="10">October</SelectItem>
-                  <SelectItem value="11">November</SelectItem>
-                  <SelectItem value="12">December</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                    <Input
+                      id="name"
+                      type="name"
+                      onChange={field.onChange}
+                      placeholder={cards[selectedCard].Cardholder}
+                      required
+                    />
 
-            <div className="grid gap-2">
-              <Label htmlFor="year">Year</Label>
-              <Select>
-                <SelectTrigger id="year">
-                  <SelectValue placeholder="Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <SelectItem
-                      key={i}
-                      value={`${new Date().getFullYear() + i}`}
-                    >
-                      {new Date().getFullYear() + i}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <Button className="mt-[22px]">Save</Button>
-          </div>
+              <div className="grid grid-cols-3 gap-4">
+                <FormField
+                  control={form.control}
+                  name="expiry_month"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="month">Expires</Label>
+
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={cards[selectedCard].Expiry.split('/')[0]}
+                      >
+                        <FormControl>
+                          <SelectTrigger id="month">
+                            <SelectValue placeholder="Month" />
+                          </SelectTrigger>
+                        </FormControl>
+
+                        <SelectContent>
+                          <SelectItem value="1">January</SelectItem>
+                          <SelectItem value="2">February</SelectItem>
+                          <SelectItem value="3">March</SelectItem>
+                          <SelectItem value="4">April</SelectItem>
+                          <SelectItem value="5">May</SelectItem>
+                          <SelectItem value="6">June</SelectItem>
+                          <SelectItem value="7">July</SelectItem>
+                          <SelectItem value="8">August</SelectItem>
+                          <SelectItem value="9">September</SelectItem>
+                          <SelectItem value="10">October</SelectItem>
+                          <SelectItem value="11">November</SelectItem>
+                          <SelectItem value="12">December</SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="expiry_year"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="year">Year</Label>
+
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={cards[selectedCard].Expiry.split('/')[1]}
+                      >
+                        <FormControl>
+                          <SelectTrigger id="year">
+                            <SelectValue placeholder="Year" />
+                          </SelectTrigger>
+                        </FormControl>
+
+                        <SelectContent>
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <SelectItem
+                              key={i}
+                              value={`${new Date().getFullYear() + i}`}
+                            >
+                              {new Date().getFullYear() + i}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="mt-[32px]">
+                  Save
+                </Button>
+              </div>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>
