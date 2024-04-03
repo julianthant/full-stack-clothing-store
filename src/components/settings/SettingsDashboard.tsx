@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import Link from 'next/link';
 import {
@@ -26,8 +26,6 @@ import { AddressComponent } from './account/AdresssComponent';
 import { PaymentComponent } from './account/PaymentComponent';
 
 export function SettingsDashboard() {
-  const router = useRouter();
-
   const searchParams = useSearchParams();
   const menuPage = searchParams.get('menu');
   const [selectedKey, setSelectedKey] = useState(menuPage || 'Account');
@@ -48,8 +46,15 @@ export function SettingsDashboard() {
   ];
 
   const subMenu = subLinks.find((item) => item.key === selectedKey);
-  const subMenuPage = searchParams.get('subMenu');
-  const [menuKey, setMenuKey] = useState(subMenuPage || 'Login & Security');
+  const subMenuPage = decodeURIComponent(searchParams.get('subMenu') || '');
+
+  const getDefaultSubMenu = (key: string) => {
+    const defaultSubMenu = subLinks.find((item) => item.key === key)?.value[0];
+
+    return encodeURIComponent(defaultSubMenu || '');
+  };
+
+  const [menuKey, setMenuKey] = useState(subMenuPage);
 
   return (
     <div className="grid border rounded-[20px] min-h-[700px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -63,15 +68,14 @@ export function SettingsDashboard() {
             <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4">
               {menuItems.map((item) => (
                 <Link
-                  href="#"
+                  href={`/settings?menu=${item.key}&subMenu=${getDefaultSubMenu(
+                    item.key
+                  )}`}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
                     selectedKey === item.key && 'bg-muted text-primary'
                   )}
-                  onClick={() => {
-                    setSelectedKey(item.key),
-                      menuPage && router.push('/settings');
-                  }}
+                  onClick={() => setSelectedKey(item.key)}
                   key={item.key}
                 >
                   {item.value}
@@ -107,15 +111,11 @@ export function SettingsDashboard() {
                 </Link>
                 {menuItems.map((item) => (
                   <Link
-                    href="#"
+                    href={`/settings?menu=${selectedKey}`}
                     className={cn(
                       'mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                       selectedKey === item.key && 'bg-muted text-primary'
                     )}
-                    onClick={() => {
-                      setSelectedKey(item.key),
-                        menuPage && router.push('/settings');
-                    }}
                     key={item.key}
                   >
                     {item.value}
@@ -130,15 +130,14 @@ export function SettingsDashboard() {
             {subMenu?.value.map((item) => (
               <Button key={item} asChild variant="ghost">
                 <Link
-                  href="#"
+                  href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
+                    item
+                  )}`}
                   className={cn(
                     'text-muted-foreground transition-colors hover:text-foreground',
                     menuKey === item && 'text-foreground'
                   )}
-                  onClick={() => {
-                    setMenuKey(item),
-                      menuPage && subMenuPage && router.push('/settings');
-                  }}
+                  onClick={() => setMenuKey(item)}
                 >
                   {item}
                 </Link>
@@ -156,10 +155,6 @@ export function SettingsDashboard() {
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
-          {selectedKey === 'Account' && menuKey === 'Login & Security' && (
-            <AccountComponent />
-          )}
-
           {selectedKey === 'Account' && menuKey === 'Payments' && (
             <PaymentComponent />
           )}
@@ -171,6 +166,11 @@ export function SettingsDashboard() {
           {selectedKey === 'Account' && menuKey === 'Profiles' && (
             <ProfileComponent />
           )}
+
+          {selectedKey === 'Account' &&
+            (menuKey === 'Login & Security' || !subMenuPage || !menuKey) && (
+              <AccountComponent />
+            )}
         </main>
       </div>
     </div>
