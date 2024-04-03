@@ -1,12 +1,9 @@
-'use client';
-
 import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
 import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';
 
-import { roboto } from '@/components/utils/Fonts';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { sendTwoFactorActivationCode } from '@/actions/send-code';
 
@@ -15,15 +12,14 @@ export const AccountComponent = () => {
   const user = useCurrentUser();
 
   return (
-    <div className="p-10 w-full">
-      <h1 className={`font-bold text-inherit ${roboto.className} text-3xl`}>
-        Account Settings
-      </h1>
-
-      <div className="space-y-4 mt-8">
+    <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
+      <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex">
-            <h3 className="font-semibold">Name</h3>
+            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+              <h3 className="font-semibold">Name</h3>
+            </Skeleton>
+
             <Link
               href={'/settings/edit/new-name'}
               className="font-semibold ml-auto text-green-600"
@@ -41,7 +37,10 @@ export const AccountComponent = () => {
 
         <div className="space-y-2">
           <div className="flex">
-            <h3 className="font-semibold">Email</h3>
+            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+              <h3 className="font-semibold">Email</h3>
+            </Skeleton>
+
             {!user?.isOAuth && (
               <Link
                 href={'/settings/edit/new-email'}
@@ -61,7 +60,10 @@ export const AccountComponent = () => {
 
         <div className="space-y-2">
           <div className="flex">
-            <h3 className="font-semibold">Password</h3>
+            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+              <h3 className="font-semibold">Password</h3>
+            </Skeleton>
+
             <Link
               href={'/settings/edit/reset-password'}
               className="font-semibold ml-auto text-green-600"
@@ -79,7 +81,10 @@ export const AccountComponent = () => {
 
         <div className="space-y-2">
           <div className="flex">
-            <h3 className="font-semibold">Country</h3>
+            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+              <h3 className="font-semibold">Country</h3>
+            </Skeleton>
+
             <Link
               href={'/settings/edit/change-country'}
               className="font-semibold ml-auto text-green-600"
@@ -97,7 +102,10 @@ export const AccountComponent = () => {
 
         <div className="space-y-2">
           <div className="flex">
-            <h3 className="font-semibold">Primary Mobile Number</h3>
+            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+              <h3 className="font-semibold">Mobile Number</h3>
+            </Skeleton>
+
             <Link
               href={'/settings/edit/phone-number'}
               className="font-semibold ml-auto text-green-600"
@@ -115,7 +123,9 @@ export const AccountComponent = () => {
 
         <div className="space-y-2">
           <div className="flex">
-            <h3 className="font-semibold">Two Factor Authentication</h3>
+            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+              <h3 className="font-semibold">Two Factor Authentication</h3>
+            </Skeleton>
 
             <form
               className="ml-auto"
