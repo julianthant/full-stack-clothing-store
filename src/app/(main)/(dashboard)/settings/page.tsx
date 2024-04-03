@@ -1,10 +1,10 @@
-import { SettingsComponent } from '@/components/settings/SettingsComponent';
+import { SettingsDashboard } from '@/components/settings/SettingsDashboard';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <SettingsComponent />;
+  return <SettingsDashboard />;
 };
 
 export default page;
