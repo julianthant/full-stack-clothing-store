@@ -33,7 +33,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from '@/components/ui/Input-otp';
+} from '@/components/ui/input-otp';
 
 interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
