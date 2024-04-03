@@ -1,3 +1,5 @@
+'use client';
+
 import { Skeleton } from '@nextui-org/react';
 import { AvatarFallback } from '../utils/Avatar';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
@@ -8,9 +10,9 @@ export const UserComponent = () => {
   return (
     <div>
       {!!user ? (
-        <div className="pb-2 p-3 w-[200px] flex items-center space-x-2">
+        <div className="py-2 flex items-center space-x-2">
           <AvatarFallback userImage={user?.image || ''} />
-          <div className="flex flex-col w-[160px]">
+          <div className="flex flex-col lg:w-[190px] w-[150px]">
             <div className="truncate text-default-600 text-sm">
               {user?.name || 'Guest'}
             </div>
