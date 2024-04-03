@@ -20,9 +20,9 @@ export const NavUserComponent = () => {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="pb-2 p-3 w-[200px] flex items-center space-x-2">
           <div>
-            <Skeleton className="flex rounded-full w-12 h-12" />
+            <Skeleton className="flex rounded-full w-8 h-8" />
           </div>
           <div className="w-full flex flex-col gap-2">
             <Skeleton className="h-3 w-3/5 rounded-lg" />
