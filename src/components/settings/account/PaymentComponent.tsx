@@ -163,7 +163,7 @@ export const PaymentComponent = () => {
               </Select>
             </div>
 
-            <Button className="w-20 mt-[22px]">Save</Button>
+            <Button className="mt-[22px]">Save</Button>
           </div>
         </CardContent>
       </Card>
