@@ -21,7 +21,7 @@ import Image from 'next/image';
 import CreditCardImage from '../../images/credit-card-example.png';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Input } from '../../ui/input';
 import {
   Select,
   SelectContent,
