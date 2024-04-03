@@ -120,7 +120,7 @@ export const PaymentComponent = () => {
             <Input id="name" type="name" placeholder="John Doe" required />
           </div>
 
-          <div className="grid grid-cols-3 gap-4 place-items-center">
+          <div className="grid grid-cols-3 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="month">Expires</Label>
               <Select>
@@ -143,6 +143,7 @@ export const PaymentComponent = () => {
                 </SelectContent>
               </Select>
             </div>
+
             <div className="grid gap-2">
               <Label htmlFor="year">Year</Label>
               <Select>
