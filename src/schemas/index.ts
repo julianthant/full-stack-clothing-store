@@ -36,3 +36,9 @@ export const PhoneNumberSchema = z.object({
 export const TwoFASchema = z.object({
   code: z.string().length(6),
 });
+
+export const CardEditSchema = z.object({
+  name: z.string(),
+  expiry_month: z.string().min(1).max(2),
+  expiry_year: z.string().length(4),
+});
