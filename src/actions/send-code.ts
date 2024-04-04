@@ -8,8 +8,8 @@ import { generateTwoFAToken } from '@/lib/token';
 export const sendTwoFactorActivationCode = async (email: string) => {
   const existingUser = await getUserByEmail(email);
 
-  if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: 'Email does not exist!' };
+  if (!existingUser || !existingUser.email || !existingUser.emailVerified) {
+    throw Error;
   }
 
   const twoFAToken = await generateTwoFAToken(existingUser.email);
