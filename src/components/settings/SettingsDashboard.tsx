@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import Link from 'next/link';
@@ -25,7 +25,22 @@ import { ProfileComponent } from './account/ProfileComponent';
 import { AddressComponent } from './account/AdresssComponent';
 import { PaymentComponent } from './account/PaymentComponent';
 
-export function SettingsDashboard() {
+type SettingsDashboardProps = {
+  payment:
+    | {
+        id: string;
+        userId: string;
+        cardType: string;
+        cardHolder: string;
+        cardNumber: string;
+        expiryMonth: string;
+        expiryYear: string;
+        cvc: string;
+      }[]
+    | null;
+};
+
+export function SettingsDashboard({ payment }: SettingsDashboardProps) {
   const searchParams = useSearchParams();
   const menuPage = searchParams.get('menu');
   const [selectedKey, setSelectedKey] = useState(menuPage || 'Account');
@@ -57,7 +72,7 @@ export function SettingsDashboard() {
   const [menuKey, setMenuKey] = useState(subMenuPage);
 
   return (
-    <div className="grid border rounded-[20px] min-h-[700px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid border rounded-[20px] min-h-[700px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] mb-16">
       <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
         <div className="flex h-full max-h-dvh flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -156,7 +171,7 @@ export function SettingsDashboard() {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
           {selectedKey === 'Account' && menuKey === 'Payments' && (
-            <PaymentComponent />
+            <PaymentComponent paymentMethods={payment} />
           )}
 
           {selectedKey === 'Account' && menuKey === 'Addresses' && (
