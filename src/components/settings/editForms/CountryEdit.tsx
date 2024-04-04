@@ -69,7 +69,7 @@ export function CountryEdit({
   };
 
   return (
-    <div className={cn('grid gap-6 w-full', className)} {...props}>
+    <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
           Change Country
