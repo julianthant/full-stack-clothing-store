@@ -1,10 +1,12 @@
 import { SettingsDashboard } from '@/components/settings/SettingsDashboard';
-import { FC } from 'react';
+import { getPaymentMethodsByUserId } from '@/data/payment-methods';
+import { currentUser } from '@/lib/server-auth';
 
-interface pageProps {}
+const page = async () => {
+  const user = await currentUser();
+  const paymentMethods = await getPaymentMethodsByUserId(user?.id as string);
 
-const page: FC<pageProps> = ({}) => {
-  return <SettingsDashboard />;
+  return <SettingsDashboard payment={paymentMethods} />;
 };
 
 export default page;
