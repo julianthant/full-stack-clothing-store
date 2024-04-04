@@ -11,7 +11,7 @@ export const UserComponent = () => {
     <div>
       {!!user ? (
         <div className="py-2 flex items-center space-x-2">
-          <AvatarFallback userImage={user?.image || ''} />
+          <AvatarFallback userImage={user?.image} />
           <div className="flex flex-col lg:w-[190px] w-[150px]">
             <div className="truncate text-default-600 text-sm">
               {user?.name || 'Guest'}
