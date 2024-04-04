@@ -79,7 +79,7 @@ export function PhoneNumberEdit({
   };
 
   return (
-    <div className={cn('grid gap-6 w-full', className)} {...props}>
+    <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
           Change Phone Number
@@ -90,7 +90,7 @@ export function PhoneNumberEdit({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid gap-1">
-            <div className="grid">
+            <div className="grid gap-2">
               <FormField
                 control={form.control}
                 name="code"
