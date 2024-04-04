@@ -42,3 +42,12 @@ export const CardEditSchema = z.object({
   expiry_month: z.string().min(1).max(2),
   expiry_year: z.string().length(4),
 });
+
+export const cardAddSchema = z.object({
+  paymentType: z.string(),
+  cardHolder: z.string(),
+  cardNumber: z.string().min(15).max(16),
+  expiryMonth: z.string().min(1).max(2),
+  expiryYear: z.string().length(4),
+  cvc: z.string().length(3),
+});
