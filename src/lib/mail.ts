@@ -2,6 +2,8 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const localEnvironment = process.env.NODE_ENV === 'development';
+
 export const sendTwoFAEmail = async (email: string, token: string) => {
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -12,7 +14,9 @@ export const sendTwoFAEmail = async (email: string, token: string) => {
 };
 
 export const sendVerficationEmail = async (email: string, token: string) => {
-  const confirmLink = `https://${process.env.APP_URL}/auth/new-verification?token=${token}`;
+  const confirmLink = localEnvironment
+    ? `http://localhost:3000/auth/new-verification?token=${token}`
+    : `https://${process.env.APP_URL}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -23,7 +27,9 @@ export const sendVerficationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordEmail = async (email: string, token: string) => {
-  const resendLink = `https://${process.env.APP_URL}/auth/new-password?token=${token}`;
+  const resendLink = localEnvironment
+    ? `http://localhost:3000//auth/new-password?token=${token}`
+    : `https://${process.env.APP_URL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -37,7 +43,9 @@ export const sendLoggedInPasswordEmail = async (
   email: string,
   token: string
 ) => {
-  const resendLink = `https://${process.env.APP_URL}/settings/edit/new-password?token=${token}`;
+  const resendLink = localEnvironment
+    ? `http://localhost:3000/settings/edit/new-password?token=${token}`
+    : `https://${process.env.APP_URL}/settings/edit/new-password?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -51,7 +59,9 @@ export const sendLoggedInVerficationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `https://${process.env.APP_URL}/settings/edit/verify-email?token=${token}`;
+  const confirmLink = localEnvironment
+    ? `http://localhost:3000/settings/edit/verify-email?token=${token}`
+    : `https://${process.env.APP_URL}/settings/edit/verify-email?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
