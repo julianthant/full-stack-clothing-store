@@ -3,7 +3,6 @@
 import * as z from 'zod';
 import * as React from 'react';
 
-import { Reset } from '@/actions/reset';
 import { ResetSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -54,7 +53,7 @@ export function EmailEdit({ className, ...props }: EmailEditProps) {
   };
 
   return (
-    <div className={cn('grid gap-6 w-full', className)} {...props}>
+    <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Reset Email</h1>
         <p className="text-sm text-muted-foreground">Need new email?</p>
