@@ -31,6 +31,9 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { sendTwoFactorActivationCode } from '@/actions/send-code';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface TwoFAEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -43,6 +46,8 @@ export function TwoFAEdit({ className, ...props }: TwoFAEditProps) {
 
   const searchParams = useSearchParams();
   let formType = searchParams.get('type');
+
+  const user = useCurrentUser();
 
   React.useEffect(() => {
     if (formType !== 'activate' && formType !== 'deactivate') {
@@ -70,81 +75,126 @@ export function TwoFAEdit({ className, ...props }: TwoFAEditProps) {
   };
 
   return (
-    <div className={cn('grid gap-6 w-full', className)} {...props}>
-      <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Two Factor Authentication
-        </h1>
-        {formType === 'activate' && (
-          <p className="text-sm text-muted-foreground">
-            Enter the activation code in your email
-          </p>
-        )}
-        {formType === 'deactivate' && (
-          <p className="text-sm text-muted-foreground">
-            Enter the deactivation code in your email
-          </p>
-        )}
-      </div>
+    <div className={cn('grid w-[300px]', className)} {...props}>
+      <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="space-y-5">
-            <div className="flex items-center justify-center">
-              <FormField
-                control={form.control}
-                name="code"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="sr-only" htmlFor="code">
-                      OTP Code
-                    </FormLabel>
+      <div className="grid gap-6">
+        <div className="flex flex-col space-y-2 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Two Factor Authentication
+          </h1>
+          {formType === 'activate' && (
+            <p className="text-sm text-muted-foreground">
+              Enter the activation code in your email
+            </p>
+          )}
+          {formType === 'deactivate' && (
+            <p className="text-sm text-muted-foreground">
+              Enter the deactivation code in your email
+            </p>
+          )}
+        </div>
 
-                    <FormControl>
-                      <InputOTP
-                        {...field}
-                        disabled={isPending || !!formError}
-                        maxLength={6}
-                      >
-                        <InputOTPGroup>
-                          <InputOTPSlot index={0} />
-                          <InputOTPSlot index={1} />
-                        </InputOTPGroup>
-                        <InputOTPSeparator />
-                        <InputOTPGroup>
-                          <InputOTPSlot index={2} />
-                          <InputOTPSlot index={3} />
-                        </InputOTPGroup>
-                        <InputOTPSeparator />
-                        <InputOTPGroup>
-                          <InputOTPSlot index={4} />
-                          <InputOTPSlot index={5} />
-                        </InputOTPGroup>
-                      </InputOTP>
-                    </FormControl>
+        <div className="grid gap-2">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="space-y-5">
+                <div className="flex items-center justify-center">
+                  <FormField
+                    control={form.control}
+                    name="code"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="sr-only" htmlFor="code">
+                          OTP Code
+                        </FormLabel>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                        <FormControl>
+                          <InputOTP
+                            {...field}
+                            disabled={isPending || !!formError}
+                            maxLength={6}
+                          >
+                            <InputOTPGroup>
+                              <InputOTPSlot index={0} />
+                              <InputOTPSlot index={1} />
+                            </InputOTPGroup>
+                            <InputOTPSeparator />
+                            <InputOTPGroup>
+                              <InputOTPSlot index={2} />
+                              <InputOTPSlot index={3} />
+                            </InputOTPGroup>
+                            <InputOTPSeparator />
+                            <InputOTPGroup>
+                              <InputOTPSlot index={4} />
+                              <InputOTPSlot index={5} />
+                            </InputOTPGroup>
+                          </InputOTP>
+                        </FormControl>
 
-            <FormError message={error || formError} />
-            <FormSuccess message={success} />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
+                <FormError message={error || formError} />
+                <FormSuccess message={success} />
+
+                <Button
+                  disabled={isPending || !!formError}
+                  className="w-full"
+                  type="submit"
+                >
+                  {isPending && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  {formType === 'activate' ? 'Activate' : 'Deactivate'}
+                </Button>
+              </div>
+            </form>
+          </Form>
+          <form
+            className=""
+            onSubmit={async (event) => {
+              event.preventDefault();
+              await sendTwoFactorActivationCode(user?.email as string)
+                .then(() =>
+                  toast.success('Verification code sent!', {
+                    position: 'top-center',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: 'colored',
+                  })
+                )
+                .catch(() =>
+                  toast.error('Failed to send code!', {
+                    position: 'top-center',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: 'colored',
+                  })
+                );
+            }}
+          >
             <Button
-              disabled={isPending || !!formError}
-              className="mt-2 w-full"
+              className="font-semibold w-full"
               type="submit"
+              variant="secondary"
             >
-              {isPending && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              {formType === 'activate' ? 'Activate' : 'Deactivate'}
+              Resend Code
             </Button>
-          </div>
-        </form>
-      </Form>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
