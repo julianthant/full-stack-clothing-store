@@ -6,6 +6,7 @@ import { Skeleton } from '@nextui-org/react';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { sendTwoFactorActivationCode } from '@/actions/send-code';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const AccountComponent = () => {
   const router = useRouter();
@@ -13,6 +14,8 @@ export const AccountComponent = () => {
 
   return (
     <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
+      <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
+
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex">
@@ -133,15 +136,43 @@ export const AccountComponent = () => {
                 event.preventDefault();
 
                 if (!user?.is2FAEnabled) {
-                  await sendTwoFactorActivationCode(user?.email as string);
-                  await router.push(
-                    '/settings/edit/two-factor-authentication?type=activate'
-                  );
+                  await sendTwoFactorActivationCode(user?.email as string)
+                    .then(() =>
+                      router.push(
+                        '/settings/edit/two-factor-authentication?type=activate'
+                      )
+                    )
+                    .catch(() => {
+                      toast.error('Failed to send code', {
+                        position: 'top-center',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        progress: undefined,
+                        theme: 'colored',
+                      });
+                    });
                 } else if (user?.is2FAEnabled) {
-                  await sendTwoFactorActivationCode(user?.email as string);
-                  await router.push(
-                    '/settings/edit/two-factor-authentication?type=deactivate'
-                  );
+                  await sendTwoFactorActivationCode(user?.email as string)
+                    .then(() =>
+                      router.push(
+                        '/settings/edit/two-factor-authentication?type=deactivate'
+                      )
+                    )
+                    .catch(() => {
+                      toast.error('Failed to send code', {
+                        position: 'top-center',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        progress: undefined,
+                        theme: 'colored',
+                      });
+                    });
                 }
               }}
             >
