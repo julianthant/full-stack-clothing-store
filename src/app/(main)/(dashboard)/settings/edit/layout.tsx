@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FC, ReactNode } from 'react';
 
 interface LayoutProps {
@@ -6,9 +7,16 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="mx-auto max-w-[400px] w-full min-h-[300px]">
-      <div className="flex items-center justify-center border p-10 rounded-3xl mt-20">
-        {children}
+    <div className="mx-auto w-fit min-h-[300px]">
+      <div className="grid space-y-3 border p-10 rounded-3xl mt-20">
+        <div className="flex items-center justify-center">{children}</div>
+
+        <Link
+          className="text-center text-sm font-semibold mx-auto hover:underline underline-offset-4"
+          href="/settings?memu=Account"
+        >
+          Back to Login
+        </Link>
       </div>
     </div>
   );
