@@ -1,4 +1,4 @@
-import { PaymentMethodCard } from '@/components/settings/account/PaymentMethodCard';
+import { PaymentMethodCard } from '@/components/settings/editForms/PaymentMethodCard';
 import { FC } from 'react';
 
 interface pageProps {}
