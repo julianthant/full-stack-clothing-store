@@ -177,75 +177,77 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
             </div>
           ) : (
             <div className="grid">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="sr-only" htmlFor="email">
-                      Email
-                    </FormLabel>
+              <div className="grid gap-2">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only" htmlFor="email">
+                        Email
+                      </FormLabel>
 
-                    <FormControl>
-                      <Input
-                        key="inside"
-                        {...field}
-                        type="email"
-                        variant="bordered"
-                        autoCapitalize="none"
-                        autoComplete="email"
-                        autoCorrect="off"
-                        placeholder="name@example.com"
-                        radius="sm"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          key="inside"
+                          {...field}
+                          type="email"
+                          variant="bordered"
+                          autoCapitalize="none"
+                          autoComplete="email"
+                          autoCorrect="off"
+                          placeholder="name@example.com"
+                          radius="sm"
+                          disabled={isPending}
+                        />
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="sr-only" htmlFor="password">
-                      Password
-                    </FormLabel>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only" htmlFor="password">
+                        Password
+                      </FormLabel>
 
-                    <FormControl>
-                      <Input
-                        key="inside"
-                        {...field}
-                        type={isVisible ? 'text' : 'password'}
-                        variant="bordered"
-                        autoCapitalize="none"
-                        autoComplete="Password"
-                        autoCorrect="off"
-                        disabled={isPending}
-                        placeholder="password"
-                        radius="sm"
-                        endContent={
-                          <button
-                            className="focus:outline-none"
-                            type="button"
-                            onClick={toggleVisibility}
-                          >
-                            {isVisible ? (
-                              <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                            ) : (
-                              <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                            )}
-                          </button>
-                        }
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          key="inside"
+                          {...field}
+                          type={isVisible ? 'text' : 'password'}
+                          variant="bordered"
+                          autoCapitalize="none"
+                          autoComplete="Password"
+                          autoCorrect="off"
+                          disabled={isPending}
+                          placeholder="password"
+                          radius="sm"
+                          endContent={
+                            <button
+                              className="focus:outline-none"
+                              type="button"
+                              onClick={toggleVisibility}
+                            >
+                              {isVisible ? (
+                                <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                              ) : (
+                                <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                              )}
+                            </button>
+                          }
+                        />
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormError message={error || urlError} />
               <FormSuccess message={success} />
