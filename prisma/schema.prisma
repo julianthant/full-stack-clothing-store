@@ -13,100 +13,82 @@ enum UserRole {
 }
 
 model User {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?     @unique
-  password      String?
-  phoneNumber   String?     @unique
-  country       String?
-  role          UserRole    @default(USER)
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  cart          Cart?
-  is2FAEnabled  Boolean     @default(false)
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?
+  email             String?            @unique
+  password          String?
+  phoneNumber       String?            @unique
+  country           String?
+  role              UserRole           @default(USER)
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  payments          Payment[]
+  is2FAEnabled      Boolean            @default(false)
   TwoFAConfirmation TwoFAConfirmation?
 }
 
 model Account {
-  id                 String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String     @unique @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @unique @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-model Cart {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  owner     User       @relation(fields: [ownerId], references: [id])
-  ownerId   String     @unique @db.ObjectId
-  cartItems CartItem[]
-}
+model Payment {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String @db.ObjectId
+  cardType    String
+  cardHolder  String
+  cardNumber  String
+  expiryMonth String
+  expiryYear  String
+  cvc         String
 
-model CartItem {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  image     String?
-  price     Float
-  quantity  Int      @default(1)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  cart      Cart     @relation(fields: [cartId], references: [id])
-  cartId    String   @unique @db.ObjectId
-  itemId    String   @unique @db.ObjectId
-}
-
-model Item {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  image     String?
-  price     Float
-  quantity  Int      @default(1)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String
-  token String @unique
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model PasswordResetToken {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String
-  token String @unique
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model TwoFAToken {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String
-  token String @unique
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model TwoFAConfirmation {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  userId             String     @unique @db.ObjectId
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
