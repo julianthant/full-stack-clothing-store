@@ -70,7 +70,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid">
+          <div className="grid gap-2">
             <FormField
               control={form.control}
               name="name"
