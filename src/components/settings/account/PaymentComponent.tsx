@@ -7,13 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { roboto } from '@/components/utils/Fonts';
 import { Button } from '@/components/ui/button';
 import { Divider } from '@nextui-org/react';
@@ -21,10 +14,9 @@ import { PlusCircle } from 'lucide-react';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import CreditCardImage from '../../images/credit-card-example.png';
 import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/Input';
+import { toast, ToastContainer } from 'react-toastify';
+import { RemovePaymentMethod } from '@/actions/remove-payment-method';
 
 type PaymentComponentProps = {
   paymentMethods:
@@ -32,6 +24,7 @@ type PaymentComponentProps = {
         id: string;
         userId: string;
         cardType: string;
+        cardImage: string;
         cardHolder: string;
         cardNumber: string;
         expiryMonth: string;
@@ -46,7 +39,8 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
 
   return (
     <div className="sm:flex grid gap-4">
-      <Card>
+      <Card className="h-min">
+        <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
           <CardDescription>Methods & Accounts</CardDescription>
@@ -64,17 +58,19 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
               >
                 <div className="flex w-[320px] items-center justify-left px-6 py-4 gap-3">
                   <Image
-                    src={CreditCardImage}
+                    src={card.cardImage}
                     className="aspect-auto"
                     alt="Credit Card"
                     width={95}
+                    height={60}
                   />
                   <div className=" rounded-lg">
                     <h3 className={`${roboto.className} font-bold text-sm`}>
                       {card.cardType}
                     </h3>
                     <p className="text-xs">
-                      Card ending in **** {card.cardNumber.slice(-4)}
+                      Card ending in &#x2022;&#x2022;&#x2022;&#x2022;{' '}
+                      {card.cardNumber.slice(-4)}
                     </p>
                   </div>
                 </div>
@@ -84,12 +80,7 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
             ))}
 
           <Link href="/settings/edit/add-payment-method">
-            <div
-              className={cn(
-                'flex hover:cursor-pointer hover:bg-foreground-200 bg-foreground-100 px-6 py-4 gap-3',
-                paymentMethods && paymentMethods?.length >= 3 && 'rounded-b-lg'
-              )}
-            >
+            <div className="flex hover:cursor-pointer hover:bg-foreground-200 bg-foreground-100 px-6 py-4 gap-3 rounded-b-lg">
               <div className="border-2 border-dotted w-[95px] h-14 border-foreground-400 flex items-center justify-center">
                 <PlusCircle size={24} className="text-foreground-400" />
               </div>
@@ -102,85 +93,80 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
       </Card>
 
       {!!paymentMethods && paymentMethods?.length > 0 && (
-        <Card className="h-full">
+        <Card className="h-min">
           <CardHeader>
-            <CardTitle>
-              {paymentMethods[selectedCard].cardHolder}&apos;s
-            </CardTitle>
-            <CardDescription>
-              {paymentMethods[selectedCard].cardType}
-            </CardDescription>
+            <div className="flex justify-between pl-1">
+              <div className="grid gap-2">
+                <CardTitle>
+                  {paymentMethods[selectedCard].cardHolder}&apos;s
+                </CardTitle>
+                <CardDescription className="w-44">
+                  {paymentMethods[selectedCard].cardType}
+                </CardDescription>
+              </div>
+              <form
+                className="ml-auto h-min"
+                onSubmit={async (event) => {
+                  event.preventDefault();
+                  await RemovePaymentMethod(paymentMethods[selectedCard].id)
+                    .then(() =>
+                      toast.success(
+                        `Removed Card Ending in ${paymentMethods[
+                          selectedCard
+                        ].cardNumber.slice(-4)}`,
+                        {
+                          position: 'top-center',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: false,
+                          draggable: false,
+                          progress: undefined,
+                          theme: 'colored',
+                        }
+                      )
+                    )
+                    .catch(() => {
+                      toast.error('Unable to remove card!', {
+                        position: 'top-center',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        progress: undefined,
+                        theme: 'colored',
+                      });
+                    });
+                }}
+              >
+                <Button
+                  type="submit"
+                  variant={'link'}
+                  className="w-min p-0 mr-1 h-min text-red-500"
+                >
+                  Remove
+                </Button>
+              </form>
+            </div>
           </CardHeader>
 
-          <CardContent className="grid gap-4">
+          <CardContent className="grid gap-2">
             <Image
-              src={CreditCardImage}
+              src={paymentMethods[selectedCard].cardImage}
               alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
               width={300}
+              height={189}
             />
 
-            <div className="grid gap-2">
-              <Label htmlFor="name">Name on Card</Label>
-              <Input
-                id="name"
-                type="name"
-                placeholder={paymentMethods[selectedCard].cardHolder}
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 ">
-              <div className="grid gap-2">
-                <Label htmlFor="month">Expires</Label>
-                <Select>
-                  <SelectTrigger id="month">
-                    <SelectValue
-                      placeholder={paymentMethods[selectedCard].expiryMonth}
-                    />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="1">January</SelectItem>
-                    <SelectItem value="2">February</SelectItem>
-                    <SelectItem value="3">March</SelectItem>
-                    <SelectItem value="4">April</SelectItem>
-                    <SelectItem value="5">May</SelectItem>
-                    <SelectItem value="6">June</SelectItem>
-                    <SelectItem value="7">July</SelectItem>
-                    <SelectItem value="8">August</SelectItem>
-                    <SelectItem value="9">September</SelectItem>
-                    <SelectItem value="10">October</SelectItem>
-                    <SelectItem value="11">November</SelectItem>
-                    <SelectItem value="12">December</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="year">Year</Label>
-                <Select>
-                  <SelectTrigger id="year">
-                    <SelectValue
-                      placeholder={paymentMethods[selectedCard].expiryYear}
-                    />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    {Array.from({ length: 10 }, (_, i) => (
-                      <SelectItem
-                        key={i}
-                        value={`${new Date().getFullYear() + i}`}
-                      >
-                        {new Date().getFullYear() + i}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button asChild className="mt-[22px]" variant={'outline'}>
+            <div className="mr-auto">
+              <Button
+                asChild
+                className="w-full p-0 ml-1 text-teal-600"
+                variant={'link'}
+              >
                 <Link
-                  href={`/settings/edit/edit-payment-method?card-id=${paymentMethods[selectedCard].expiryYear}`}
+                  href={`/settings/edit/edit-payment-method?card-id=${paymentMethods[selectedCard].id}`}
                 >
                   Edit
                 </Link>
