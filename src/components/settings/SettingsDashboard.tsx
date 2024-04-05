@@ -32,6 +32,7 @@ type SettingsDashboardProps = {
         userId: string;
         cardType: string;
         cardHolder: string;
+        cardImage: string;
         cardNumber: string;
         expiryMonth: string;
         expiryYear: string;
