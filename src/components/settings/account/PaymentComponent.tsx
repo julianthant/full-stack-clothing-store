@@ -112,7 +112,7 @@ export const PaymentComponent = () => {
                   selectedCard === index && 'bg-foreground-200'
                 )}
               >
-                <div className="relative flex w-[340px] items-center justify-left px-6 py-4 gap-3">
+                <div className="relative flex w-[340px] items-center justify-start px-6 py-4 gap-3">
                   <div className="relative">
                     <Image
                       src={BlackCard}
@@ -151,7 +151,7 @@ export const PaymentComponent = () => {
               </div>
             ))
           ) : (
-            <div className="py-2 w-[340px] flex items-center space-x-2">
+            <div className="px-6 py-4 w-[340px] flex items-center gap-3 justify-start">
               <div>
                 <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
               </div>
