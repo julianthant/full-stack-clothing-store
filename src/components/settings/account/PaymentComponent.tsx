@@ -18,6 +18,9 @@ import { cn } from '@/lib/utils';
 import { toast, ToastContainer } from 'react-toastify';
 import { RemovePaymentMethod } from '@/actions/remove-payment-method';
 
+import BlackCard from '../../images/black-card.png';
+import { Icons } from '@/components/utils/Icons';
+
 type PaymentComponentProps = {
   paymentMethods:
     | {
@@ -58,7 +61,7 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
               >
                 <div className="flex w-[320px] items-center justify-left px-6 py-4 gap-3">
                   <Image
-                    src={card.cardImage}
+                    src={BlackCard}
                     className="aspect-auto"
                     alt="Credit Card"
                     width={95}
@@ -152,12 +155,34 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
           </CardHeader>
 
           <CardContent className="grid gap-2">
-            <Image
-              src={paymentMethods[selectedCard].cardImage}
-              alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
-              width={300}
-              height={189}
-            />
+            <div className="relative font-bold text-white">
+              <Image
+                src={BlackCard}
+                alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
+                width={300}
+                height={189}
+              />
+              <p className="absolute top-[20px] left-[30px]">
+                {
+                  paymentMethods[selectedCard].cardType.split(
+                    'CREDIT' || 'DEBIT'
+                  )[0]
+                }
+              </p>
+              <p className="absolute top-[120px] left-[30px]">
+                {paymentMethods[selectedCard].expiryMonth.padStart(2, '0')}/
+                {paymentMethods[selectedCard].expiryYear}
+              </p>
+              <p className="absolute top-[145px] left-[30px]">
+                {paymentMethods[selectedCard].cardHolder}
+              </p>
+              {paymentMethods[selectedCard].cardType.includes('MASTERCARD') && (
+                <Icons.masterCardLogo className="absolute top-[116px] right-[37px] w-20 h-20" />
+              )}
+              {paymentMethods[selectedCard].cardType.includes('VISA') && (
+                <Icons.visaLogo className="absolute top-[115px] right-[42px] w-20 h-20" />
+              )}
+            </div>
 
             <div className="mr-auto">
               <Button
