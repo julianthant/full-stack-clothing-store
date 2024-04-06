@@ -1,15 +1,15 @@
 'use server';
 
 import * as z from 'zod';
-import bcrypt from 'bcryptjs';
 import axios from 'axios';
+import bcrypt from 'bcryptjs';
 
 import { db } from '@/database/db';
 import { getUserById } from '@/data/user';
+import { getPaymentMethodsByUserId } from './get-payment-method';
 
-import { cardAddSchema } from '@/schemas';
-import { getPaymentMethodsByUserId } from '@/data/payment-methods';
 import { currentUser } from '@/lib/server-auth';
+import { cardAddSchema } from '@/schemas';
 
 export const AddPaymentMethod = async (
   values: z.infer<typeof cardAddSchema>
@@ -48,6 +48,8 @@ export const AddPaymentMethod = async (
   }
 
   const existingCards = await getPaymentMethodsByUserId(dbUser.id);
+
+  const firstCard = existingCards?.length === 0;
 
   if (existingCards) {
     let cardMatch = false;
@@ -123,6 +125,7 @@ export const AddPaymentMethod = async (
       lastFourNumbers: cardNumber.slice(-4),
       expiryMonth,
       expiryYear,
+      default: firstCard,
       cvc: hashedCVC,
     },
   });
