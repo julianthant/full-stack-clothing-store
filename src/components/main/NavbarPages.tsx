@@ -1,5 +1,7 @@
 'use client';
 
+import { Icons } from '../utils/Icons';
+
 import {
   NavbarContent,
   NavbarItem,
@@ -10,7 +12,6 @@ import {
   Button,
   Link,
 } from '@nextui-org/react';
-import { Icons } from '../utils/Icons';
 
 export const NavbarPages = ({}) => {
   return (

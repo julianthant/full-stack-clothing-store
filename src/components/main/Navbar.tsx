@@ -1,6 +1,14 @@
 'use client';
 
+import Link from 'next/link';
 import { FC, useState } from 'react';
+
+import { Icons } from '../utils/Icons';
+import { gabarito } from '../utils/Fonts';
+import { NavbarPages } from './NavbarPages';
+import { AccountDropdown } from './AccountDropdown';
+import { ShoppingCartIcon, Search } from 'lucide-react';
+
 import {
   Navbar,
   NavbarBrand,
@@ -12,12 +20,6 @@ import {
   Button,
   Input,
 } from '@nextui-org/react';
-import Link from 'next/link';
-import { Icons } from '../utils/Icons';
-import { gabarito } from '../utils/Fonts';
-import { ShoppingCartIcon, Search } from 'lucide-react';
-import { AccountDropdown } from './AccountDropdown';
-import { NavbarPages } from './NavbarPages';
 
 interface NavbarComponentProps {}
 

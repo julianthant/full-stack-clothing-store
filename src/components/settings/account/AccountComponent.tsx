@@ -1,16 +1,16 @@
 import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
-import { Divider } from '@nextui-org/react';
-import { Skeleton } from '@nextui-org/react';
-
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { sendTwoFactorActivationCode } from '@/actions/send-code';
+
+import { Divider } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/react';
 import { ToastContainer, toast } from 'react-toastify';
 
 export const AccountComponent = () => {
-  const router = useRouter();
   const user = useCurrentUser();
+  const router = useRouter();
 
   return (
     <div className="w-full rounded-lg border border-dashed shadow-sm p-8">

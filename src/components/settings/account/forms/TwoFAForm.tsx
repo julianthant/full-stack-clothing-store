@@ -5,9 +5,11 @@ import * as React from 'react';
 
 import { TwoFASchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { sendTwoFactorActivationCode } from '@/actions/send-code';
 
 import { FormError } from '../../../utils/FormError';
 import { FormSuccess } from '../../../utils/Form.Success';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Validate2FACode } from '@/actions/activate-2fa';
 import { useSearchParams } from 'next/navigation';
 
@@ -15,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';
 import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
 
 import {
   Form,
@@ -31,9 +34,6 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
-import { sendTwoFactorActivationCode } from '@/actions/send-code';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { ToastContainer, toast } from 'react-toastify';
 
 interface TwoFAEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 

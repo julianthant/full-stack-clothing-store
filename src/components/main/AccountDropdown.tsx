@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { SignOut } from '@/actions/signout';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
+import { User2Icon } from 'lucide-react';
+import { UserComponent } from '../utils/UserComponent';
+
 import {
   Dropdown,
   DropdownTrigger,
@@ -12,10 +15,7 @@ import {
   DropdownSection,
   DropdownItem,
   Button,
-  User,
 } from '@nextui-org/react';
-import { User2Icon } from 'lucide-react';
-import { UserComponent } from '../utils/UserComponent';
 
 export const AccountDropdown = () => {
   const user = useCurrentUser();

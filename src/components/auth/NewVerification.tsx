@@ -1,8 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { newVerification } from '@/actions/new-verification';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Spinner } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';

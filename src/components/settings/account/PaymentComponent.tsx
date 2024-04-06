@@ -1,5 +1,20 @@
 import { useState } from 'react';
 
+import Link from 'next/link';
+import Image from 'next/image';
+import BlackCard from '../../images/black-card.png';
+
+import { cn } from '@/lib/utils';
+import { roboto } from '@/components/utils/Fonts';
+
+import { RemovePaymentMethod } from '@/actions/remove-payment-method';
+import { toast, ToastContainer } from 'react-toastify';
+
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@/components/ui/button';
+import { Divider } from '@nextui-org/react';
+import { PlusCircle } from 'lucide-react';
+
 import {
   Card,
   CardContent,
@@ -7,19 +22,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { roboto } from '@/components/utils/Fonts';
-import { Button } from '@/components/ui/button';
-import { Divider } from '@nextui-org/react';
-import { PlusCircle } from 'lucide-react';
-
-import Link from 'next/link';
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
-import { toast, ToastContainer } from 'react-toastify';
-import { RemovePaymentMethod } from '@/actions/remove-payment-method';
-
-import BlackCard from '../../images/black-card.png';
-import { Icons } from '@/components/utils/Icons';
 
 type PaymentComponentProps = {
   paymentMethods:

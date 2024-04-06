@@ -1,16 +1,15 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { useSearchParams } from 'next/navigation';
 import { newEmailVerification } from '@/actions/new-email';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Spinner } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@nextui-org/react';
 import { FormError } from '@/components/utils/FormError';
 import { FormSuccess } from '@/components/utils/Form.Success';
-
-import Link from 'next/link';
 
 export const NewEmailForm = () => {
   const [error, setError] = useState<string | undefined>('');
