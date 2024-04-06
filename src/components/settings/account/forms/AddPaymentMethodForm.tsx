@@ -4,6 +4,7 @@ import * as z from 'zod';
 import React from 'react';
 
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
 import { AddPaymentMethod } from '@/actions/add-payment-method';
@@ -48,6 +49,8 @@ export function AddPaymentMethodForm() {
 
   const [isPending, startTransition] = React.useTransition();
 
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof cardAddSchema>>({
     resolver: zodResolver(cardAddSchema),
     defaultValues: {
@@ -71,6 +74,25 @@ export function AddPaymentMethodForm() {
       });
     });
   };
+
+  React.useEffect(() => {
+    if (!!success) {
+      const successMessage = encodeURI('Payment method updated successfully');
+      router.push(
+        '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
+          successMessage
+      );
+    }
+
+    if (!!error) {
+      const errorMessage = encodeURI('Unable to update payment method');
+      router.push(
+        '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
+          errorMessage
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
 
   return (
     <Card className="border-0 shadow-none p-0 w-[500px]">
