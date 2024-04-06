@@ -32,10 +32,12 @@ type SettingsDashboardProps = {
     | {
         id: string;
         userId: string;
+        bankName: string;
         cardType: string;
+        cardScheme: string;
         cardHolder: string;
-        cardImage: string;
         cardNumber: string;
+        lastFourNumbers: string;
         expiryMonth: string;
         expiryYear: string;
         cvc: string;
