@@ -48,14 +48,17 @@ model Account {
 }
 
 model Payment {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String @db.ObjectId
-  cardType    String
-  cardHolder  String
-  cardNumber  String
-  expiryMonth String
-  expiryYear  String
-  cvc         String
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String @db.ObjectId
+  bankName        String
+  cardType        String
+  cardScheme      String
+  cardHolder      String
+  cardNumber      String
+  lastFourNumbers String
+  expiryMonth     String
+  expiryYear      String
+  cvc             String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
