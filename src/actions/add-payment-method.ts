@@ -8,7 +8,7 @@ import { db } from '@/database/db';
 import { getUserById } from '@/data/user';
 
 import { cardAddSchema } from '@/schemas';
-import { getPaymentMethodByCardNumber } from '@/data/payment-methods';
+import { getPaymentMethodsByUserId } from '@/data/payment-methods';
 import { currentUser } from '@/lib/server-auth';
 
 export const AddPaymentMethod = async (
@@ -43,18 +43,24 @@ export const AddPaymentMethod = async (
     return { error: 'Invalid payment type!' };
   }
 
-  if (
-    !cardNumber.startsWith('2') &&
-    !cardNumber.startsWith('4') &&
-    !cardNumber.startsWith('5')
-  ) {
+  if (!cardNumber.startsWith('4') && !cardNumber.startsWith('5')) {
     return { error: 'Mastercard and Visa only!' };
   }
 
-  const existingCard = await getPaymentMethodByCardNumber(cardNumber);
+  const existingCards = await getPaymentMethodsByUserId(dbUser.id);
 
-  if (existingCard) {
-    return { error: 'Card already in use!' };
+  if (existingCards) {
+    let cardMatch = false;
+    for (const card of existingCards) {
+      cardMatch = await bcrypt.compare(cardNumber, card.cardNumber);
+      if (cardMatch) {
+        break;
+      }
+    }
+
+    if (cardMatch) {
+      return { error: 'Card already exists!' };
+    }
   }
 
   const currentMonth = new Date().getMonth() + 1;
@@ -70,11 +76,11 @@ export const AddPaymentMethod = async (
   let paymentTitle = '';
 
   if (paymentType === 'apple') {
-    paymentTitle = 'Apple Credit Card';
+    paymentTitle = 'Apple';
   }
 
   if (paymentType === 'paypal') {
-    paymentTitle = 'Paypal Credit Card';
+    paymentTitle = 'Paypal';
   }
 
   const cardOptions = {
@@ -86,29 +92,35 @@ export const AddPaymentMethod = async (
       'X-RapidAPI-Key': process.env.CARD_API_KEY,
       'X-RapidAPI-Host': 'bin-ip-checker.p.rapidapi.com',
     },
-    data: { bin: cardNumber.slice(0, 6) },
+    data: { bin: cardNumber },
   };
 
   const cardInfo = await axios.request(cardOptions);
 
-  if (!cardInfo.data.valid && !cardInfo.data) {
+  if (!cardInfo.data && !cardInfo.data.valid) {
     return { error: 'Invalid card!' };
   }
 
   const bankName = cardInfo.data.BIN.issuer.name;
-  const cardScheme = cardInfo.data.BIN.scheme || 'Debit';
-  const cardType = cardInfo.data.BIN.type;
+  const cardScheme = cardInfo.data.BIN.scheme;
+  const cardType = cardInfo.data.BIN.type || 'Debit';
 
-  paymentTitle = `${bankName} ${cardScheme} ${cardType} CARD`;
+  if (paymentType === 'card') {
+    paymentTitle = cardScheme;
+  }
 
+  const hashedCard = await bcrypt.hash(cardNumber, 10);
   const hashedCVC = await bcrypt.hash(cvc, 10);
 
   await db.payment.create({
     data: {
       userId: dbUser.id,
-      cardType: paymentTitle,
+      bankName,
+      cardType,
+      cardScheme: paymentTitle,
       cardHolder,
-      cardNumber,
+      cardNumber: hashedCard,
+      lastFourNumbers: cardNumber.slice(-4),
       expiryMonth,
       expiryYear,
       cvc: hashedCVC,
