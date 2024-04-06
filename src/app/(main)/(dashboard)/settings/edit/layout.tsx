@@ -13,7 +13,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
         <Link
           className="text-center text-sm font-semibold mx-auto hover:underline underline-offset-4"
-          href="/settings?memu=Account"
+          href="/settings?menu=Account"
         >
           Back to Settings
         </Link>
