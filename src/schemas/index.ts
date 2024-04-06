@@ -38,9 +38,10 @@ export const TwoFASchema = z.object({
 });
 
 export const CardEditSchema = z.object({
-  name: z.string(),
-  expiry_month: z.string().min(1).max(2),
-  expiry_year: z.string().length(4),
+  cardHolder: z.string(),
+  expiryMonth: z.string().min(1).max(2),
+  expiryYear: z.string().length(4),
+  defaultCard: z.boolean().default(false).optional(),
 });
 
 export const cardAddSchema = z.object({
