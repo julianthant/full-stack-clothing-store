@@ -1,11 +1,14 @@
-import { useState } from 'react';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import BlackCard from '../../images/black-card.png';
 
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+
 import { cn } from '@/lib/utils';
 import { roboto } from '@/components/utils/Fonts';
+import { getPaymentMethodsByUserId } from '@/actions/get-payment-method';
 
 import { RemovePaymentMethod } from '@/actions/remove-payment-method';
 import { toast, ToastContainer } from 'react-toastify';
@@ -23,8 +26,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-type PaymentComponentProps = {
-  paymentMethods:
+export const PaymentComponent = () => {
+  const [selectedCard, setSelectedCard] = useState(0);
+  const [paymentMethods, setPaymentMethods] = useState<
     | {
         id: string;
         userId: string;
@@ -37,12 +41,57 @@ type PaymentComponentProps = {
         expiryMonth: string;
         expiryYear: string;
         cvc: string;
+        default: boolean;
       }[]
-    | null;
-};
+    | null
+  >();
+  const [remove, setRemoved] = useState(false);
 
-export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
-  const [selectedCard, setSelectedCard] = useState(0);
+  const user = useCurrentUser();
+  const params = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const message = params.get('message');
+  const success = params.get('success');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const cards = await getPaymentMethodsByUserId(user?.id as string);
+        setPaymentMethods(cards);
+        setRemoved(false);
+        router.replace(pathname);
+
+        success === 'true' &&
+          toast.success(decodeURI(message as string), {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: 'colored',
+          });
+
+        success === 'false' &&
+          toast.error(decodeURI(message as string), {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: 'colored',
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, user?.id, remove]);
 
   return (
     <div className="sm:flex grid gap-4">
@@ -63,14 +112,26 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                   selectedCard === index && 'bg-foreground-200'
                 )}
               >
-                <div className="flex w-[340px] items-center justify-left px-6 py-4 gap-3">
-                  <Image
-                    src={BlackCard}
-                    className="aspect-auto"
-                    alt="Credit Card"
-                    width={95}
-                    height={60}
-                  />
+                <div className="relative flex w-[340px] items-center justify-left px-6 py-4 gap-3">
+                  <div className="relative">
+                    <Image
+                      src={BlackCard}
+                      className="max-w-[85px]"
+                      alt="Credit Card"
+                      width={95}
+                      height={60}
+                    />
+                    {card.default && (
+                      <>
+                        <div className="absolute bg-green-600 right-0 top-2 w-6 h-4" />
+                        <div className="absolute bg-green-600 right-5 top-2 w-6 h-4 -skew-x-[150deg]" />
+                        <p className="absolute right-[0.2rem] top-2 text-[0.65rem] text-center text-black">
+                          Default
+                        </p>
+                      </>
+                    )}
+                  </div>
+
                   <div className=" rounded-lg">
                     <h3 className={`${roboto.className} font-bold text-sm`}>
                       {card.bankName} {card.cardScheme} {card.cardType} CARD
@@ -80,6 +141,10 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                       {card.lastFourNumbers}
                     </p>
                   </div>
+
+                  {index === selectedCard && (
+                    <div className="absolute bg-orange-500 w-1 h-full left-0" />
+                  )}
                 </div>
 
                 <Divider />
@@ -117,11 +182,10 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                 onSubmit={async (event) => {
                   event.preventDefault();
                   await RemovePaymentMethod(paymentMethods[selectedCard].id)
-                    .then(() =>
+                    .then(() => {
+                      setRemoved(true);
                       toast.success(
-                        `Removed Card Ending in ${paymentMethods[
-                          selectedCard
-                        ].cardNumber.slice(-4)}`,
+                        `Removed Card Ending in ${paymentMethods[selectedCard].lastFourNumbers}`,
                         {
                           position: 'top-center',
                           autoClose: 5000,
@@ -132,10 +196,10 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                           progress: undefined,
                           theme: 'colored',
                         }
-                      )
-                    )
-                    .catch(() => {
-                      toast.error('Unable to remove card!', {
+                      );
+                    })
+                    .catch((err) => {
+                      toast.error(`Unable to remove card! ${err}`, {
                         position: 'top-center',
                         autoClose: 5000,
                         hideProgressBar: false,
