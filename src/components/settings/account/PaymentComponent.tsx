@@ -26,10 +26,12 @@ type PaymentComponentProps = {
     | {
         id: string;
         userId: string;
+        bankName: string;
         cardType: string;
-        cardImage: string;
+        cardScheme: string;
         cardHolder: string;
         cardNumber: string;
+        lastFourNumbers: string;
         expiryMonth: string;
         expiryYear: string;
         cvc: string;
@@ -59,7 +61,7 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                   selectedCard === index && 'bg-foreground-200'
                 )}
               >
-                <div className="flex w-[320px] items-center justify-left px-6 py-4 gap-3">
+                <div className="flex w-[340px] items-center justify-left px-6 py-4 gap-3">
                   <Image
                     src={BlackCard}
                     className="aspect-auto"
@@ -69,11 +71,11 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                   />
                   <div className=" rounded-lg">
                     <h3 className={`${roboto.className} font-bold text-sm`}>
-                      {card.cardType}
+                      {card.bankName} {card.cardScheme} {card.cardType} CARD
                     </h3>
                     <p className="text-xs">
                       Card ending in &#x2022;&#x2022;&#x2022;&#x2022;{' '}
-                      {card.cardNumber.slice(-4)}
+                      {card.lastFourNumbers}
                     </p>
                   </div>
                 </div>
@@ -103,8 +105,9 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                 <CardTitle>
                   {paymentMethods[selectedCard].cardHolder}&apos;s
                 </CardTitle>
-                <CardDescription className="w-44">
-                  {paymentMethods[selectedCard].cardType}
+                <CardDescription className="w-48">
+                  {paymentMethods[selectedCard].cardScheme}{' '}
+                  {paymentMethods[selectedCard].cardType} CARD
                 </CardDescription>
               </div>
               <form
@@ -163,11 +166,7 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
                 height={189}
               />
               <p className="absolute top-[20px] left-[30px]">
-                {
-                  paymentMethods[selectedCard].cardType.split(
-                    'CREDIT' || 'DEBIT'
-                  )[0]
-                }
+                {paymentMethods[selectedCard].bankName}
               </p>
               <p className="absolute top-[120px] left-[30px]">
                 {paymentMethods[selectedCard].expiryMonth.padStart(2, '0')}/
@@ -176,10 +175,10 @@ export const PaymentComponent = ({ paymentMethods }: PaymentComponentProps) => {
               <p className="absolute top-[145px] left-[30px]">
                 {paymentMethods[selectedCard].cardHolder}
               </p>
-              {paymentMethods[selectedCard].cardType.includes('MASTERCARD') && (
+              {paymentMethods[selectedCard].cardScheme === 'MASTERCARD' && (
                 <Icons.masterCardLogo className="absolute top-[116px] right-[37px] w-20 h-20" />
               )}
-              {paymentMethods[selectedCard].cardType.includes('VISA') && (
+              {paymentMethods[selectedCard].cardScheme === 'VISA' && (
                 <Icons.visaLogo className="absolute top-[115px] right-[42px] w-20 h-20" />
               )}
             </div>
