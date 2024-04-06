@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { SignOut } from '@/actions/signout';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { NavUserComponent } from './NavUserComponent';
 
 import {
   Dropdown,
@@ -16,6 +15,7 @@ import {
   User,
 } from '@nextui-org/react';
 import { User2Icon } from 'lucide-react';
+import { UserComponent } from '../utils/UserComponent';
 
 export const AccountDropdown = () => {
   const user = useCurrentUser();
@@ -57,7 +57,7 @@ export const AccountDropdown = () => {
             key="profile"
             className="h-14 gap-2 opacity-100"
           >
-            <NavUserComponent />
+            <UserComponent page="Navbar" />
           </DropdownItem>
           <DropdownItem key="dashboard" href="/settings?menu=Account">
             Account
