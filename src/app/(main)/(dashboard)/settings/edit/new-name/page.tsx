@@ -1,10 +1,10 @@
-import { NameEdit } from '@/components/settings/editForms/NameEdit';
+import { NameEditForm } from '@/components/settings/account/forms/NameEditForm';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <NameEdit />;
+  return <NameEditForm />;
 };
 
 export default page;

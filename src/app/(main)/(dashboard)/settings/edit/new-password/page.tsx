@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { NewPassword } from '@/components/settings/editForms/NewPassword';
+import { NewPasswordForm } from '@/components/settings/account/forms/NewPasswordForm';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <NewPassword />;
+  return <NewPasswordForm />;
 };
 
 export default page;

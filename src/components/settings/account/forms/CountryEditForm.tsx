@@ -7,13 +7,13 @@ import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeCountry } from '@/actions/change-country';
 
-import { FormError } from '../../utils/FormError';
-import { FormSuccess } from '../../utils/Form.Success';
+import { FormError } from '../../../utils/FormError';
+import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../utils/Icons';
+import { Icons } from '../../../utils/Icons';
 
-import { Button } from '../../ui/button';
+import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -39,7 +39,7 @@ interface CountryEditProps extends React.HTMLAttributes<HTMLDivElement> {
   countryNames: string[];
 }
 
-export function CountryEdit({
+export function CountryEditForm({
   countryNames,
   className,
   ...props

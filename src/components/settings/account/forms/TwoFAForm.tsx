@@ -6,14 +6,14 @@ import * as React from 'react';
 import { TwoFASchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { FormError } from '../../utils/FormError';
-import { FormSuccess } from '../../utils/Form.Success';
+import { FormError } from '../../../utils/FormError';
+import { FormSuccess } from '../../../utils/Form.Success';
 import { Validate2FACode } from '@/actions/activate-2fa';
 import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../utils/Icons';
-import { Button } from '../../ui/button';
+import { Icons } from '../../../utils/Icons';
+import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -37,7 +37,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 interface TwoFAEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function TwoFAEdit({ className, ...props }: TwoFAEditProps) {
+export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
   const [formError, setFormError] = React.useState<string | undefined>('');

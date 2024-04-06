@@ -10,12 +10,12 @@ import { useSearchParams } from 'next/navigation';
 import { newPassword } from '@/actions/new-password';
 import { NewPasswordSchema } from '@/schemas';
 
-import { FormError } from '../../utils/FormError';
-import { FormSuccess } from '../../utils/Form.Success';
+import { FormError } from '../../../utils/FormError';
+import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../utils/Icons';
-import { Button } from '../../ui/button';
+import { Icons } from '../../../utils/Icons';
+import { Button } from '../../../ui/button';
 import { Input } from '@nextui-org/react';
 
 import {
@@ -29,7 +29,7 @@ import {
 
 interface NewPasswordProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function NewPassword({ className, ...props }: NewPasswordProps) {
+export function NewPasswordForm({ className, ...props }: NewPasswordProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 

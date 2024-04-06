@@ -1,10 +1,10 @@
-import { PasswordReset } from '@/components/settings/editForms/PasswordReset';
+import { PasswordResetForm } from '@/components/settings/account/forms/PasswordResetForm';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <PasswordReset />;
+  return <PasswordResetForm />;
 };
 
 export default page;

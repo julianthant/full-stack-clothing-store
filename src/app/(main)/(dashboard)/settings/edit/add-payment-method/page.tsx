@@ -1,10 +1,10 @@
-import { PaymentMethodCard } from '@/components/settings/editForms/PaymentMethodCard';
+import { AddPaymentMethodForm } from '@/components/settings/account/forms/AddPaymentMethodForm';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <PaymentMethodCard />;
+  return <AddPaymentMethodForm />;
 };
 
 export default page;

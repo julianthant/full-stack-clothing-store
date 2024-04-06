@@ -3,17 +3,16 @@
 import * as z from 'zod';
 import * as React from 'react';
 
-import { NameSchema } from '@/schemas';
-import { ChangeName } from '@/actions/change-name';
+import { ResetSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { FormError } from '../../utils/FormError';
-import { FormSuccess } from '../../utils/Form.Success';
+import { FormError } from '../../../utils/FormError';
+import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../utils/Icons';
+import { Icons } from '../../../utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../ui/button';
+import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -24,28 +23,29 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { newEmailToken } from '@/actions/new-email';
 
-interface NameEditProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface EmailEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function NameEdit({ className, ...props }: NameEditProps) {
+export function EmailResetForm({ className, ...props }: EmailEditProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 
   const [isPending, startTransition] = React.useTransition();
 
-  const form = useForm<z.infer<typeof NameSchema>>({
-    resolver: zodResolver(NameSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
-      name: '',
+      email: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NameSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     setError('');
     setSuccess('');
 
     startTransition(() => {
-      ChangeName(values).then((data) => {
+      newEmailToken(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -55,8 +55,8 @@ export function NameEdit({ className, ...props }: NameEditProps) {
   return (
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Change Name</h1>
-        <p className="text-sm text-muted-foreground">Enter your new name</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Reset Email</h1>
+        <p className="text-sm text-muted-foreground">Need new email?</p>
       </div>
 
       <Form {...form}>
@@ -64,23 +64,23 @@ export function NameEdit({ className, ...props }: NameEditProps) {
           <div className="grid gap-1">
             <FormField
               control={form.control}
-              name="name"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="sr-only" htmlFor="email">
-                    Name
+                    Email
                   </FormLabel>
 
                   <FormControl>
                     <Input
                       key="inside"
                       {...field}
-                      type="name"
+                      type="email"
                       variant="bordered"
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
-                      placeholder="John Doe"
+                      placeholder="name@example.com"
                       radius="sm"
                       disabled={isPending}
                     />
@@ -98,7 +98,7 @@ export function NameEdit({ className, ...props }: NameEditProps) {
               {isPending && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Set New Name
+              Send Reset Email
             </Button>
           </div>
         </form>

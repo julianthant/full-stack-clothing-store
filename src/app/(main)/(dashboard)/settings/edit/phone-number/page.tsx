@@ -1,4 +1,4 @@
-import { PhoneNumberEdit } from '@/components/settings/editForms/PhoneNumberEdit';
+import { PhoneNumberEditForm } from '@/components/settings/account/forms/PhoneNumberEditForm';
 
 const page = async ({}) => {
   const response = await fetch('https://restcountries.com/v2/all');
@@ -12,7 +12,7 @@ const page = async ({}) => {
       dialCode: country.callingCodes[0],
     }));
 
-  return <PhoneNumberEdit phoneCodes={phoneCodes} />;
+  return <PhoneNumberEditForm phoneCodes={phoneCodes} />;
 };
 
 export default page;

@@ -36,7 +36,7 @@ import { AddPaymentMethod } from '@/actions/add-payment-method';
 import { FormError } from '@/components/utils/FormError';
 import { FormSuccess } from '@/components/utils/Form.Success';
 
-export function PaymentMethodCard() {
+export function AddPaymentMethodForm() {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 

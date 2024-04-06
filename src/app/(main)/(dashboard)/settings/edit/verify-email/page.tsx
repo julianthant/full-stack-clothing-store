@@ -1,10 +1,10 @@
-import { NewEmailVerification } from '@/components/settings/editForms/NewEmail';
+import { NewEmailForm } from '@/components/settings/account/forms/NewEmailForm';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <NewEmailVerification />;
+  return <NewEmailForm />;
 };
 
 export default page;

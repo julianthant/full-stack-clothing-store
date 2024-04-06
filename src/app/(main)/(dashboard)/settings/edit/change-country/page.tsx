@@ -1,4 +1,4 @@
-import { CountryEdit } from '@/components/settings/editForms/CountryEdit';
+import { CountryEditForm } from '@/components/settings/account/forms/CountryEditForm';
 
 const page = async ({}) => {
   const response = await fetch('https://restcountries.com/v3.1/all');
@@ -8,7 +8,7 @@ const page = async ({}) => {
     (country: { name: { common: string } }) => country.name.common
   );
 
-  return <CountryEdit countryNames={countryNames} />;
+  return <CountryEditForm countryNames={countryNames} />;
 };
 
 export default page;

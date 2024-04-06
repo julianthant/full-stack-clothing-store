@@ -1,10 +1,10 @@
-import { EmailEdit } from '@/components/settings/editForms/EmailReset';
+import { EmailResetForm } from '@/components/settings/account/forms/EmailResetForm';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <EmailEdit />;
+  return <EmailResetForm />;
 };
 
 export default page;

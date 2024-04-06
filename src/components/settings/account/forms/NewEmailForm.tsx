@@ -12,7 +12,7 @@ import { FormSuccess } from '@/components/utils/Form.Success';
 
 import Link from 'next/link';
 
-export const NewEmailVerification = () => {
+export const NewEmailForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
 

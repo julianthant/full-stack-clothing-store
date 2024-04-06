@@ -6,14 +6,14 @@ import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PhoneNumberSchema } from '@/schemas';
 
-import { FormError } from '../../utils/FormError';
-import { FormSuccess } from '../../utils/Form.Success';
+import { FormError } from '../../../utils/FormError';
+import { FormSuccess } from '../../../utils/Form.Success';
 import { ChangePhoneNumber } from '@/actions/change-phone-number';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../utils/Icons';
+import { Icons } from '../../../utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../ui/button';
+import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -35,15 +35,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-interface PhoneNumberEditProps extends React.HTMLAttributes<HTMLDivElement> {
+interface PhoneNumberEditForm extends React.HTMLAttributes<HTMLDivElement> {
   phoneCodes: { name: string; dialCode: string }[];
 }
 
-export function PhoneNumberEdit({
+export function PhoneNumberEditForm({
   className,
   phoneCodes,
   ...props
-}: PhoneNumberEditProps) {
+}: PhoneNumberEditForm) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 

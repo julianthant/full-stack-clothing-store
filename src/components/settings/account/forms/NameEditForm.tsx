@@ -3,17 +3,17 @@
 import * as z from 'zod';
 import * as React from 'react';
 
-import { Reset } from '@/actions/reset';
-import { ResetSchema } from '@/schemas';
+import { NameSchema } from '@/schemas';
+import { ChangeName } from '@/actions/change-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { FormError } from '../../utils/FormError';
-import { FormSuccess } from '../../utils/Form.Success';
+import { FormError } from '../../../utils/FormError';
+import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../utils/Icons';
+import { Icons } from '../../../utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../ui/button';
+import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -25,27 +25,27 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-interface PasswordResetProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface NameEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function PasswordReset({ className, ...props }: PasswordResetProps) {
+export function NameEditForm({ className, ...props }: NameEditProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 
   const [isPending, startTransition] = React.useTransition();
 
-  const form = useForm<z.infer<typeof ResetSchema>>({
-    resolver: zodResolver(ResetSchema),
+  const form = useForm<z.infer<typeof NameSchema>>({
+    resolver: zodResolver(NameSchema),
     defaultValues: {
-      email: '',
+      name: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
+  const onSubmit = (values: z.infer<typeof NameSchema>) => {
     setError('');
     setSuccess('');
 
     startTransition(() => {
-      Reset(values).then((data) => {
+      ChangeName(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -55,10 +55,8 @@ export function PasswordReset({ className, ...props }: PasswordResetProps) {
   return (
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Reset Password
-        </h1>
-        <p className="text-sm text-muted-foreground">Forgot your password?</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Change Name</h1>
+        <p className="text-sm text-muted-foreground">Enter your new name</p>
       </div>
 
       <Form {...form}>
@@ -66,23 +64,23 @@ export function PasswordReset({ className, ...props }: PasswordResetProps) {
           <div className="grid gap-1">
             <FormField
               control={form.control}
-              name="email"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="sr-only" htmlFor="email">
-                    Email
+                    Name
                   </FormLabel>
 
                   <FormControl>
                     <Input
                       key="inside"
                       {...field}
-                      type="email"
+                      type="name"
                       variant="bordered"
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
-                      placeholder="name@example.com"
+                      placeholder="John Doe"
                       radius="sm"
                       disabled={isPending}
                     />
@@ -100,7 +98,7 @@ export function PasswordReset({ className, ...props }: PasswordResetProps) {
               {isPending && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Send Reset Email
+              Set New Name
             </Button>
           </div>
         </form>
