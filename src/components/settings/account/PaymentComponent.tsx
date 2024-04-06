@@ -61,7 +61,7 @@ export const PaymentComponent = () => {
         const cards = await getPaymentMethodsByUserId(user?.id as string);
         setPaymentMethods(cards);
         setRemoved(false);
-        router.replace(pathname);
+        router.replace(pathname + '?menu=Account&subMenu=Payments');
 
         success === 'true' &&
           toast.success(decodeURI(message as string), {
