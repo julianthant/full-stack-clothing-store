@@ -27,25 +27,7 @@ import { PaymentComponent } from './account/PaymentComponent';
 import { DashboardComponent } from './dashboard/DashboardComponent';
 import { OrderComponent } from './order/OrderComponent';
 
-type SettingsDashboardProps = {
-  payment:
-    | {
-        id: string;
-        userId: string;
-        bankName: string;
-        cardType: string;
-        cardScheme: string;
-        cardHolder: string;
-        cardNumber: string;
-        lastFourNumbers: string;
-        expiryMonth: string;
-        expiryYear: string;
-        cvc: string;
-      }[]
-    | null;
-};
-
-export function SettingsDashboard({ payment }: SettingsDashboardProps) {
+export function SettingsDashboard() {
   const searchParams = useSearchParams();
   const menuPage = searchParams.get('menu');
   const [selectedKey, setSelectedKey] = useState(menuPage || 'Account');
@@ -85,7 +67,7 @@ export function SettingsDashboard({ payment }: SettingsDashboardProps) {
         { key: 'Login & Security', value: <AccountComponent /> },
         {
           key: 'Payments',
-          value: <PaymentComponent paymentMethods={payment} />,
+          value: <PaymentComponent />,
         },
         { key: 'Addresses', value: <AddressComponent /> },
         { key: 'Profiles', value: <ProfileComponent /> },
