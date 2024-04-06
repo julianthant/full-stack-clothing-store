@@ -175,18 +175,6 @@ export const PaymentComponent = () => {
               </div>
 
               <Divider />
-
-              <div className="px-6 py-4 w-[340px] flex items-center gap-3 justify-start">
-                <div>
-                  <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
-                </div>
-                <div className="w-full flex flex-col gap-2">
-                  <Skeleton className="h-4 w rounded-lg" />
-                  <Skeleton className="h-4 w-3/5 rounded-lg" />
-                </div>
-              </div>
-
-              <Divider />
             </>
           )}
 
