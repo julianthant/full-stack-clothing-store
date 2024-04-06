@@ -100,13 +100,9 @@ export function SettingsDashboard({ payment }: SettingsDashboardProps) {
     return encodeURIComponent(defaultSubMenu || '');
   };
 
-  const [menuKey, setMenuKey] = useState(subMenuPage);
+  const [menuKey, setMenuKey] = useState(subMenuPage || firstComponent?.key);
 
   const showDashboard = () => {
-    if (menuKey === firstComponent?.key || !menuKey) {
-      return firstComponent?.value;
-    }
-
     const menuLink = subMenu?.value.find((item) => item.key === menuKey);
 
     return menuLink?.value || null;
@@ -191,10 +187,7 @@ export function SettingsDashboard({ payment }: SettingsDashboardProps) {
                   )}`}
                   className={cn(
                     'text-muted-foreground transition-colors hover:text-foreground',
-                    menuKey === item.key && 'text-foreground',
-                    !menuKey &&
-                      item.key === firstComponent?.key &&
-                      'text-foreground'
+                    menuKey === item.key && 'text-foreground'
                   )}
                   onClick={() => setMenuKey(item.key)}
                 >
