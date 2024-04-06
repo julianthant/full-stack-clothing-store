@@ -24,6 +24,8 @@ import { AccountComponent } from './account/AccountComponent';
 import { ProfileComponent } from './account/ProfileComponent';
 import { AddressComponent } from './account/AdresssComponent';
 import { PaymentComponent } from './account/PaymentComponent';
+import { DashboardComponent } from './dashboard/DashboardComponent';
+import { OrderComponent } from './order/OrderComponent';
 
 type SettingsDashboardProps = {
   payment:
@@ -47,46 +49,84 @@ export function SettingsDashboard({ payment }: SettingsDashboardProps) {
   const [selectedKey, setSelectedKey] = useState(menuPage || 'Account');
 
   const menuItems = [
-    { key: 'Dashboard', value: <Home className="h-4 w-4" /> },
-    { key: 'Orders', value: <ShoppingCart className="h-4 w-4" /> },
-    { key: 'Products', value: <Package className="h-4 w-4" /> },
-    { key: 'Account', value: <Users className="h-4 w-4" /> },
-    { key: 'Analytics', value: <LineChart className="h-4 w-4" /> },
+    {
+      key: 'Dashboard',
+      value: <Home className="h-4 w-4" />,
+      component: <DashboardComponent />,
+    },
+    {
+      key: 'Orders',
+      value: <ShoppingCart className="h-4 w-4" />,
+      component: <OrderComponent />,
+    },
+    {
+      key: 'Products',
+      value: <Package className="h-4 w-4" />,
+      component: <OrderComponent />,
+    },
+    {
+      key: 'Account',
+      value: <Users className="h-4 w-4" />,
+      component: <AccountComponent />,
+    },
+    {
+      key: 'Analytics',
+      value: <LineChart className="h-4 w-4" />,
+      component: <OrderComponent />,
+    },
   ];
 
   const subLinks = [
     {
       key: 'Account',
-      value: ['Login & Security', 'Payments', 'Addresses', 'Profiles'],
+      value: [
+        { key: 'Login & Security', value: <AccountComponent /> },
+        {
+          key: 'Payments',
+          value: <PaymentComponent paymentMethods={payment} />,
+        },
+        { key: 'Addresses', value: <AddressComponent /> },
+        { key: 'Profiles', value: <ProfileComponent /> },
+      ],
     },
   ];
 
   const subMenu = subLinks.find((item) => item.key === selectedKey);
   const subMenuPage = decodeURIComponent(searchParams.get('subMenu') || '');
+  const firstComponent = subMenu?.value[0];
 
-  const getDefaultSubMenu = (key: string) => {
-    const defaultSubMenu = subLinks.find((item) => item.key === key)?.value[0];
-
+  const getDefaultSubMenu = () => {
+    const defaultSubMenu = firstComponent?.key;
     return encodeURIComponent(defaultSubMenu || '');
   };
 
   const [menuKey, setMenuKey] = useState(subMenuPage);
+
+  const showDashboard = () => {
+    if (menuKey === firstComponent?.key || !menuKey) {
+      return firstComponent?.value;
+    }
+
+    const menuLink = subMenu?.value.find((item) => item.key === menuKey);
+
+    return menuLink?.value || null;
+  };
 
   return (
     <div className="grid border rounded-[20px] min-h-[700px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] mb-16">
       <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
         <div className="flex h-full max-h-dvh flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <UserComponent />
+            <UserComponent page="Profile" />
           </div>
 
           <div className="flex-1">
             <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4">
               {menuItems.map((item) => (
                 <Link
-                  href={`/settings?menu=${item.key}&subMenu=${getDefaultSubMenu(
+                  href={`/settings?menu=${
                     item.key
-                  )}`}
+                  }&subMenu=${getDefaultSubMenu()}`}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
                     selectedKey === item.key && 'bg-muted text-primary'
@@ -144,18 +184,21 @@ export function SettingsDashboard({ payment }: SettingsDashboardProps) {
 
           <nav className="hidden flex-col gap-3 text-lg font-medium lg:flex lg:flex-row md:items-center md:text-sm lg:gap-2">
             {subMenu?.value.map((item) => (
-              <Button key={item} asChild variant="ghost">
+              <Button key={item.key} asChild variant="ghost">
                 <Link
                   href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
-                    item
+                    item.key
                   )}`}
                   className={cn(
                     'text-muted-foreground transition-colors hover:text-foreground',
-                    menuKey === item && 'text-foreground'
+                    menuKey === item.key && 'text-foreground',
+                    !menuKey &&
+                      item.key === firstComponent?.key &&
+                      'text-foreground'
                   )}
-                  onClick={() => setMenuKey(item)}
+                  onClick={() => setMenuKey(item.key)}
                 >
-                  {item}
+                  {item.key}
                 </Link>
               </Button>
             ))}
@@ -171,22 +214,7 @@ export function SettingsDashboard({ payment }: SettingsDashboardProps) {
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
-          {selectedKey === 'Account' && menuKey === 'Payments' && (
-            <PaymentComponent paymentMethods={payment} />
-          )}
-
-          {selectedKey === 'Account' && menuKey === 'Addresses' && (
-            <AddressComponent />
-          )}
-
-          {selectedKey === 'Account' && menuKey === 'Profiles' && (
-            <ProfileComponent />
-          )}
-
-          {selectedKey === 'Account' &&
-            (menuKey === 'Login & Security' || !subMenuPage || !menuKey) && (
-              <AccountComponent />
-            )}
+          {showDashboard()}
         </main>
       </div>
     </div>
