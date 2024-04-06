@@ -48,8 +48,8 @@ model Account {
 }
 
 model Payment {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String @db.ObjectId
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String  @db.ObjectId
   bankName        String
   cardType        String
   cardScheme      String
@@ -59,6 +59,7 @@ model Payment {
   expiryMonth     String
   expiryYear      String
   cvc             String
+  default         Boolean @default(false)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
