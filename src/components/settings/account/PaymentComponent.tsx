@@ -15,7 +15,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { Divider } from '@nextui-org/react';
+import { Divider, Skeleton } from '@nextui-org/react';
 import { PlusCircle } from 'lucide-react';
 
 import {
@@ -102,7 +102,7 @@ export const PaymentComponent = () => {
           <CardDescription>Methods & Accounts</CardDescription>
         </CardHeader>
         <CardContent className="grid bg-foreground-100 p-0 rounded-b-lg">
-          {!!paymentMethods &&
+          {!!paymentMethods ? (
             paymentMethods.map((card, index) => (
               <div
                 key={index}
@@ -149,7 +149,18 @@ export const PaymentComponent = () => {
 
                 <Divider />
               </div>
-            ))}
+            ))
+          ) : (
+            <div className="py-2 w-[340px] flex items-center space-x-2">
+              <div>
+                <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <Skeleton className="h-4 w rounded-lg" />
+                <Skeleton className="h-4 w-3/5 rounded-lg" />
+              </div>
+            </div>
+          )}
 
           <Link href="/settings/edit/add-payment-method">
             <div className="flex hover:cursor-pointer hover:bg-foreground-200 bg-foreground-100 px-6 py-4 gap-3 rounded-b-lg">
