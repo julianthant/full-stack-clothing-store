@@ -11,9 +11,6 @@ import { cardAddSchema } from '@/schemas';
 import { getPaymentMethodByCardNumber } from '@/data/payment-methods';
 import { currentUser } from '@/lib/server-auth';
 
-import { createCanvas, loadImage } from 'canvas';
-import path from 'path';
-
 export const AddPaymentMethod = async (
   values: z.infer<typeof cardAddSchema>
 ) => {
@@ -44,6 +41,14 @@ export const AddPaymentMethod = async (
     paymentType !== 'apple'
   ) {
     return { error: 'Invalid payment type!' };
+  }
+
+  if (
+    !cardNumber.startsWith('2') &&
+    !cardNumber.startsWith('4') &&
+    !cardNumber.startsWith('5')
+  ) {
+    return { error: 'Mastercard and Visa only!' };
   }
 
   const existingCard = await getPaymentMethodByCardNumber(cardNumber);
@@ -94,27 +99,6 @@ export const AddPaymentMethod = async (
   const cardScheme = cardInfo.data.BIN.scheme || 'Debit';
   const cardType = cardInfo.data.BIN.type;
 
-  const template = await loadImage(
-    path.resolve('./src/components/images/credit-card-plain.png')
-  );
-
-  const canvas = createCanvas(template.width, template.height);
-  const ctx = canvas.getContext('2d');
-
-  ctx.drawImage(template, 0, 0, template.width, template.height);
-
-  ctx.font = 'bold 76px Courier';
-  ctx.fillStyle = 'black';
-
-  ctx.fillText(expiryMonth.padStart(2, '0'), 170, 600);
-  ctx.fillText('/', 260, 600);
-  ctx.fillText(expiryYear, 300, 600);
-  ctx.fillText(cardHolder, 170, 700);
-
-  const buffer = canvas.toBuffer();
-  const base64Image = buffer.toString('base64');
-  const imageUrl = `data:image/png;base64,${base64Image}`;
-
   paymentTitle = `${bankName} ${cardScheme} ${cardType} CARD`;
 
   const hashedCVC = await bcrypt.hash(cvc, 10);
@@ -124,7 +108,6 @@ export const AddPaymentMethod = async (
       userId: dbUser.id,
       cardType: paymentTitle,
       cardHolder,
-      cardImage: imageUrl,
       cardNumber,
       expiryMonth,
       expiryYear,
