@@ -64,13 +64,13 @@ export function SettingsDashboard() {
     {
       key: 'Account',
       value: [
+        { key: 'Profiles', value: <ProfileComponent /> },
         { key: 'Login & Security', value: <AccountComponent /> },
         {
           key: 'Payments',
           value: <PaymentComponent />,
         },
         { key: 'Addresses', value: <AddressComponent /> },
-        { key: 'Profiles', value: <ProfileComponent /> },
       ],
     },
   ];
@@ -93,7 +93,7 @@ export function SettingsDashboard() {
   };
 
   return (
-    <div className="grid border rounded-[20px] min-h-[700px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] mb-16">
+    <div className="grid border rounded-[20px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] mb-16">
       <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
         <div className="flex h-full max-h-dvh flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -192,7 +192,8 @@ export function SettingsDashboard() {
             />
           </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
+
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-[500px] min-h-[500px] overflow-auto">
           {showDashboard()}
         </main>
       </div>
