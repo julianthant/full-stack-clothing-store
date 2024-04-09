@@ -173,7 +173,9 @@ export function SettingsDashboard() {
                     'text-muted-foreground transition-colors hover:text-foreground',
                     menuKey === item.key && 'text-foreground'
                   )}
-                  onClick={() => setMenuKey(item.key)}
+                  onClick={() => {
+                    setMenuKey(item.key);
+                  }}
                 >
                   {item.key}
                 </Link>
