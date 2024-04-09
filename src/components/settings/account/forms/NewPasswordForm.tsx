@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 
-import { newPassword } from '@/actions/new-password';
+import { newPassword } from '@/actions/accountSecurity/new-password';
 import { NewPasswordSchema } from '@/schemas';
 
 import { FormError } from '../../../utils/FormError';

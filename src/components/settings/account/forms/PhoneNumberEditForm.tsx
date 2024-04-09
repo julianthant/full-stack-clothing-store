@@ -8,7 +8,7 @@ import { PhoneNumberSchema } from '@/schemas';
 
 import { FormError } from '../../../utils/FormError';
 import { FormSuccess } from '../../../utils/Form.Success';
-import { ChangePhoneNumber } from '@/actions/change-phone-number';
+import { ChangePhoneNumber } from '@/actions/accountProfile/change-phone-number';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';

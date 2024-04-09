@@ -8,14 +8,14 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { roboto } from '@/components/utils/Fonts';
-import { getPaymentMethodsByUserId } from '@/actions/get-payment-method';
+import { getPaymentMethodsByUserId } from '@/actions/accountPayments/get-payment-method';
 
-import { RemovePaymentMethod } from '@/actions/remove-payment-method';
+import { RemovePaymentMethod } from '@/actions/accountPayments/remove-payment-method';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { Divider } from '@nextui-org/react';
+import { Divider, Skeleton, Spinner } from '@nextui-org/react';
 import { PlusCircle } from 'lucide-react';
 
 import {
@@ -26,25 +26,27 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
+type Payments =
+  | {
+      id: string;
+      userId: string;
+      bankName: string;
+      cardType: string;
+      cardScheme: string;
+      cardHolder: string;
+      cardNumber: string;
+      lastFourNumbers: string;
+      expiryMonth: string;
+      expiryYear: string;
+      cvc: string;
+      default: boolean;
+    }[]
+  | null;
+
 export const PaymentComponent = () => {
   const [selectedCard, setSelectedCard] = useState(0);
-  const [paymentMethods, setPaymentMethods] = useState<
-    | {
-        id: string;
-        userId: string;
-        bankName: string;
-        cardType: string;
-        cardScheme: string;
-        cardHolder: string;
-        cardNumber: string;
-        lastFourNumbers: string;
-        expiryMonth: string;
-        expiryYear: string;
-        cvc: string;
-        default: boolean;
-      }[]
-    | null
-  >();
+  const [paymentMethods, setPaymentMethods] = useState<Payments>();
+
   const [remove, setRemoved] = useState(false);
 
   const user = useCurrentUser();
@@ -61,7 +63,7 @@ export const PaymentComponent = () => {
         const cards = await getPaymentMethodsByUserId(user?.id as string);
         setPaymentMethods(cards);
         setRemoved(false);
-        router.replace(pathname);
+        router.replace(pathname + '?menu=Account&subMenu=Payments');
 
         success === 'true' &&
           toast.success(decodeURI(message as string), {
@@ -94,7 +96,7 @@ export const PaymentComponent = () => {
   }, [success, user?.id, remove]);
 
   return (
-    <div className="sm:flex grid gap-4">
+    <div className="sm:flex grid gap-4 relative">
       <Card className="h-min">
         <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
         <CardHeader>
@@ -102,7 +104,7 @@ export const PaymentComponent = () => {
           <CardDescription>Methods & Accounts</CardDescription>
         </CardHeader>
         <CardContent className="grid bg-foreground-100 p-0 rounded-b-lg">
-          {!!paymentMethods &&
+          {!!paymentMethods ? (
             paymentMethods.map((card, index) => (
               <div
                 key={index}
@@ -112,14 +114,14 @@ export const PaymentComponent = () => {
                   selectedCard === index && 'bg-foreground-200'
                 )}
               >
-                <div className="relative flex w-[340px] items-center justify-left px-6 py-4 gap-3">
+                <div className="relative flex w-[340px] items-center justify-start px-6 py-4 gap-3">
                   <div className="relative">
                     <Image
                       src={BlackCard}
                       className="max-w-[85px]"
                       alt="Credit Card"
-                      width={95}
-                      height={60}
+                      width={85}
+                      height={53.45}
                     />
                     {card.default && (
                       <>
@@ -149,7 +151,34 @@ export const PaymentComponent = () => {
 
                 <Divider />
               </div>
-            ))}
+            ))
+          ) : (
+            <>
+              <div className="px-6 py-4 w-[340px] flex items-center gap-3 justify-start">
+                <div>
+                  <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
+                </div>
+                <div className="w-full flex flex-col gap-2">
+                  <Skeleton className="h-4 w rounded-lg" />
+                  <Skeleton className="h-4 w-3/5 rounded-lg" />
+                </div>
+              </div>
+
+              <Divider />
+
+              <div className="px-6 py-4 w-[340px] flex items-center gap-3 justify-start">
+                <div>
+                  <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
+                </div>
+                <div className="w-full flex flex-col gap-2">
+                  <Skeleton className="h-4 w rounded-lg" />
+                  <Skeleton className="h-4 w-3/5 rounded-lg" />
+                </div>
+              </div>
+
+              <Divider />
+            </>
+          )}
 
           <Link href="/settings/edit/add-payment-method">
             <div className="flex hover:cursor-pointer hover:bg-foreground-200 bg-foreground-100 px-6 py-4 gap-3 rounded-b-lg">
@@ -198,8 +227,8 @@ export const PaymentComponent = () => {
                         }
                       );
                     })
-                    .catch((err) => {
-                      toast.error(`Unable to remove card! ${err}`, {
+                    .catch(() => {
+                      toast.error(`Unable to remove card!`, {
                         position: 'top-center',
                         autoClose: 5000,
                         hideProgressBar: false,

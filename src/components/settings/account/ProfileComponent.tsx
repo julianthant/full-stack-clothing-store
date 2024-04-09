@@ -5,7 +5,7 @@ import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { sendTwoFactorActivationCode } from '@/actions/send-code';
+import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
 export const ProfileComponent = () => {
   const router = useRouter();

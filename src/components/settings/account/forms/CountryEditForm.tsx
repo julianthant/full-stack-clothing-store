@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangeCountry } from '@/actions/change-country';
+import { ChangeCountry } from '@/actions/accountProfile/change-country';
 
 import { FormError } from '../../../utils/FormError';
 import { FormSuccess } from '../../../utils/Form.Success';
@@ -87,8 +87,8 @@ export function CountryEditForm({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only" htmlFor="email">
-                    Email
+                  <FormLabel className="sr-only" htmlFor="country">
+                    Country
                   </FormLabel>
 
                   <Select

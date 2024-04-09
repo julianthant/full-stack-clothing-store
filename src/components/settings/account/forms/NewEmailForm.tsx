@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useSearchParams } from 'next/navigation';
-import { newEmailVerification } from '@/actions/new-email';
+import { newEmailVerification } from '@/actions/accountSecurity/new-email';
 import { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';

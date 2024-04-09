@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { sendTwoFactorActivationCode } from '@/actions/send-code';
+import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
 import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';

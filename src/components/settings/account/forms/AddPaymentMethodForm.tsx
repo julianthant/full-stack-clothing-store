@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
-import { AddPaymentMethod } from '@/actions/add-payment-method';
+import { AddPaymentMethod } from '@/actions/accountPayments/add-payment-method';
 
 import { FormError } from '@/components/utils/FormError';
 import { FormSuccess } from '@/components/utils/Form.Success';
@@ -55,11 +55,6 @@ export function AddPaymentMethodForm() {
     resolver: zodResolver(cardAddSchema),
     defaultValues: {
       paymentType: 'card',
-      cardHolder: '',
-      cardNumber: '',
-      expiryMonth: '',
-      expiryYear: '',
-      cvc: '',
     },
   });
 

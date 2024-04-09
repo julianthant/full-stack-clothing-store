@@ -5,12 +5,12 @@ import * as React from 'react';
 
 import { TwoFASchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { sendTwoFactorActivationCode } from '@/actions/send-code';
+import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
 import { FormError } from '../../../utils/FormError';
 import { FormSuccess } from '../../../utils/Form.Success';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { Validate2FACode } from '@/actions/activate-2fa';
+import { Validate2FACode } from '@/actions/accountSecurity/activate-2fa';
 import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';

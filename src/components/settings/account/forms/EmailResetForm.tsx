@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { newEmailToken } from '@/actions/new-email';
+import { newEmailToken } from '@/actions/accountSecurity/new-email';
 
 interface EmailEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 

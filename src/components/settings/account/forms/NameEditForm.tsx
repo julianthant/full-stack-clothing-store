@@ -4,7 +4,7 @@ import * as z from 'zod';
 import * as React from 'react';
 
 import { NameSchema } from '@/schemas';
-import { ChangeName } from '@/actions/change-name';
+import { ChangeName } from '@/actions/accountProfile/change-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FormError } from '../../../utils/FormError';

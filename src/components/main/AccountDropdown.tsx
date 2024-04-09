@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { SignOut } from '@/actions/signout';
+import { SignOut } from '@/actions/authentication/signout';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import { User2Icon } from 'lucide-react';
