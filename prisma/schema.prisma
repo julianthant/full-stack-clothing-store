@@ -24,6 +24,7 @@ model User {
   image             String?
   accounts          Account[]
   payments          Payment[]
+  addresses         Address[]
   is2FAEnabled      Boolean            @default(false)
   TwoFAConfirmation TwoFAConfirmation?
 }
@@ -60,6 +61,23 @@ model Payment {
   expiryYear      String
   cvc             String
   default         Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Address {
+  id                   String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String  @db.ObjectId
+  fullName             String
+  streetAddress        String
+  streetOptional       String?
+  city                 String
+  country              String
+  states               String?
+  zipCode              String
+  phoneNumber          String
+  deliveryInstructions String?
+  defaultAddress       Boolean @default(false)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
