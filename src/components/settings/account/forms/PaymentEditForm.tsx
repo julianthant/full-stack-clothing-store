@@ -36,7 +36,7 @@ import {
 } from '@/components/ui/form';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { getPaymentMethodById } from '@/actions/get-payment-method';
+import { getPaymentMethodById } from '@/actions/accountPayments/get-payment-method';
 import { UpdatePaymentMethod } from '@/actions/accountPayments/update-payment-method';
 
 export function PaymentEditForm() {
