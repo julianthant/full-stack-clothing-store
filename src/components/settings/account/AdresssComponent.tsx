@@ -1,166 +1,244 @@
 import Link from 'next/link';
 
-import { useRouter } from 'next/navigation';
-import { Divider } from '@nextui-org/react';
-import { Skeleton } from '@nextui-org/react';
-
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { sendTwoFactorActivationCode } from '@/actions/send-code';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+
+import { cn } from '@/lib/utils';
+import { toast, ToastContainer } from 'react-toastify';
+
+import { Button } from '@/components/ui/button';
+import { Divider, Skeleton, Spinner } from '@nextui-org/react';
+import { PlusIcon } from 'lucide-react';
+
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { getAddresssByUserId } from '@/actions/accountAddresses/get-address';
+import { RemoveAddress } from '@/actions/accountAddresses/remove-address';
+
+type Addresses =
+  | {
+      id: string;
+      userId: string;
+      fullName: string;
+      streetAddress: string;
+      streetOptional: string | null;
+      city: string;
+      country: string;
+      states: string | null;
+      zipCode: string;
+      phoneNumber: string;
+      deliveryInstructions: string | null;
+      defaultAddress: boolean;
+    }[]
+  | null;
 
 export const AddressComponent = () => {
-  const router = useRouter();
+  const [addresses, setAddresses] = useState<Addresses>();
+
+  const [remove, setRemoved] = useState(false);
+
   const user = useCurrentUser();
+  const params = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const message = params.get('message');
+  const success = params.get('success');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const addresses = await getAddresssByUserId(user?.id as string);
+        setAddresses(addresses);
+        setRemoved(false);
+        router.replace(pathname + '?menu=Account&subMenu=Addresses');
+
+        success === 'true' &&
+          toast.success(decodeURI(message as string), {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: 'colored',
+          });
+
+        success === 'false' &&
+          toast.error(decodeURI(message as string), {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: 'colored',
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, user?.id, remove]);
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-lg font-semibold md:text-2xl">Account Settings</h1>
-      <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex">
-              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Name</h3>
-              </Skeleton>
-
-              <Link
-                href={'/settings/edit/new-name'}
-                className="font-semibold ml-auto text-green-600"
-              >
-                Edit
-              </Link>
+    <div className="grid gap-4 relative grid-cols-4">
+      <Card className="rounded-lg p-4 min-h-[319px]">
+        <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
+        <Button
+          className="shadow-none"
+          asChild
+          onClick={() => router.push('/settings/edit/add-new-address')}
+        >
+          <CardContent className="hover:bg-foreground-200 bg-foreground-100 cursor-pointer flex flex-col items-center justify-center p-0 rounded-lg h-full border-2 border-dashed border-foreground-400">
+            <PlusIcon size={70} className="text-foreground-400 mx-auto" />
+            <div className="flex items-center justify-center">
+              <p className="text-2xl font-bold text-foreground-600">
+                Add Address
+              </p>
             </div>
+          </CardContent>
+        </Button>
+      </Card>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
-              <p>{user?.name}</p>
-            </Skeleton>
-          </div>
+      {addresses ? (
+        addresses.map((address) => (
+          <Card
+            key={address.id}
+            className="h-full rounded-lg flex justify-between flex-col"
+          >
+            {address.defaultAddress && (
+              <CardHeader className="px-5 py-2 border-b">
+                <CardTitle className="text-md font-semibold">
+                  <p>Default Address</p>
+                </CardTitle>
+              </CardHeader>
+            )}
 
-          <Divider />
-
-          <div className="space-y-2">
-            <div className="flex">
-              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Email</h3>
-              </Skeleton>
-
-              {!user?.isOAuth && (
-                <Link
-                  href={'/settings/edit/new-email'}
-                  className="font-semibold ml-auto text-green-600"
-                >
-                  Edit
-                </Link>
+            <CardContent
+              className={cn(
+                'grid gap-2',
+                address.defaultAddress ? 'px-5 pb-8' : 'p-5'
               )}
-            </div>
+            >
+              <div className="flex flex-col gap-2">
+                <div className="grid gap-2">
+                  <div className="flex flex-col gap-1">
+                    <p className="text-sm text-foreground-600 font-bold">
+                      {address.fullName.toUpperCase()}
+                    </p>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
-              <p>{user?.email}</p>
-            </Skeleton>
-          </div>
+                    <p className="text-sm text-foreground-600">
+                      {address.streetAddress.toUpperCase()}{' '}
+                      {address.streetOptional &&
+                        address.streetOptional.toUpperCase()}
+                    </p>
 
-          <Divider />
+                    <p className="text-sm text-foreground-600">
+                      {address.city.toUpperCase()},{' '}
+                      {address.states && address.states.toUpperCase()}{' '}
+                      {address.zipCode}
+                    </p>
 
-          <div className="space-y-2">
-            <div className="flex">
-              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Password</h3>
-              </Skeleton>
+                    <p className="text-sm text-foreground-600">
+                      {address.country}
+                    </p>
 
-              <Link
-                href={'/settings/edit/reset-password'}
-                className="font-semibold ml-auto text-green-600"
-              >
-                Edit
-              </Link>
-            </div>
+                    <p className="text-sm text-foreground-600">
+                      Phone number: {address.phoneNumber}
+                    </p>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
-              <p>{'********' || 'N/A'}</p>
-            </Skeleton>
-          </div>
+                    <Link href={''} className="text-sm text-teal-600">
+                      Add delivery instructions
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
 
-          <Divider />
-
-          <div className="space-y-2">
-            <div className="flex">
-              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Country</h3>
-              </Skeleton>
-
-              <Link
-                href={'/settings/edit/change-country'}
-                className="font-semibold ml-auto text-green-600"
-              >
-                Edit
-              </Link>
-            </div>
-
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
-              <p>{user?.country || 'N/A'}</p>
-            </Skeleton>
-          </div>
-
-          <Divider />
-
-          <div className="space-y-2">
-            <div className="flex">
-              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Mobile Number</h3>
-              </Skeleton>
-
-              <Link
-                href={'/settings/edit/phone-number'}
-                className="font-semibold ml-auto text-green-600"
-              >
-                Edit
-              </Link>
-            </div>
-
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
-              <p>{user?.phoneNumber || 'N/A'}</p>
-            </Skeleton>
-          </div>
-
-          <Divider />
-
-          <div className="space-y-2">
-            <div className="flex">
-              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Two Factor Authentication</h3>
-              </Skeleton>
-
-              <form
-                className="ml-auto"
-                onSubmit={async (event) => {
-                  event.preventDefault();
-
-                  if (!user?.is2FAEnabled) {
-                    await sendTwoFactorActivationCode(user?.email as string);
-                    await router.push(
-                      '/settings/edit/two-factor-authentication?type=activate'
-                    );
-                  } else if (user?.is2FAEnabled) {
-                    await sendTwoFactorActivationCode(user?.email as string);
-                    await router.push(
-                      '/settings/edit/two-factor-authentication?type=deactivate'
-                    );
-                  }
-                }}
-              >
-                <button
-                  className="font-semibold ml-auto text-green-600"
-                  type="submit"
+            <CardFooter className="p-5">
+              <div className="flex gap-4">
+                <Button asChild className="p-0 text-teal-600" variant={'link'}>
+                  <Link href={`/settings/edit/edit-address?address-id=`}>
+                    Edit
+                  </Link>
+                </Button>
+                <Divider
+                  orientation="vertical"
+                  className="h-4 w-[2px] my-auto bg-foreground-500"
+                />
+                <form
+                  className="my-auto h-min"
+                  onSubmit={async (event) => {
+                    event.preventDefault();
+                    await RemoveAddress(address.id)
+                      .then(() => {
+                        setRemoved(true);
+                        toast.success(`Removed address successfully!`, {
+                          position: 'top-center',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: false,
+                          draggable: false,
+                          progress: undefined,
+                          theme: 'colored',
+                        });
+                      })
+                      .catch(() => {
+                        toast.error(`Unable to remove address!`, {
+                          position: 'top-center',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: false,
+                          draggable: false,
+                          progress: undefined,
+                          theme: 'colored',
+                        });
+                      });
+                  }}
                 >
-                  {user?.is2FAEnabled ? 'Turn off' : 'Turn on'}
-                </button>
-              </form>
+                  <Button
+                    type="submit"
+                    variant={'link'}
+                    className="w-min p-0 mr-1 h-min text-red-500"
+                  >
+                    Remove
+                  </Button>
+                </form>
+              </div>
+            </CardFooter>
+          </Card>
+        ))
+      ) : (
+        <Card className="rounded-lg flex flex-col justify-between">
+          <div className="grid gap-3  p-5">
+            <Skeleton className="h-4 w-2/3 rounded-md" />
+
+            <div className="grid gap-2">
+              <Skeleton className="h-4 w-full rounded-md" />
+              <Skeleton className="h-4 w-full rounded-md" />
+              <Skeleton className="h-4 w-1/3 rounded-md" />
+              <Skeleton className="h-4 w-2/4 rounded-md" />
+              <Skeleton className="h-4 w-5/6 rounded-md" />
+              <Skeleton className="h-4 w-4/6 rounded-md" />
             </div>
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
-              <p>{user?.is2FAEnabled ? 'Enabled' : 'Disabled'}</p>
-            </Skeleton>
           </div>
-        </div>
-      </div>
+
+          <div className="p-5 py-7">
+            <Skeleton className="h-4 w-3/5 rounded-md" />
+          </div>
+        </Card>
+      )}
     </div>
   );
 };
