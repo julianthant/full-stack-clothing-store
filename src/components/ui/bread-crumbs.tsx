@@ -11,12 +11,12 @@ export const BreadCrumbs = () => {
     let path = '';
 
     return linkTabs.map((tab, i) => {
-      const cleanedTab = tab.replace(/-/g, '');
+      const cleanedTab = tab.replace(/-/g, ' ');
       path += `/${cleanedTab}`;
 
       return (
         <BreadcrumbItem key={i + 1} href={path} className="capitalize">
-          {tab}
+          {cleanedTab}
         </BreadcrumbItem>
       );
     });
