@@ -124,7 +124,7 @@ export function SettingsDashboard() {
       </div>
 
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 rounded-tr-[20px]">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 pr-9 lg:h-[60px] rounded-tr-[20px]">
           <Sheet>
             <SheetTrigger asChild>
               <Button
