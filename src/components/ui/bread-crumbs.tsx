@@ -11,7 +11,8 @@ export const BreadCrumbs = () => {
     let path = '';
 
     return linkTabs.map((tab, i) => {
-      path += `/${tab}`;
+      const cleanedTab = tab.replace(/-/g, '');
+      path += `/${cleanedTab}`;
 
       return (
         <BreadcrumbItem key={i + 1} href={path} className="capitalize">
