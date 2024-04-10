@@ -55,7 +55,6 @@ interface CountryEditProps {
 export function AddAddressForm({ countryNames, states }: CountryEditProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
-
   const [isPending, startTransition] = React.useTransition();
 
   const router = useRouter();
@@ -115,6 +114,7 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
+                    disabled={isPending}
                   >
                     <FormControl>
                       <SelectTrigger>
