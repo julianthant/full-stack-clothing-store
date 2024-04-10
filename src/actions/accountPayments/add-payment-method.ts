@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 
 import { db } from '@/database/db';
 import { getUserById } from '@/data/user';
-import { getPaymentMethodsByUserId } from './get-payment-method';
+import { getPaymentMethodsByUserId } from '../../data/get-payment-method';
 
 import { currentUser } from '@/lib/server-auth';
 import { cardAddSchema } from '@/schemas';
