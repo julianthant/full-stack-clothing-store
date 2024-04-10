@@ -36,8 +36,8 @@ import {
 } from '@/components/ui/form';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { getPaymentMethodById } from '@/actions/accountPayments/get-payment-method';
 import { UpdatePaymentMethod } from '@/actions/accountPayments/update-payment-method';
+import axios from 'axios';
 
 export function PaymentEditForm() {
   const [error, setError] = React.useState<string | undefined>('');
@@ -47,33 +47,16 @@ export function PaymentEditForm() {
   const params = useSearchParams();
   const id = params.get('card-id');
 
-  const [card, setCard] = React.useState<
-    | {
-        id: string;
-        userId: string;
-        bankName: string;
-        cardType: string;
-        cardScheme: string;
-        cardHolder: string;
-        cardNumber: string;
-        lastFourNumbers: string;
-        expiryMonth: string;
-        expiryYear: string;
-        cvc: string;
-        default: boolean;
-      }
-    | null
-    | undefined
-  >();
+  const [card, setCard] = React.useState<PaymentMethod>();
+  const [isPending, startTransition] = React.useTransition();
 
   useEffect(() => {
     (async () => {
-      try {
-        const card = await getPaymentMethodById(id as string);
-        setCard(card);
-      } catch {
-        setError('Failed to fetch card details');
-      }
+      const paymentMethod = await axios.get(
+        `/api/payments/getUnique/${id as string}`
+      );
+
+      setCard(paymentMethod.data);
     })();
   }, [id]);
 
@@ -91,8 +74,6 @@ export function PaymentEditForm() {
       });
     }
   }, [card, form]);
-
-  const [isPending, startTransition] = React.useTransition();
 
   const onSubmit = (values: z.infer<typeof CardEditSchema>) => {
     setError('');
