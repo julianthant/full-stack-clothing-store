@@ -1,13 +1,11 @@
 import Link from 'next/link';
 
-import { useRouter } from 'next/navigation';
 import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 export const ProfileComponent = () => {
-  const router = useRouter();
   const user = useCurrentUser();
 
   return (
