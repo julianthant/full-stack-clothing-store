@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import './globals.css';
-import { Providers } from './providers';
+import { Providers, QueryProvider } from './providers';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
@@ -17,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={GeistSans.className}>
-        <Providers>{children}</Providers>
+        <QueryProvider>
+          <Providers>{children}</Providers>
+        </QueryProvider>
       </body>
     </html>
   );
