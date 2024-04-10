@@ -4,11 +4,11 @@ import BlackCard from '../../images/black-card.png';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { roboto } from '@/components/utils/Fonts';
-import { getPaymentMethodsByUserId } from '@/actions/accountPayments/get-payment-method';
+import { getPaymentMethodsByUserId } from '@/data/get-payment-method';
 
 import { RemovePaymentMethod } from '@/actions/accountPayments/remove-payment-method';
 import { toast, ToastContainer } from 'react-toastify';
@@ -25,75 +25,52 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
 export const PaymentComponent = () => {
   const [selectedCard, setSelectedCard] = useState(0);
-  const [paymentMethods, setPaymentMethods] = useState<
-    | {
-        id: string;
-        userId: string;
-        bankName: string;
-        cardType: string;
-        cardScheme: string;
-        cardHolder: string;
-        cardNumber: string;
-        lastFourNumbers: string;
-        expiryMonth: string;
-        expiryYear: string;
-        cvc: string;
-        default: boolean;
-      }[]
-    | null
-  >();
-
-  const [remove, setRemoved] = useState(false);
 
   const user = useCurrentUser();
-  const params = useSearchParams();
+  const queryClient = useQueryClient();
+
   const router = useRouter();
-  const pathname = usePathname();
+  const params = useSearchParams();
 
   const message = params.get('message');
   const success = params.get('success');
 
   useEffect(() => {
-    (async () => {
-      try {
-        const cards = await getPaymentMethodsByUserId(user?.id as string);
-        setPaymentMethods(cards);
-        setRemoved(false);
+    if (success === 'true') {
+      toast.success(message);
+    } else if (success === 'false') {
+      toast.error(message);
+    }
 
-        router.replace(pathname + '?menu=Account&subMenu=Payments');
-
-        success === 'true' &&
-          toast.success(decodeURI(message as string), {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: 'colored',
-          });
-
-        success === 'false' &&
-          toast.error(decodeURI(message as string), {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: 'colored',
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    router.replace('/settings?menu=Account&subMenu=Payments');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, user?.id, remove]);
+  }, [success]);
+
+  const { data: paymentMethods, isLoading } = useQuery({
+    queryFn: () =>
+      user
+        ? axios.get(`/api/payments/getAll/${user?.id}`).then((res) => res.data)
+        : [],
+    queryKey: ['payment-methods', { userId: user?.id as string }],
+  });
+
+  const { mutateAsync: removePaymentMethod } = useMutation({
+    mutationFn: (paymentMethodID: string) =>
+      RemovePaymentMethod(paymentMethodID),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
+      toast.success('Payment method removed successfully!');
+    },
+    onError: (error) => {
+      toast.error('Failed to remove payment method!');
+      console.error(error);
+    },
+  });
 
   return (
     <div className="sm:flex grid gap-4">
@@ -105,7 +82,7 @@ export const PaymentComponent = () => {
         </CardHeader>
         <CardContent className="grid bg-foreground-100 p-0 rounded-b-lg">
           {!!paymentMethods ? (
-            paymentMethods.map((card, index) => (
+            paymentMethods.map((card: PaymentMethod, index: number) => (
               <div
                 key={index}
                 onClick={() => setSelectedCard(index)}
@@ -121,7 +98,7 @@ export const PaymentComponent = () => {
                       className="max-w-[85px]"
                       alt="Credit Card"
                       width={85}
-                      height={53.45}
+                      height={53}
                     />
                     {card.default && (
                       <>
@@ -210,35 +187,7 @@ export const PaymentComponent = () => {
                 className="ml-auto h-min"
                 onSubmit={async (event) => {
                   event.preventDefault();
-                  await RemovePaymentMethod(paymentMethods[selectedCard].id)
-                    .then(() => {
-                      setRemoved(true);
-                      toast.success(
-                        `Removed Card Ending in ${paymentMethods[selectedCard].lastFourNumbers}`,
-                        {
-                          position: 'top-center',
-                          autoClose: 5000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: false,
-                          draggable: false,
-                          progress: undefined,
-                          theme: 'colored',
-                        }
-                      );
-                    })
-                    .catch(() => {
-                      toast.error(`Unable to remove card!`, {
-                        position: 'top-center',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: false,
-                        progress: undefined,
-                        theme: 'colored',
-                      });
-                    });
+                  await removePaymentMethod(paymentMethods[selectedCard].id);
                 }}
               >
                 <Button
@@ -259,6 +208,8 @@ export const PaymentComponent = () => {
                 alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
                 width={300}
                 height={189}
+                priority
+                style={{ width: '300px', height: 'auto' }}
               />
               <p className="absolute top-[20px] left-[30px]">
                 {paymentMethods[selectedCard].bankName}
