@@ -7,8 +7,10 @@ import { getUserById } from '@/data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { CardEditSchema } from '@/schemas';
-import { getPaymentMethodById } from './get-payment-method';
-import { getDefaultPaymentMethodByUserId } from '@/data/payment-methods';
+import {
+  getPaymentMethodById,
+  getDefaultPaymentMethodByUserId,
+} from '@/data/get-payment-method';
 
 export const UpdatePaymentMethod = async (
   values: z.infer<typeof CardEditSchema>,
