@@ -51,6 +51,14 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     return { error: 'Invalid country!' };
   }
 
+  if (country === 'United States' && !states) {
+    return { error: 'State is required!' };
+  }
+
+  if (country !== 'United States' && states) {
+    return { error: 'State is not required!' };
+  }
+
   if (states) {
     const response = await fetch(
       'https://api.census.gov/data/2010/dec/sf1?get=NAME&for=state:*'
@@ -101,5 +109,5 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     },
   });
 
-  return { success: 'Card added!' };
+  return { success: 'Address added!' };
 };
