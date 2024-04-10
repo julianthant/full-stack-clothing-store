@@ -6,14 +6,16 @@ export async function GET(req: NextRequest) {
   try {
     const id = req.nextUrl.pathname.split('/').pop();
 
+    if (!id) {
+      return;
+    }
+
     const address = await db.address.findUnique({
       where: { id },
     });
 
-    console.log(address);
-
     return NextResponse.json(address);
-  } catch (error) {
-    return null;
+  } catch {
+    return;
   }
 }
