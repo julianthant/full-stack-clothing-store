@@ -24,8 +24,6 @@ export const getPaymentMethodsByUserId = async (userId: string) => {
   }
 };
 
-import { db } from '@/database/db';
-
 export const getDefaultPaymentMethodByUserId = async (userId: string) => {
   try {
     const paymentMethod = await db.payment.findFirst({
