@@ -1,6 +1,6 @@
 'use server';
 
-import { getAddressById } from './get-address';
+import { getAddressById } from '../../data/get-address';
 import { getUserById } from '@/data/user';
 import { db } from '@/database/db';
 import { currentUser } from '@/lib/server-auth';
@@ -27,4 +27,6 @@ export const RemoveAddress = async (addressdId: string) => {
   await db.address.delete({
     where: { id: address.id },
   });
+
+  return true;
 };
