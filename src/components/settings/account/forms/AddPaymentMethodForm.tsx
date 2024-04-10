@@ -46,7 +46,6 @@ import {
 export function AddPaymentMethodForm() {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
-
   const [isPending, startTransition] = React.useTransition();
 
   const router = useRouter();
@@ -71,7 +70,7 @@ export function AddPaymentMethodForm() {
   };
 
   React.useEffect(() => {
-    if (!!success) {
+    if (success) {
       const successMessage = encodeURI('Payment method updated successfully');
       router.push(
         '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
@@ -79,7 +78,7 @@ export function AddPaymentMethodForm() {
       );
     }
 
-    if (!!error) {
+    if (error) {
       const errorMessage = encodeURI('Unable to update payment method');
       router.push(
         '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
