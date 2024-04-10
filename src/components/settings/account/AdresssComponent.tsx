@@ -1,14 +1,14 @@
 import Link from 'next/link';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { Button } from '@/components/ui/button';
-import { Divider, Skeleton, Spinner } from '@nextui-org/react';
+import { Divider, Skeleton } from '@nextui-org/react';
 import { PlusIcon } from 'lucide-react';
 
 import {
@@ -18,79 +18,53 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { getAddresssByUserId } from '@/actions/accountAddresses/get-address';
+import axios from 'axios';
 import { RemoveAddress } from '@/actions/accountAddresses/remove-address';
-
-type Addresses =
-  | {
-      id: string;
-      userId: string;
-      fullName: string;
-      streetAddress: string;
-      streetOptional: string | null;
-      city: string;
-      country: string;
-      states: string | null;
-      zipCode: string;
-      phoneNumber: string;
-      deliveryInstructions: string | null;
-      defaultAddress: boolean;
-    }[]
-  | null;
+import { useEffect } from 'react';
 
 export const AddressComponent = () => {
-  const [addresses, setAddresses] = useState<Addresses>();
-
-  const [remove, setRemoved] = useState(false);
-
   const user = useCurrentUser();
-  const params = useSearchParams();
+  const queryClient = useQueryClient();
+
   const router = useRouter();
-  const pathname = usePathname();
+  const params = useSearchParams();
 
   const message = params.get('message');
   const success = params.get('success');
 
   useEffect(() => {
-    (async () => {
-      try {
-        const addresses = await getAddresssByUserId(user?.id as string);
-        setAddresses(addresses);
-        setRemoved(false);
-        router.replace(pathname + '?menu=Account&subMenu=Addresses');
+    if (success === 'true') {
+      toast.success(message);
+    } else if (success === 'false') {
+      toast.error(message);
+    }
 
-        success === 'true' &&
-          toast.success(decodeURI(message as string), {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: 'colored',
-          });
-
-        success === 'false' &&
-          toast.error(decodeURI(message as string), {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: 'colored',
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    router.replace('/settings?menu=Account&subMenu=Addresses');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, user?.id, remove]);
+  }, [success]);
+
+  const { data: addresses } = useQuery({
+    queryFn: () =>
+      user
+        ? axios.get(`/api/addresses/getAll/${user?.id}`).then((res) => res.data)
+        : [],
+    queryKey: ['addresses', { userId: user?.id as string }],
+  });
+
+  const { mutateAsync: removeAddress } = useMutation({
+    mutationFn: (addressID: string) => RemoveAddress(addressID),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['addresses'] });
+      toast.success('Address removed successfully');
+    },
+    onError: (error) => {
+      toast.error('Failed to remove address');
+      console.error(error);
+    },
+  });
 
   return (
-    <div className="grid gap-4 relative grid-cols-4">
+    <div className="grid gap-4 relative 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2">
       <Card className="rounded-lg p-4 min-h-[319px]">
         <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
         <Button
@@ -109,8 +83,8 @@ export const AddressComponent = () => {
         </Button>
       </Card>
 
-      {addresses ? (
-        addresses.map((address) => (
+      {!!addresses ? (
+        addresses.map((address: Address) => (
           <Card
             key={address.id}
             className="h-full rounded-lg flex justify-between flex-col"
@@ -167,7 +141,9 @@ export const AddressComponent = () => {
             <CardFooter className="p-5">
               <div className="flex gap-4">
                 <Button asChild className="p-0 text-teal-600" variant={'link'}>
-                  <Link href={`/settings/edit/edit-address?address-id=`}>
+                  <Link
+                    href={`/settings/edit/edit-address?address-id=${address.id}`}
+                  >
                     Edit
                   </Link>
                 </Button>
@@ -179,32 +155,7 @@ export const AddressComponent = () => {
                   className="my-auto h-min"
                   onSubmit={async (event) => {
                     event.preventDefault();
-                    await RemoveAddress(address.id)
-                      .then(() => {
-                        setRemoved(true);
-                        toast.success(`Removed address successfully!`, {
-                          position: 'top-center',
-                          autoClose: 5000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: false,
-                          draggable: false,
-                          progress: undefined,
-                          theme: 'colored',
-                        });
-                      })
-                      .catch(() => {
-                        toast.error(`Unable to remove address!`, {
-                          position: 'top-center',
-                          autoClose: 5000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: false,
-                          draggable: false,
-                          progress: undefined,
-                          theme: 'colored',
-                        });
-                      });
+                    await removeAddress(address.id);
                   }}
                 >
                   <Button
