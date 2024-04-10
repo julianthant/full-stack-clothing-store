@@ -124,7 +124,7 @@ export function SettingsDashboard() {
       </div>
 
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 pr-9 lg:h-[60px] rounded-tr-[20px]">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 xl:pr-9 pr-7 lg:h-[60px] rounded-tr-[20px]">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -193,9 +193,11 @@ export function SettingsDashboard() {
           </div>
         </header>
 
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-[500px] min-h-[500px] overflow-auto">
-          {showDashboard()}
-        </main>
+        <div className="rounded-br-[20px] overflow-hidden">
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-[500px] min-h-[500px] overflow-auto">
+            {showDashboard()}
+          </main>
+        </div>
       </div>
     </div>
   );
