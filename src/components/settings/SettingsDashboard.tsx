@@ -170,12 +170,16 @@ export function SettingsDashboard() {
                 </Link>
                 {menuItems.map((item) => (
                   <div className="grid gap-2 place-items-start" key={item.key}>
-                    <Button asChild variant={'ghost'}>
+                    <Button
+                      asChild
+                      variant={'ghost'}
+                      className="flex items-center justify-start w-full"
+                    >
                       <Link
                         href={`/settings?menu=${selectedKey}`}
                         onClick={() => setSelectedKey(item.key)}
                         className={cn(
-                          'mx-[-0.65rem] flex items-center w-full justify-start gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                          'mx-[-0.65rem] gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                           selectedKey === item.key && 'bg-muted text-primary'
                         )}
                       >
