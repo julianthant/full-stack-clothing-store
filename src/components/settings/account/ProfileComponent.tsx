@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
+import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';
-
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 export const ProfileComponent = () => {
@@ -27,7 +27,10 @@ export const ProfileComponent = () => {
               </Link>
             </div>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+            <Skeleton
+              className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+              isLoaded={!!user}
+            >
               <p>{user?.name}</p>
             </Skeleton>
           </div>
@@ -48,7 +51,10 @@ export const ProfileComponent = () => {
               </Link>
             </div>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+            <Skeleton
+              className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+              isLoaded={!!user}
+            >
               <p>{user?.country || 'N/A'}</p>
             </Skeleton>
           </div>
@@ -93,7 +99,10 @@ export const ProfileComponent = () => {
               </Link>
             </div>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+            <Skeleton
+              className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+              isLoaded={!!user}
+            >
               <p>
                 {(user?.dateOfBirth &&
                   format(user?.dateOfBirth as Date, 'dd MMMM, yyy')) ||
@@ -118,7 +127,10 @@ export const ProfileComponent = () => {
               </Link>
             </div>
 
-            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+            <Skeleton
+              className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+              isLoaded={!!user}
+            >
               <p>{user?.phoneNumber || 'N/A'}</p>
             </Skeleton>
           </div>
