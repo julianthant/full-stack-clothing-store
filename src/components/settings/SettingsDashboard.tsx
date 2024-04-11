@@ -174,31 +174,36 @@ export function SettingsDashboard() {
                       href={`/settings?menu=${selectedKey}`}
                       onClick={() => setSelectedKey(item.key)}
                       className={cn(
-                        'mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                        'mx-[-0.65rem] rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                         selectedKey === item.key && 'bg-muted text-primary'
                       )}
                     >
-                      {item.value}
-                      {item.key}
+                      <p>
+                        {item.value} {item.key}
+                      </p>
 
-                      {subMenu?.value.map((item) => (
-                        <Button key={item.key} asChild variant="ghost">
-                          <Link
-                            href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
-                              item.key
-                            )}`}
-                            className={cn(
-                              'text-muted-foreground transition-colors hover:text-foreground',
-                              menuKey === item.key && 'text-foreground'
-                            )}
-                            onClick={() => {
-                              setMenuKey(item.key);
-                            }}
-                          >
-                            {item.key}
-                          </Link>
-                        </Button>
-                      ))}
+                      {subLinks.map(
+                        (subItem) =>
+                          item.key === subItem.key &&
+                          subItem.value.map((sub) => (
+                            <Button key={sub.key} asChild variant="ghost">
+                              <Link
+                                href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
+                                  sub.key
+                                )}`}
+                                className={cn(
+                                  'text-muted-foreground transition-colors hover:text-foreground',
+                                  menuKey === sub.key && 'text-foreground'
+                                )}
+                                onClick={() => {
+                                  setMenuKey(sub.key);
+                                }}
+                              >
+                                {sub.key}
+                              </Link>
+                            </Button>
+                          ))
+                      )}
                     </Link>
                   </Button>
                 ))}
