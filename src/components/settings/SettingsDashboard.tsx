@@ -169,13 +169,13 @@ export function SettingsDashboard() {
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
                 {menuItems.map((item) => (
-                  <div className="grid gap-2" key={item.key}>
+                  <div className="grid gap-2 place-items-start" key={item.key}>
                     <Button asChild variant={'ghost'}>
                       <Link
                         href={`/settings?menu=${selectedKey}`}
                         onClick={() => setSelectedKey(item.key)}
                         className={cn(
-                          'mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                          'mx-[-0.65rem] flex items-center justify-start gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                           selectedKey === item.key && 'bg-muted text-primary'
                         )}
                       >
@@ -184,7 +184,7 @@ export function SettingsDashboard() {
                       </Link>
                     </Button>
 
-                    <div className="grid pl-4 gap-1">
+                    <div className="grid place-items-start pl-4 gap-1">
                       {subLinks.map(
                         (subItem) =>
                           item.key === subItem.key &&
