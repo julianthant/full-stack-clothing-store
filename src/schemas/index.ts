@@ -76,3 +76,11 @@ export const addressSchema = z.object({
   deliveryInstructions: z.string().optional(),
   defaultAddress: z.boolean().default(false).optional(),
 });
+
+export const genderSchema = z.object({
+  gender: z.string(),
+});
+
+export const dateSchema = z.object({
+  date: z.date(),
+});
