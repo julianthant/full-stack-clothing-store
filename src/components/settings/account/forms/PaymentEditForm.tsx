@@ -1,15 +1,15 @@
 'use client';
 
 import * as z from 'zod';
-import React, { useEffect } from 'react';
+import axios from 'axios';
+
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useTransition, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CardEditSchema } from '@/schemas';
-
-import { FormError } from '@/components/utils/FormError';
-import { FormSuccess } from '@/components/utils/Form.Success';
+import { UpdatePaymentMethod } from '@/actions/accountPayments/update-payment-method';
 
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
@@ -17,6 +17,7 @@ import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@nextui-org/react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 import {
   Select,
@@ -35,20 +36,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { UpdatePaymentMethod } from '@/actions/accountPayments/update-payment-method';
-import axios from 'axios';
-
 export function PaymentEditForm() {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
+  const [card, setCard] = useState<PaymentMethod>();
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
   const params = useSearchParams();
   const id = params.get('card-id');
-
-  const [card, setCard] = React.useState<PaymentMethod>();
-  const [isPending, startTransition] = React.useTransition();
 
   useEffect(() => {
     (async () => {
@@ -76,35 +70,24 @@ export function PaymentEditForm() {
   }, [card, form]);
 
   const onSubmit = (values: z.infer<typeof CardEditSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       UpdatePaymentMethod(values, id as string).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
-
-  useEffect(() => {
-    if (!!success) {
-      const successMessage = encodeURI('Payment method updated successfully');
-      router.push(
-        '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
-          successMessage
-      );
-    }
-
-    if (!!error) {
-      const errorMessage = encodeURI('Unable to update payment method');
-      router.push(
-        '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
-          errorMessage
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, error]);
 
   return (
     <Card className="border-0 shadow-none p-0 w-full">
@@ -242,9 +225,6 @@ export function PaymentEditForm() {
                   </FormItem>
                 )}
               />
-
-              <FormError message={error} />
-              <FormSuccess message={success} />
 
               <div className="pt-1">
                 <Button disabled={isPending} className="w-full" type="submit">

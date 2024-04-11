@@ -1,7 +1,8 @@
 'use client';
 
 import * as z from 'zod';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useTransition } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,9 +10,6 @@ import { useSearchParams } from 'next/navigation';
 
 import { newPassword } from '@/actions/accountSecurity/new-password';
 import { NewPasswordSchema } from '@/schemas';
-
-import { FormError } from '../../../utils/FormError';
-import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';
@@ -30,14 +28,12 @@ import {
 interface NewPasswordProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function NewPasswordForm({ className, ...props }: NewPasswordProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
-
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [isPending, startTransition] = React.useTransition();
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
@@ -49,18 +45,29 @@ export function NewPasswordForm({ className, ...props }: NewPasswordProps) {
   });
 
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    setError('');
-    setSuccess('');
-
     if (!token) {
-      setError('Token is missing!');
+      router.push(
+        '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+          encodeURIComponent('Token is missing')
+      );
       return;
     }
 
     startTransition(() => {
       newPassword(values, token).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
@@ -116,9 +123,6 @@ export function NewPasswordForm({ className, ...props }: NewPasswordProps) {
                 </FormItem>
               )}
             />
-
-            <FormError message={error} />
-            <FormSuccess message={success} />
 
             <Button disabled={isPending} className="mt-2" type="submit">
               {isPending && (

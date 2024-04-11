@@ -1,14 +1,12 @@
 'use client';
 
 import * as z from 'zod';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 import { Reset } from '@/actions/authentication/reset';
 import { ResetSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { FormError } from '../../../utils/FormError';
-import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';
@@ -28,10 +26,9 @@ import {
 interface PasswordResetProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function PasswordResetForm({ className, ...props }: PasswordResetProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
+  const [isPending, startTransition] = useTransition();
 
-  const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof ResetSchema>>({
     resolver: zodResolver(ResetSchema),
@@ -41,13 +38,21 @@ export function PasswordResetForm({ className, ...props }: PasswordResetProps) {
   });
 
   const onSubmit = (values: z.infer<typeof ResetSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       Reset(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
@@ -92,9 +97,6 @@ export function PasswordResetForm({ className, ...props }: PasswordResetProps) {
                 </FormItem>
               )}
             />
-
-            <FormError message={error} />
-            <FormSuccess message={success} />
 
             <Button disabled={isPending} className="mt-2" type="submit">
               {isPending && (

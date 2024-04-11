@@ -1,14 +1,12 @@
 'use client';
 
 import * as z from 'zod';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 import { NameSchema } from '@/schemas';
 import { ChangeName } from '@/actions/accountProfile/change-name';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { FormError } from '../../../utils/FormError';
-import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';
@@ -28,10 +26,9 @@ import {
 interface NameEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function NameEditForm({ className, ...props }: NameEditProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
+  const [isPending, startTransition] = useTransition();
 
-  const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
@@ -41,13 +38,21 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
   });
 
   const onSubmit = (values: z.infer<typeof NameSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       ChangeName(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
@@ -55,7 +60,7 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
   return (
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Change Name</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Name</h1>
         <p className="text-sm text-muted-foreground">Enter your new name</p>
       </div>
 
@@ -90,9 +95,6 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
                 </FormItem>
               )}
             />
-
-            <FormError message={error} />
-            <FormSuccess message={success} />
 
             <Button disabled={isPending} className="mt-2" type="submit">
               {isPending && (

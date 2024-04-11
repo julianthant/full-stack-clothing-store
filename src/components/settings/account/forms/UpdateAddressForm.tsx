@@ -1,20 +1,21 @@
 'use client';
 
 import * as z from 'zod';
-import React from 'react';
+import axios from 'axios';
 
 import { useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTransition, useState, useEffect } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addressSchema } from '@/schemas';
 import { UpdateAddress } from '@/actions/accountAddresses/update-address';
 
-import { FormError } from '@/components/utils/FormError';
-import { FormSuccess } from '@/components/utils/Form.Success';
-
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@nextui-org/react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 import {
   Card,
@@ -42,9 +43,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Spinner } from '@nextui-org/react';
-import axios from 'axios';
 
 interface CountryEditProps {
   countryNames: string[];
@@ -52,18 +50,15 @@ interface CountryEditProps {
 }
 
 export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
-
-  const [address, setAddress] = React.useState<Address>();
-  const [isPending, startTransition] = React.useTransition();
+  const [address, setAddress] = useState<Address>();
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
   const params = useSearchParams();
 
   const id = params.get('address-id');
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       const existingAddress = await axios.get(
         `/api/addresses/getUnique/${id as string}`
@@ -77,7 +72,7 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
     resolver: zodResolver(addressSchema),
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!!address) {
       form.reset({
         country: address?.country || '',
@@ -95,35 +90,24 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
   }, [address, form]);
 
   const onSubmit = (values: z.infer<typeof addressSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       UpdateAddress(values, id as string).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Addresses&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Addresses&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
-
-  React.useEffect(() => {
-    if (!!success) {
-      const successMessage = encodeURI('Address updated successfully');
-      router.push(
-        '/settings/?menu=Account&subMenu=Addresses&success=true&message=' +
-          successMessage
-      );
-    }
-
-    if (!!error) {
-      const errorMessage = encodeURI('Unable to update address');
-      router.push(
-        '/settings/?menu=Account&subMenu=Addresses&success=false&message=' +
-          errorMessage
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, error]);
 
   return (
     <Card className="border-0 shadow-none p-0 w-[500px]">
@@ -356,10 +340,6 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
                   </FormItem>
                 )}
               />
-
-              <FormError message={error} />
-              <FormSuccess message={success} />
-
               <div className="pt-1">
                 <Button disabled={isPending} className="w-full" type="submit">
                   {isPending && (

@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
 import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';
-import { ToastContainer, toast } from 'react-toastify';
 
 export const AccountComponent = () => {
   const user = useCurrentUser();
@@ -14,8 +14,6 @@ export const AccountComponent = () => {
 
   return (
     <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
-      <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
-
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex">
@@ -80,16 +78,7 @@ export const AccountComponent = () => {
                       )
                     )
                     .catch(() => {
-                      toast.error('Failed to send code', {
-                        position: 'top-center',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: false,
-                        progress: undefined,
-                        theme: 'colored',
-                      });
+                      toast.error('Failed to send code');
                     });
                 } else if (user?.is2FAEnabled) {
                   await sendTwoFactorActivationCode(user?.email as string)
@@ -99,16 +88,7 @@ export const AccountComponent = () => {
                       )
                     )
                     .catch(() => {
-                      toast.error('Failed to send code', {
-                        position: 'top-center',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: false,
-                        progress: undefined,
-                        theme: 'colored',
-                      });
+                      toast.error('Failed to send code');
                     });
                 }
               }}

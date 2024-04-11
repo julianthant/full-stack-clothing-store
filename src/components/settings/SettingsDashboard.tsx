@@ -1,9 +1,24 @@
 'use client';
 
-import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-
 import Link from 'next/link';
+
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+
+import { UserComponent } from '../utils/UserComponent';
+import { OrderComponent } from './order/OrderComponent';
+import { AccountComponent } from './account/AccountComponent';
+import { ProfileComponent } from './account/ProfileComponent';
+import { AddressComponent } from './account/AdresssComponent';
+import { PaymentComponent } from './account/PaymentComponent';
+import { DashboardComponent } from './dashboard/DashboardComponent';
+
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+
 import {
   Home,
   LineChart,
@@ -15,22 +30,16 @@ import {
   Users,
 } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/Input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { UserComponent } from '../utils/UserComponent';
-import { cn } from '@/lib/utils';
-import { AccountComponent } from './account/AccountComponent';
-import { ProfileComponent } from './account/ProfileComponent';
-import { AddressComponent } from './account/AdresssComponent';
-import { PaymentComponent } from './account/PaymentComponent';
-import { DashboardComponent } from './dashboard/DashboardComponent';
-import { OrderComponent } from './order/OrderComponent';
-
 export function SettingsDashboard() {
   const searchParams = useSearchParams();
   const menuPage = searchParams.get('menu');
   const [selectedKey, setSelectedKey] = useState(menuPage || 'Account');
+
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const message = params.get('message');
+  const success = params.get('success');
 
   const menuItems = [
     {
@@ -64,7 +73,7 @@ export function SettingsDashboard() {
     {
       key: 'Account',
       value: [
-        { key: 'Profiles', value: <ProfileComponent /> },
+        { key: 'Profile', value: <ProfileComponent /> },
         { key: 'Login & Security', value: <AccountComponent /> },
         {
           key: 'Payments',
@@ -77,6 +86,21 @@ export function SettingsDashboard() {
 
   const subMenu = subLinks.find((item) => item.key === selectedKey);
   const subMenuPage = decodeURIComponent(searchParams.get('subMenu') || '');
+
+  useEffect(() => {
+    if (!success) return;
+
+    if (success === 'true') {
+      toast.success(message);
+    } else if (success === 'false') {
+      toast.error(message);
+    }
+
+    router.replace(`/settings?menu=${selectedKey}&subMenu=${subMenuPage}`);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
+
   const firstComponent = subMenu?.value[0];
 
   const getDefaultSubMenu = () => {
@@ -86,14 +110,13 @@ export function SettingsDashboard() {
 
   const [menuKey, setMenuKey] = useState(subMenuPage || firstComponent?.key);
 
-  const showDashboard = () => {
+  const ShowDashboard = () => {
     const menuLink = subMenu?.value.find((item) => item.key === menuKey);
-
     return menuLink?.value || null;
   };
 
   return (
-    <div className="grid border rounded-[20px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] mb-16">
+    <div className="grid border rounded-[20px] w-full md:grid-cols-[250px_1fr] lg:grid-cols-[280px_1fr] mb-16">
       <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
         <div className="flex h-full max-h-dvh flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -194,8 +217,8 @@ export function SettingsDashboard() {
         </header>
 
         <div className="rounded-br-[20px] overflow-hidden">
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-[500px] min-h-[500px] overflow-auto">
-            {showDashboard()}
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-[570px] min-h-[500px] overflow-auto">
+            <ShowDashboard />
           </main>
         </div>
       </div>

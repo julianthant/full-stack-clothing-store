@@ -1,14 +1,12 @@
 'use client';
 
 import * as z from 'zod';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeCountry } from '@/actions/accountProfile/change-country';
-
-import { FormError } from '../../../utils/FormError';
-import { FormSuccess } from '../../../utils/Form.Success';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';
@@ -44,10 +42,9 @@ export function CountryEditForm({
   className,
   ...props
 }: CountryEditProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
+  const [isPending, startTransition] = useTransition();
 
-  const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
@@ -57,13 +54,21 @@ export function CountryEditForm({
   });
 
   const onSubmit = (values: z.infer<typeof NameSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       ChangeCountry(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
@@ -71,11 +76,9 @@ export function CountryEditForm({
   return (
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Change Country
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Country</h1>
         <p className="text-sm text-muted-foreground">
-          Choose your current country
+          Change your current country
         </p>
       </div>
 
@@ -116,9 +119,6 @@ export function CountryEditForm({
                 </FormItem>
               )}
             />
-
-            <FormError message={error} />
-            <FormSuccess message={success} />
 
             <Button disabled={isPending} className="mt-2" type="submit">
               {isPending && (

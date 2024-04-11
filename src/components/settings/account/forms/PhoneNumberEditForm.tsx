@@ -1,13 +1,11 @@
 'use client';
 
 import * as z from 'zod';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PhoneNumberSchema } from '@/schemas';
-
-import { FormError } from '../../../utils/FormError';
-import { FormSuccess } from '../../../utils/Form.Success';
 import { ChangePhoneNumber } from '@/actions/accountProfile/change-phone-number';
 
 import { cn } from '@/lib/utils';
@@ -44,10 +42,9 @@ export function PhoneNumberEditForm({
   phoneCodes,
   ...props
 }: PhoneNumberEditForm) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
+  const [isPending, startTransition] = useTransition();
 
-  const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof PhoneNumberSchema>>({
     resolver: zodResolver(PhoneNumberSchema),
@@ -57,13 +54,21 @@ export function PhoneNumberEditForm({
   });
 
   const onSubmit = (values: z.infer<typeof PhoneNumberSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       ChangePhoneNumber(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
@@ -82,7 +87,7 @@ export function PhoneNumberEditForm({
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Change Phone Number
+          Primary Phone Number
         </h1>
         <p className="text-sm text-muted-foreground">Enter your new number</p>
       </div>
@@ -164,9 +169,6 @@ export function PhoneNumberEditForm({
                 )}
               />
             </div>
-
-            <FormError message={error} />
-            <FormSuccess message={success} />
 
             <Button disabled={isPending} className="mt-2 w-full" type="submit">
               {isPending && (

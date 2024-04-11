@@ -1,14 +1,14 @@
 'use client';
 
 import * as z from 'zod';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect, useTransition } from 'react';
 
+import { toast } from 'react-toastify';
 import { TwoFASchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
-import { FormError } from '../../../utils/FormError';
-import { FormSuccess } from '../../../utils/Form.Success';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Validate2FACode } from '@/actions/accountSecurity/activate-2fa';
 import { useSearchParams } from 'next/navigation';
@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';
 import { Button } from '../../../ui/button';
 import { useForm } from 'react-hook-form';
-import { ToastContainer, toast } from 'react-toastify';
 
 import {
   Form,
@@ -38,18 +37,16 @@ import {
 interface TwoFAEditProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
-  const [formError, setFormError] = React.useState<string | undefined>('');
-
-  const [isPending, startTransition] = React.useTransition();
+  const [formError, setFormError] = useState<string | undefined>('');
+  const [isPending, startTransition] = useTransition();
 
   const searchParams = useSearchParams();
   let formType = searchParams.get('type');
 
   const user = useCurrentUser();
+  const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (formType !== 'activate' && formType !== 'deactivate') {
       setFormError('Invalid form type');
     }
@@ -63,21 +60,35 @@ export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
   });
 
   const onSubmit = (values: z.infer<typeof TwoFASchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       Validate2FACode(values, formType as string).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (!data) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent('Unable to validate 2FA Code')
+          );
+          return;
+        }
+
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
 
   return (
     <div className={cn('grid w-[300px]', className)} {...props}>
-      <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
-
       <div className="grid gap-6">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
@@ -138,9 +149,6 @@ export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
                   />
                 </div>
 
-                <FormError message={error || formError} />
-                <FormSuccess message={success} />
-
                 <Button
                   disabled={isPending || !!formError}
                   className="w-full"
@@ -159,30 +167,8 @@ export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
             onSubmit={async (event) => {
               event.preventDefault();
               await sendTwoFactorActivationCode(user?.email as string)
-                .then(() =>
-                  toast.success('Verification code sent!', {
-                    position: 'top-center',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                    progress: undefined,
-                    theme: 'colored',
-                  })
-                )
-                .catch(() =>
-                  toast.error('Failed to send code!', {
-                    position: 'top-center',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                    progress: undefined,
-                    theme: 'colored',
-                  })
-                );
+                .then(() => toast.success('Verification code sent!'))
+                .catch(() => toast.error('Failed to send code!'));
             }}
           >
             <Button

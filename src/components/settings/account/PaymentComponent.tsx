@@ -1,22 +1,21 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import axios from 'axios';
 import BlackCard from '../../images/black-card.png';
 
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { roboto } from '@/components/utils/Fonts';
-import { getPaymentMethodsByUserId } from '@/data/get-payment-method';
-
 import { RemovePaymentMethod } from '@/actions/accountPayments/remove-payment-method';
-import { toast, ToastContainer } from 'react-toastify';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { Divider, Skeleton, Spinner } from '@nextui-org/react';
 import { PlusCircle } from 'lucide-react';
+import { Divider, Skeleton } from '@nextui-org/react';
 
 import {
   Card,
@@ -25,31 +24,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 
 export const PaymentComponent = () => {
   const [selectedCard, setSelectedCard] = useState(0);
 
   const user = useCurrentUser();
   const queryClient = useQueryClient();
-
-  const router = useRouter();
-  const params = useSearchParams();
-
-  const message = params.get('message');
-  const success = params.get('success');
-
-  useEffect(() => {
-    if (success === 'true') {
-      toast.success(message);
-    } else if (success === 'false') {
-      toast.error(message);
-    }
-
-    router.replace('/settings?menu=Account&subMenu=Payments');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success]);
 
   const { data: paymentMethods, isLoading } = useQuery({
     queryFn: () =>
@@ -73,15 +53,14 @@ export const PaymentComponent = () => {
   });
 
   return (
-    <div className="sm:flex grid gap-4">
-      <Card className="h-min">
-        <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
+    <div className="xl:flex grid gap-4">
+      <Card className="h-min w-[362px]">
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
           <CardDescription>Methods & Accounts</CardDescription>
         </CardHeader>
         <CardContent className="grid bg-foreground-100 p-0 rounded-b-lg">
-          {!!paymentMethods ? (
+          {!isLoading ? (
             paymentMethods.map((card: PaymentMethod, index: number) => (
               <div
                 key={index}
@@ -91,7 +70,7 @@ export const PaymentComponent = () => {
                   selectedCard === index && 'bg-foreground-200'
                 )}
               >
-                <div className="relative flex w-[340px] items-center justify-start px-6 py-4 gap-3">
+                <div className="relative flex items-center justify-start px-6 py-4 gap-3">
                   <div className="relative">
                     <Image
                       src={BlackCard}
@@ -170,8 +149,8 @@ export const PaymentComponent = () => {
         </CardContent>
       </Card>
 
-      {!!paymentMethods && paymentMethods?.length > 0 && (
-        <Card className="h-min">
+      {paymentMethods?.length > 0 && (
+        <Card className="h-min w-min">
           <CardHeader>
             <div className="flex justify-between pl-1">
               <div className="grid gap-2">
@@ -206,10 +185,9 @@ export const PaymentComponent = () => {
               <Image
                 src={BlackCard}
                 alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
-                width={300}
-                height={189}
+                width={312}
                 priority
-                style={{ width: '300px', height: 'auto' }}
+                style={{ maxWidth: '312px', height: 'auto' }}
               />
               <p className="absolute top-[20px] left-[30px]">
                 {paymentMethods[selectedCard].bankName}
@@ -218,14 +196,14 @@ export const PaymentComponent = () => {
                 {paymentMethods[selectedCard].expiryMonth.padStart(2, '0')}/
                 {paymentMethods[selectedCard].expiryYear}
               </p>
-              <p className="absolute top-[145px] left-[30px]">
+              <p className="absolute top-[150px] left-[30px]">
                 {paymentMethods[selectedCard].cardHolder}
               </p>
               {paymentMethods[selectedCard].cardScheme === 'MASTERCARD' && (
-                <Icons.masterCardLogo className="absolute top-[116px] right-[37px] w-20 h-20" />
+                <Icons.masterCardLogo className="absolute top-[121px] right-[37px] w-20 h-20" />
               )}
               {paymentMethods[selectedCard].cardScheme === 'VISA' && (
-                <Icons.visaLogo className="absolute top-[115px] right-[42px] w-20 h-20" />
+                <Icons.visaLogo className="absolute top-[120px] right-[42px] w-20 h-20" />
               )}
             </div>
 

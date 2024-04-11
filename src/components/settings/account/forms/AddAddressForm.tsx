@@ -1,22 +1,18 @@
 'use client';
 
 import * as z from 'zod';
-import React from 'react';
+import { useTransition } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addressSchema } from '@/schemas';
-import { AddPaymentMethod } from '@/actions/accountPayments/add-payment-method';
-
-import { FormError } from '@/components/utils/FormError';
-import { FormSuccess } from '@/components/utils/Form.Success';
 
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
+import { AddAddress } from '@/actions/accountAddresses/add-new-address';
 
 import {
   Card,
@@ -44,8 +40,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { AddAddress } from '@/actions/accountAddresses/add-new-address';
 
 interface CountryEditProps {
   countryNames: string[];
@@ -53,47 +47,33 @@ interface CountryEditProps {
 }
 
 export function AddAddressForm({ countryNames, states }: CountryEditProps) {
-  const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
-  const [isPending, startTransition] = React.useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
 
   const form = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
-    defaultValues: {},
   });
 
   const onSubmit = (values: z.infer<typeof addressSchema>) => {
-    setError('');
-    setSuccess('');
-
     startTransition(() => {
       AddAddress(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        if (data.success) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Addresses&success=true&message=' +
+              encodeURIComponent(data.success)
+          );
+        }
+
+        if (data.error) {
+          router.push(
+            '/settings/?menu=Account&subMenu=Addresses&success=false&message=' +
+              encodeURIComponent(data.error)
+          );
+        }
       });
     });
   };
-
-  React.useEffect(() => {
-    if (!!success) {
-      const successMessage = encodeURI('Address added successfully');
-      router.push(
-        '/settings/?menu=Account&subMenu=Addresses&success=true&message=' +
-          successMessage
-      );
-    }
-
-    if (!!error) {
-      const errorMessage = encodeURI('Unable to add address');
-      router.push(
-        '/settings/?menu=Account&subMenu=Addresses&success=false&message=' +
-          errorMessage
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, error]);
 
   return (
     <Card className="border-0 shadow-none p-0 w-[500px]">
@@ -317,9 +297,6 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
                 </FormItem>
               )}
             />
-
-            <FormError message={error} />
-            <FormSuccess message={success} />
 
             <div className="pt-1">
               <Button disabled={isPending} className="w-full" type="submit">

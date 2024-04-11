@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import axios from 'axios';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { useSearchParams, useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { RemoveAddress } from '@/actions/accountAddresses/remove-address';
 
 import { Button } from '@/components/ui/button';
 import { Divider, Skeleton } from '@nextui-org/react';
@@ -18,30 +19,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import axios from 'axios';
-import { RemoveAddress } from '@/actions/accountAddresses/remove-address';
-import { useEffect } from 'react';
 
 export const AddressComponent = () => {
   const user = useCurrentUser();
   const queryClient = useQueryClient();
-
-  const router = useRouter();
-  const params = useSearchParams();
-
-  const message = params.get('message');
-  const success = params.get('success');
-
-  useEffect(() => {
-    if (success === 'true') {
-      toast.success(message);
-    } else if (success === 'false') {
-      toast.error(message);
-    }
-
-    router.replace('/settings?menu=Account&subMenu=Addresses');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success]);
 
   const { data: addresses } = useQuery({
     queryFn: () =>
@@ -66,12 +47,7 @@ export const AddressComponent = () => {
   return (
     <div className="grid gap-4 relative 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2">
       <Card className="rounded-lg p-4 min-h-[319px]">
-        <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
-        <Button
-          className="shadow-none"
-          asChild
-          onClick={() => router.push('/settings/edit/add-new-address')}
-        >
+        <Link href="/settings/edit/add-new-address">
           <CardContent className="hover:bg-foreground-200 bg-foreground-100 cursor-pointer flex flex-col items-center justify-center p-0 rounded-lg h-full border-2 border-dashed border-foreground-400">
             <PlusIcon size={70} className="text-foreground-400 mx-auto" />
             <div className="flex items-center justify-center">
@@ -80,14 +56,14 @@ export const AddressComponent = () => {
               </p>
             </div>
           </CardContent>
-        </Button>
+        </Link>
       </Card>
 
       {!!addresses ? (
         addresses.map((address: Address) => (
           <Card
             key={address.id}
-            className="h-full rounded-lg flex justify-between flex-col"
+            className="h-full rounded-lg flex justify-between flex-col min-h-[319px]"
           >
             {address.defaultAddress && (
               <CardHeader className="px-5 py-2 border-b">

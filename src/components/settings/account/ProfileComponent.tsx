@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { format } from 'date-fns';
 import { Divider } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/react';
 
@@ -57,7 +58,56 @@ export const ProfileComponent = () => {
           <div className="space-y-2">
             <div className="flex">
               <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-                <h3 className="font-semibold">Mobile Number</h3>
+                <h3 className="font-semibold">Gender</h3>
+              </Skeleton>
+
+              <Link
+                href={'/settings/edit/gender'}
+                className="font-semibold ml-auto text-green-600"
+              >
+                Edit
+              </Link>
+            </div>
+
+            <Skeleton
+              className="w-1/3 rounded-lg h-6 capitalize"
+              isLoaded={!!user}
+            >
+              <p>{user?.gender || 'N/A'}</p>
+            </Skeleton>
+          </div>
+
+          <Divider />
+
+          <div className="space-y-2">
+            <div className="flex">
+              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+                <h3 className="font-semibold">Date Of Birth</h3>
+              </Skeleton>
+
+              <Link
+                href={'/settings/edit/date-of-birth'}
+                className="font-semibold ml-auto text-green-600"
+              >
+                Edit
+              </Link>
+            </div>
+
+            <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+              <p>
+                {(user?.dateOfBirth &&
+                  format(user?.dateOfBirth as Date, 'dd MMMM, yyy')) ||
+                  'N/A'}
+              </p>
+            </Skeleton>
+          </div>
+
+          <Divider />
+
+          <div className="space-y-2">
+            <div className="flex">
+              <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
+                <h3 className="font-semibold">Primary Mobile Number</h3>
               </Skeleton>
 
               <Link
