@@ -12,7 +12,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       <div className="flex items-center justify-center">
         <Link
           className="text-sm font-semibold hover:underline underline-offset-4"
-          href="/settings?menu=Account&subMenu=Profiles"
+          href="/settings?menu=Account&subMenu=Profile"
         >
           Back to Settings
         </Link>
