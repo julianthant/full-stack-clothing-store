@@ -246,11 +246,9 @@ export function SettingsDashboard() {
           </div>
         </header>
 
-        <div className="rounded-br-[20px] overflow-hidden">
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-[570px] min-h-[500px] overflow-auto">
-            <ShowDashboard />
-          </main>
-        </div>
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 h-full">
+          <ShowDashboard />
+        </main>
       </div>
     </div>
   );
