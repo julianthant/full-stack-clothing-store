@@ -175,7 +175,7 @@ export function SettingsDashboard() {
                         href={`/settings?menu=${selectedKey}`}
                         onClick={() => setSelectedKey(item.key)}
                         className={cn(
-                          'mx-[-0.65rem] flex items-center w-full justify-start gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                          'mx-[-0.65rem] flex items-center w-full mr-auto gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                           selectedKey === item.key && 'bg-muted text-primary'
                         )}
                       >
