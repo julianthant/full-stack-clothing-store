@@ -55,11 +55,14 @@ export const {
         session.user.name = token.name;
         session.user.email = token.email as string;
         session.user.country = token.country as string | undefined;
+        session.user.gender = token.gender as string | undefined;
         session.user.phoneNumber = token.phoneNumber as string | undefined;
-
+        session.user.dateOfBirth = token.dateOfBirth as Date | undefined;
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.is2FAEnabled = token.is2FAEnabled as boolean;
       }
+
+      console.log(session);
 
       return session;
     },
@@ -78,7 +81,9 @@ export const {
       token.country = existingUser.country;
       token.phoneNumber = existingUser.phoneNumber;
 
+      token.dateOfBirth = existingUser.dateOfBirth;
       token.role = existingUser.role;
+      token.gender = existingUser.gender;
 
       token.isOAuth = !!existingAccount;
       token.is2FAEnabled = existingUser.is2FAEnabled;
