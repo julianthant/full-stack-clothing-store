@@ -7,6 +7,7 @@ import { getUserById } from '@/data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { addressSchema } from '@/schemas';
+import { getAddressById } from '@/data/get-address';
 
 export const UpdateAddress = async (
   values: z.infer<typeof addressSchema>,
@@ -22,6 +23,16 @@ export const UpdateAddress = async (
 
   if (!dbUser) {
     return { error: 'Unauthorized' };
+  }
+
+  if (!id) {
+    return { error: 'Invalid Address ID!' };
+  }
+
+  const address = await getAddressById(id);
+
+  if (!address) {
+    return { error: 'Invalid Address ID!' };
   }
 
   const validatedFields = addressSchema.safeParse(values);
@@ -58,8 +69,18 @@ export const UpdateAddress = async (
     return { error: 'State is required!' };
   }
 
-  if (country !== 'United States' && states) {
+  if (
+    country !== 'United States' &&
+    address.country !== 'United States' &&
+    states
+  ) {
     return { error: 'State is not required!' };
+  }
+
+  let stateCheck = states;
+
+  if (address.country === 'United States' && country !== 'United States') {
+    stateCheck = '';
   }
 
   if (states) {
@@ -105,7 +126,7 @@ export const UpdateAddress = async (
       streetOptional,
       city,
       country,
-      states,
+      states: stateCheck,
       zipCode,
       phoneNumber,
       deliveryInstructions,
