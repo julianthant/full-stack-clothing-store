@@ -19,6 +19,8 @@ model User {
   password          String?
   phoneNumber       String?
   country           String?
+  gender            String?
+  dateOfBirth       DateTime?
   role              UserRole           @default(USER)
   emailVerified     DateTime?
   image             String?
