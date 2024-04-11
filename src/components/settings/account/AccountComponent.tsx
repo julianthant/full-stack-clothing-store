@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { cn } from '@/lib/utils';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
@@ -31,7 +32,10 @@ export const AccountComponent = () => {
             )}
           </div>
 
-          <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+          <Skeleton
+            className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+            isLoaded={!!user}
+          >
             <p>{user?.email}</p>
           </Skeleton>
         </div>
@@ -52,7 +56,10 @@ export const AccountComponent = () => {
             </Link>
           </div>
 
-          <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+          <Skeleton
+            className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+            isLoaded={!!user}
+          >
             <p>{'********' || 'N/A'}</p>
           </Skeleton>
         </div>
@@ -101,7 +108,10 @@ export const AccountComponent = () => {
               </button>
             </form>
           </div>
-          <Skeleton className="w-1/3 rounded-lg h-6" isLoaded={!!user}>
+          <Skeleton
+            className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
+            isLoaded={!!user}
+          >
             <p>{user?.is2FAEnabled ? 'Enabled' : 'Disabled'}</p>
           </Skeleton>
         </div>
