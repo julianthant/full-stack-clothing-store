@@ -29,7 +29,6 @@ import {
   ShoppingCart,
   Users,
 } from 'lucide-react';
-import Image from 'next/image';
 
 export function SettingsDashboard() {
   const searchParams = useSearchParams();
@@ -170,46 +169,46 @@ export function SettingsDashboard() {
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
                 {menuItems.map((item) => (
-                  <Button asChild variant={'ghost'} key={item.key}>
-                    <Link
-                      href={`/settings?menu=${selectedKey}`}
-                      onClick={() => setSelectedKey(item.key)}
-                      className={cn(
-                        'mx-[-0.65rem] grid rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
-                        selectedKey === item.key && 'bg-muted text-primary'
-                      )}
-                    >
-                      <div className="flex items-center gap-4">
+                  <div className="grid gap-2">
+                    <Button asChild variant={'ghost'} key={item.key}>
+                      <Link
+                        href={`/settings?menu=${selectedKey}`}
+                        onClick={() => setSelectedKey(item.key)}
+                        className={cn(
+                          'mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                          selectedKey === item.key && 'bg-muted text-primary'
+                        )}
+                      >
                         {item.value}
                         {item.key}
-                      </div>
+                      </Link>
+                    </Button>
 
-                      <div className="grid pl-4 gap-4">
-                        {subLinks.map(
-                          (subItem) =>
-                            item.key === subItem.key &&
-                            subItem.value.map((sub) => (
-                              <Button key={sub.key} asChild variant="ghost">
-                                <Link
-                                  href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
-                                    sub.key
-                                  )}`}
-                                  className={cn(
-                                    'text-muted-foreground transition-colors hover:text-foreground',
-                                    menuKey === sub.key && 'text-foreground'
-                                  )}
-                                  onClick={() => {
-                                    setMenuKey(sub.key);
-                                  }}
-                                >
-                                  {sub.key}
-                                </Link>
-                              </Button>
-                            ))
-                        )}
-                      </div>
-                    </Link>
-                  </Button>
+                    <div className="grid pl-4 gap-1">
+                      {subLinks.map(
+                        (subItem) =>
+                          item.key === subItem.key &&
+                          subItem.value.map((sub) => (
+                            <Button key={sub.key} asChild variant="ghost">
+                              <Link
+                                href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
+                                  sub.key
+                                )}`}
+                                className={cn(
+                                  'text-muted-foreground transition-colors hover:text-foreground',
+                                  menuKey === sub.key && 'text-foreground'
+                                )}
+                                onClick={() => {
+                                  setMenuKey(sub.key);
+                                }}
+                              >
+                                {sub.key}
+                              </Link>
+                            </Button>
+                          ))
+                      )}
+                    </div>
+                  </div>
                 ))}
               </nav>
             </SheetContent>
@@ -246,7 +245,7 @@ export function SettingsDashboard() {
           </div>
         </header>
 
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 h-full">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
           <ShowDashboard />
         </main>
       </div>
