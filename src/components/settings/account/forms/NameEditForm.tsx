@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useTransition, HTMLAttributes } from 'react';
 
 import { NameSchema } from '@/schemas';
 import { ChangeName } from '@/actions/accountProfile/change-name';
@@ -23,7 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-interface NameEditProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface NameEditProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function NameEditForm({ className, ...props }: NameEditProps) {
   const [isPending, startTransition] = useTransition();

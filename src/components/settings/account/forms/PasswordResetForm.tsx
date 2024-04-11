@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useTransition, HTMLAttributes } from 'react';
 
 import { Reset } from '@/actions/authentication/reset';
 import { ResetSchema } from '@/schemas';
@@ -23,7 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-interface PasswordResetProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface PasswordResetProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function PasswordResetForm({ className, ...props }: PasswordResetProps) {
   const [isPending, startTransition] = useTransition();

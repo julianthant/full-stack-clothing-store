@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useTransition, HTMLAttributes } from 'react';
 
 import { ResetSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form';
 import { newEmailToken } from '@/actions/accountSecurity/new-email';
 
-interface EmailEditProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface EmailEditProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function EmailResetForm({ className, ...props }: EmailEditProps) {
   const [isPending, startTransition] = useTransition();

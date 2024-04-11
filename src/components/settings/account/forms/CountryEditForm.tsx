@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useTransition, HTMLAttributes } from 'react';
 
 import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-interface CountryEditProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CountryEditProps extends HTMLAttributes<HTMLDivElement> {
   countryNames: string[];
 }
 

@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useTransition, HTMLAttributes } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PhoneNumberSchema } from '@/schemas';
@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-interface PhoneNumberEditForm extends React.HTMLAttributes<HTMLDivElement> {
+interface PhoneNumberEditForm extends HTMLAttributes<HTMLDivElement> {
   phoneCodes: { name: string; dialCode: string }[];
 }
 

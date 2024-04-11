@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useTransition, HTMLAttributes } from 'react';
 
 import { ChangeDOB } from '@/actions/accountProfile/change-dateOfBirth';
 import { dateSchema } from '@/schemas';
@@ -31,7 +31,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-interface PhoneNumberEditForm extends React.HTMLAttributes<HTMLDivElement> {}
+interface PhoneNumberEditForm extends HTMLAttributes<HTMLDivElement> {}
 
 export function DateOfBirthForm({ className, ...props }: PhoneNumberEditForm) {
   const [isPending, startTransition] = useTransition();

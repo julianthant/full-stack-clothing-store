@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect, useTransition, HTMLAttributes } from 'react';
 
 import { toast } from 'react-toastify';
 import { TwoFASchema } from '@/schemas';
@@ -34,7 +34,7 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp';
 
-interface TwoFAEditProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface TwoFAEditProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
   const [formError, setFormError] = useState<string | undefined>('');
