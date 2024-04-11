@@ -169,17 +169,38 @@ export function SettingsDashboard() {
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
                 {menuItems.map((item) => (
-                  <Link
-                    href={`/settings?menu=${selectedKey}`}
-                    className={cn(
-                      'mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
-                      selectedKey === item.key && 'bg-muted text-primary'
-                    )}
-                    key={item.key}
-                  >
-                    {item.value}
-                    {item.key}
-                  </Link>
+                  <Button asChild variant={'ghost'} key={item.key}>
+                    <Link
+                      href={`/settings?menu=${selectedKey}`}
+                      onClick={() => setSelectedKey(item.key)}
+                      className={cn(
+                        'mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                        selectedKey === item.key && 'bg-muted text-primary'
+                      )}
+                    >
+                      {item.value}
+                      {item.key}
+
+                      {subMenu?.value.map((item) => (
+                        <Button key={item.key} asChild variant="ghost">
+                          <Link
+                            href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
+                              item.key
+                            )}`}
+                            className={cn(
+                              'text-muted-foreground transition-colors hover:text-foreground',
+                              menuKey === item.key && 'text-foreground'
+                            )}
+                            onClick={() => {
+                              setMenuKey(item.key);
+                            }}
+                          >
+                            {item.key}
+                          </Link>
+                        </Button>
+                      ))}
+                    </Link>
+                  </Button>
                 ))}
               </nav>
             </SheetContent>
