@@ -5,7 +5,9 @@ export type ExtendedUser = DefaultSession['user'] & {
   country: string | undefined;
   phoneNumber: string | undefined;
 
+  dateOfBirth: Date | undefined;
   role: UserRole;
+  gender: string | undefined;
 
   isOAuth: boolean;
   is2FAEnabled: boolean;
