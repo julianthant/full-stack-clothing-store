@@ -169,8 +169,8 @@ export function SettingsDashboard() {
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
                 {menuItems.map((item) => (
-                  <div className="grid gap-2">
-                    <Button asChild variant={'ghost'} key={item.key}>
+                  <div className="grid gap-2" key={item.key}>
+                    <Button asChild variant={'ghost'}>
                       <Link
                         href={`/settings?menu=${selectedKey}`}
                         onClick={() => setSelectedKey(item.key)}
