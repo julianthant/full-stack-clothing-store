@@ -21,6 +21,9 @@ const config = {
         'dark-overlay':
           'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))',
       },
+      screens: {
+        xs: '375px',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
