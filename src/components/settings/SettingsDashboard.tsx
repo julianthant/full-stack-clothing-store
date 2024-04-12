@@ -216,6 +216,7 @@ export function SettingsDashboard() {
                                     'text-foreground bg-muted'
                                 )}
                                 onClick={() => {
+                                  setSelectedKey(item.key);
                                   setMenuKey(sub.key);
                                 }}
                               >
