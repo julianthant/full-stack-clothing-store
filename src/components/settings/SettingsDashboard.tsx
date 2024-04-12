@@ -29,6 +29,7 @@ import {
   ShoppingCart,
   Users,
 } from 'lucide-react';
+import { get } from 'http';
 
 export function SettingsDashboard() {
   const searchParams = useSearchParams();
@@ -103,7 +104,10 @@ export function SettingsDashboard() {
 
   const firstComponent = subMenu?.value[0];
 
-  const getDefaultSubMenu = () => {
+  const getDefaultSubMenu = (key: string) => {
+    const subMenu = subLinks.find((item) => item.key === key);
+    const firstComponent = subMenu?.value[0];
+
     const defaultSubMenu = firstComponent?.key;
     return encodeURIComponent(defaultSubMenu || '');
   };
@@ -127,9 +131,9 @@ export function SettingsDashboard() {
             <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4 pb-2">
               {menuItems.map((item) => (
                 <Link
-                  href={`/settings?menu=${
+                  href={`/settings?menu=${item.key}&subMenu=${getDefaultSubMenu(
                     item.key
-                  }&subMenu=${getDefaultSubMenu()}`}
+                  )}`}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
                     selectedKey === item.key && 'bg-muted text-primary'
@@ -160,12 +164,12 @@ export function SettingsDashboard() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
+              <nav className="grid text-lg font-medium">
                 <Link
-                  href="#"
-                  className="flex items-center gap-2 text-lg font-semibold"
+                  href="/"
+                  className="flex items-center gap-2 text-lg font-semibold pb-2"
                 >
-                  <Package2 className="h-6 w-6" />
+                  CLOTHES.CO
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
                 {menuItems.map((item) => (
@@ -177,7 +181,10 @@ export function SettingsDashboard() {
                     >
                       <Link
                         href={`/settings?menu=${selectedKey}`}
-                        onClick={() => setSelectedKey(item.key)}
+                        onClick={() => {
+                          setSelectedKey(item.key);
+                          setMenuKey(getDefaultSubMenu(item.key));
+                        }}
                         className={cn(
                           'mx-[-0.65rem] gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                           selectedKey === item.key && 'bg-muted text-primary'
@@ -193,14 +200,20 @@ export function SettingsDashboard() {
                         (subItem) =>
                           item.key === subItem.key &&
                           subItem.value.map((sub) => (
-                            <Button key={sub.key} asChild variant="ghost">
+                            <Button
+                              key={sub.key}
+                              asChild
+                              variant="ghost"
+                              className="w-52 flex items-center justify-start"
+                            >
                               <Link
                                 href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
                                   sub.key
                                 )}`}
                                 className={cn(
-                                  'text-muted-foreground transition-colors hover:text-foreground',
-                                  menuKey === sub.key && 'text-foreground'
+                                  'text-muted-foreground rounded-xl transition-colors hover:text-foreground',
+                                  menuKey === sub.key &&
+                                    'text-foreground bg-muted'
                                 )}
                                 onClick={() => {
                                   setMenuKey(sub.key);
