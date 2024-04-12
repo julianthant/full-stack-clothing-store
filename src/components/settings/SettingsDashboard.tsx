@@ -72,15 +72,44 @@ export function SettingsDashboard() {
 
   const subLinks = [
     {
+      key: 'Dashboard',
+      value: [
+        { key: 'Overview', value: 'Overview' },
+        { key: 'Performance', value: 'Performance' },
+        // Add more sub-items as needed
+      ],
+    },
+    {
+      key: 'Orders',
+      value: [
+        { key: 'Order History', value: 'Order History' },
+        { key: 'Track Order', value: 'Track Order' },
+        // Add more sub-items as needed
+      ],
+    },
+    {
+      key: 'Products',
+      value: [
+        { key: 'Product List', value: 'Product List' },
+        { key: 'Add Product', value: 'Add Product' },
+        // Add more sub-items as needed
+      ],
+    },
+    {
       key: 'Account',
       value: [
         { key: 'Profile', value: <ProfileComponent /> },
         { key: 'Login & Security', value: <AccountComponent /> },
-        {
-          key: 'Payments',
-          value: <PaymentComponent />,
-        },
+        { key: 'Payments', value: <PaymentComponent /> },
         { key: 'Addresses', value: <AddressComponent /> },
+      ],
+    },
+    {
+      key: 'Analytics',
+      value: [
+        { key: 'Sales Data', value: 'Sales Data' },
+        { key: 'Customer Insights', value: 'Customer Insights' },
+        // Add more sub-items as needed
       ],
     },
   ];
@@ -172,62 +201,64 @@ export function SettingsDashboard() {
                   CLOTHES.CO
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
-                {menuItems.map((item) => (
-                  <div className="grid gap-2 place-items-start" key={item.key}>
-                    <Button
-                      asChild
-                      variant={'ghost'}
-                      className="flex items-center justify-start w-full"
-                    >
-                      <Link
-                        href={`/settings?menu=${selectedKey}`}
-                        onClick={() => {
-                          setSelectedKey(item.key);
-                          setMenuKey(getDefaultSubMenu(item.key));
-                        }}
-                        className={cn(
-                          'mx-[-0.65rem] gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
-                          selectedKey === item.key && 'bg-muted text-primary'
-                        )}
+                <div className="grid gap-2">
+                  {menuItems.map((item) => (
+                    <div className="grid gap-2" key={item.key}>
+                      <Button
+                        asChild
+                        variant={'ghost'}
+                        className="flex items-center justify-start w-full"
                       >
-                        {item.value}
-                        {item.key}
-                      </Link>
-                    </Button>
+                        <Link
+                          href={`/settings?menu=${selectedKey}`}
+                          onClick={() => {
+                            setSelectedKey(item.key);
+                            setMenuKey(getDefaultSubMenu(item.key));
+                          }}
+                          className={cn(
+                            'mx-[-0.65rem] gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
+                            selectedKey === item.key && 'bg-muted text-primary'
+                          )}
+                        >
+                          {item.value}
+                          {item.key}
+                        </Link>
+                      </Button>
 
-                    <div className="grid place-items-start pl-4 gap-1">
-                      {subLinks.map(
-                        (subItem) =>
-                          item.key === subItem.key &&
-                          subItem.value.map((sub) => (
-                            <Button
-                              key={sub.key}
-                              asChild
-                              variant="ghost"
-                              className="w-52 flex items-center justify-start"
-                            >
-                              <Link
-                                href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
-                                  sub.key
-                                )}`}
-                                className={cn(
-                                  'text-muted-foreground rounded-xl transition-colors hover:text-foreground',
-                                  menuKey === sub.key &&
-                                    'text-foreground bg-muted'
-                                )}
-                                onClick={() => {
-                                  setSelectedKey(item.key);
-                                  setMenuKey(sub.key);
-                                }}
+                      <div className="grid place-items-start pl-4 gap-1">
+                        {subLinks.map(
+                          (subItem) =>
+                            item.key === subItem.key &&
+                            subItem.value.map((sub) => (
+                              <Button
+                                key={sub.key}
+                                asChild
+                                variant="ghost"
+                                className="w-52 flex items-center justify-start"
                               >
-                                {sub.key}
-                              </Link>
-                            </Button>
-                          ))
-                      )}
+                                <Link
+                                  href={`/settings?menu=${selectedKey}&subMenu=${encodeURIComponent(
+                                    sub.key
+                                  )}`}
+                                  className={cn(
+                                    'text-muted-foreground rounded-xl transition-colors hover:text-foreground',
+                                    menuKey === sub.key &&
+                                      'text-foreground bg-muted'
+                                  )}
+                                  onClick={() => {
+                                    setSelectedKey(item.key);
+                                    setMenuKey(sub.key);
+                                  }}
+                                >
+                                  {sub.key}
+                                </Link>
+                              </Button>
+                            ))
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </nav>
             </SheetContent>
           </Sheet>
