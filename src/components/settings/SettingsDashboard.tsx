@@ -147,7 +147,7 @@ export function SettingsDashboard() {
       </div>
 
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 xl:pr-9 pr-7 lg:h-[60px] rounded-tr-[20px]">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 lg:pr-9 pr-3.5 lg:h-[60px] rounded-tr-[20px]">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -244,12 +244,12 @@ export function SettingsDashboard() {
             <Input
               type="search"
               placeholder="Search..."
-              className="w-full rounded-lg bg-background pl-8 lg:w-[180px] xl:w-[320px]"
+              className="w-full rounded-lg bg-background pl-8 lg:w-[160px] xl:w-[320px]"
             />
           </div>
         </header>
 
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 min-h-[560px]">
           <ShowDashboard />
         </main>
       </div>
