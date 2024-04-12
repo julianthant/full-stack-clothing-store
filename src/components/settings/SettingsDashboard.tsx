@@ -137,8 +137,7 @@ export function SettingsDashboard() {
     const subMenu = subLinks.find((item) => item.key === key);
     const firstComponent = subMenu?.value[0];
 
-    const defaultSubMenu = firstComponent?.key;
-    return encodeURIComponent(defaultSubMenu || '');
+    return firstComponent?.key;
   };
 
   const [menuKey, setMenuKey] = useState(subMenuPage || firstComponent?.key);
@@ -201,6 +200,7 @@ export function SettingsDashboard() {
                   CLOTHES.CO
                   <span className="sr-only">Clothes.CO</span>
                 </Link>
+
                 <div className="grid gap-2">
                   {menuItems.map((item) => (
                     <div className="grid gap-2" key={item.key}>
