@@ -62,8 +62,6 @@ export const {
         session.user.is2FAEnabled = token.is2FAEnabled as boolean;
       }
 
-      console.log(session);
-
       return session;
     },
 
