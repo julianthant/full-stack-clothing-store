@@ -189,7 +189,7 @@ export function SettingsDashboard() {
       </div>
 
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 lg:pr-9 pr-3.5 lg:h-[60px] rounded-tr-[20px]">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 lg:pr-9 pr-3.5 lg:h-[60px] rounded-tr-[20px] max-md:rounded-tl-[20px]">
           <Sheet>
             <SheetTrigger asChild>
               <Button
