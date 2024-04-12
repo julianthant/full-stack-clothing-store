@@ -14,8 +14,6 @@ export async function GET(req: NextRequest) {
       where: { id },
     });
 
-    console.log(paymentMethod);
-
     return NextResponse.json(paymentMethod);
   } catch (error) {
     return;
