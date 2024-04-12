@@ -1,13 +1,11 @@
-import Link from 'next/link';
-
-import { cn } from '@/lib/utils';
 import { toast } from 'react-toastify';
+import { Divider } from '@nextui-org/react';
+
 import { useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
-import { Divider } from '@nextui-org/react';
-import { Skeleton } from '@nextui-org/react';
+import EditUserComponent from '@/components/utils/EditUserComponent';
 
 export const AccountComponent = () => {
   const user = useCurrentUser();
@@ -16,62 +14,30 @@ export const AccountComponent = () => {
   return (
     <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
       <div className="space-y-4">
-        <div className="space-y-2">
-          <div className="flex">
-            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-              <h3 className="font-semibold">Email</h3>
-            </Skeleton>
-
-            {!user?.isOAuth && (
-              <Link
-                href={'/settings/edit/new-email'}
-                className="font-semibold ml-auto text-green-600"
-              >
-                Edit
-              </Link>
-            )}
-          </div>
-
-          <Skeleton
-            className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
-            isLoaded={!!user}
-          >
-            <p>{user?.email}</p>
-          </Skeleton>
-        </div>
+        <EditUserComponent
+          Title="Email"
+          Name={user?.email || 'N/A'}
+          FormLink={'/settings/edit/new-email'}
+          ShowEdit={!user?.isOAuth}
+        />
 
         <Divider />
 
-        <div className="space-y-2">
-          <div className="flex">
-            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-              <h3 className="font-semibold">Password</h3>
-            </Skeleton>
-
-            <Link
-              href={'/settings/edit/reset-password'}
-              className="font-semibold ml-auto text-green-600"
-            >
-              Edit
-            </Link>
-          </div>
-
-          <Skeleton
-            className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
-            isLoaded={!!user}
-          >
-            <p>{'********' || 'N/A'}</p>
-          </Skeleton>
-        </div>
+        <EditUserComponent
+          Title="Password"
+          Name={user?.isOAuth ? 'N/A' : '********'}
+          FormLink={'/settings/edit/reset-password'}
+          ShowEdit={!user?.isOAuth}
+        />
 
         <Divider />
 
-        <div className="space-y-2">
-          <div className="flex">
-            <Skeleton className="pr-4 rounded-lg h-6" isLoaded={!!user}>
-              <h3 className="font-semibold">Two Factor Authentication</h3>
-            </Skeleton>
-
+        <EditUserComponent
+          Title="Two Factor Authentication"
+          Name={user?.is2FAEnabled ? 'Enabled' : 'Disabled'}
+          FormLink={''}
+          ShowEdit={false}
+          CustomEdit={
             <form
               className="ml-auto"
               onSubmit={async (event) => {
@@ -107,14 +73,8 @@ export const AccountComponent = () => {
                 {user?.is2FAEnabled ? 'Turn off' : 'Turn on'}
               </button>
             </form>
-          </div>
-          <Skeleton
-            className={cn('rounded-lg h-6', !!user ? 'w-full' : 'w-1/3')}
-            isLoaded={!!user}
-          >
-            <p>{user?.is2FAEnabled ? 'Enabled' : 'Disabled'}</p>
-          </Skeleton>
-        </div>
+          }
+        />
       </div>
     </div>
   );
