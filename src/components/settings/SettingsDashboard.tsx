@@ -17,7 +17,12 @@ import { DashboardComponent } from './dashboard/DashboardComponent';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetOverlay,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 import {
   Home,
@@ -196,7 +201,10 @@ export function SettingsDashboard() {
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="flex flex-col">
+            <SheetContent
+              side="left"
+              className="flex flex-col overflow-y-auto max-h-screen"
+            >
               <nav className="grid text-lg font-medium">
                 <Link
                   href="/"
