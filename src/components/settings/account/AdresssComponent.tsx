@@ -76,7 +76,7 @@ export const AddressComponent = () => {
             <CardContent
               className={cn(
                 'grid gap-2',
-                address.defaultAddress ? 'px-5 pb-8' : 'p-5'
+                address.defaultAddress ? 'px-5 2xl:pb-5 max-2xl:pb-11' : 'p-5'
               )}
             >
               <div className="flex flex-col gap-2">
