@@ -54,7 +54,7 @@ export const PaymentComponent = () => {
 
   return (
     <div className="xl:flex grid gap-4">
-      <Card className="h-min xs:w-[362px] max-w-[295px]">
+      <Card className="h-min sm:w-[362px] max-sm:max-w-[295px]">
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
           <CardDescription>Methods & Accounts</CardDescription>
@@ -152,7 +152,7 @@ export const PaymentComponent = () => {
       </Card>
 
       {paymentMethods?.length > 0 && (
-        <Card className="h-min xs:w-min max-w-[295px]">
+        <Card className="h-min sm:w-min max-sm:max-w-[295px]">
           <CardHeader>
             <div className="flex justify-between pl-1">
               <div className="grid gap-2">
