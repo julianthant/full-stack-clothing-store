@@ -54,7 +54,7 @@ export const PaymentComponent = () => {
 
   return (
     <div className="xl:flex grid gap-4">
-      <Card className="h-min w-[362px]">
+      <Card className="h-min sm:w-[362px] max-sm:max-w-[295px]">
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
           <CardDescription>Methods & Accounts</CardDescription>
@@ -91,7 +91,9 @@ export const PaymentComponent = () => {
                   </div>
 
                   <div className=" rounded-lg">
-                    <h3 className={`${roboto.className} font-bold text-sm`}>
+                    <h3
+                      className={`${roboto.className} font-bold text-sm max-sm:text-xs`}
+                    >
                       {card.bankName} {card.cardScheme} {card.cardType} CARD
                     </h3>
                     <p className="text-xs">
@@ -110,7 +112,7 @@ export const PaymentComponent = () => {
             ))
           ) : (
             <>
-              <div className="px-6 py-4 w-[340px] flex items-center gap-3 justify-start">
+              <div className="px-6 py-4 w-min flex items-center gap-3 justify-start">
                 <div>
                   <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
                 </div>
@@ -122,7 +124,7 @@ export const PaymentComponent = () => {
 
               <Divider />
 
-              <div className="px-6 py-4 w-[340px] flex items-center gap-3 justify-start">
+              <div className="px-6 py-4 w-min flex items-center gap-3 justify-start">
                 <div>
                   <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
                 </div>
@@ -150,7 +152,7 @@ export const PaymentComponent = () => {
       </Card>
 
       {paymentMethods?.length > 0 && (
-        <Card className="h-min w-min">
+        <Card className="h-min sm:w-min max-sm:max-w-[295px]">
           <CardHeader>
             <div className="flex justify-between pl-1">
               <div className="grid gap-2">
@@ -187,23 +189,23 @@ export const PaymentComponent = () => {
                 alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
                 width={312}
                 priority
-                style={{ maxWidth: '312px', height: 'auto' }}
+                className="sm:max-w-[312px] max-w-full aspect-auto h-auto"
               />
-              <p className="absolute top-[20px] left-[30px]">
+              <p className="absolute top-[20px] left-[30px] max-sm:text-sm max-sm:left-[25px]">
                 {paymentMethods[selectedCard].bankName}
               </p>
-              <p className="absolute top-[120px] left-[30px]">
+              <p className="absolute top-[120px] max-sm:top-[95px] max-sm:text-sm left-[30px] max-sm:left-[25px]">
                 {paymentMethods[selectedCard].expiryMonth.padStart(2, '0')}/
                 {paymentMethods[selectedCard].expiryYear}
               </p>
-              <p className="absolute top-[150px] left-[30px]">
+              <p className="absolute top-[150px] max-sm:top-[118px] max-sm:text-sm left-[30px] max-sm:left-[25px]">
                 {paymentMethods[selectedCard].cardHolder}
               </p>
               {paymentMethods[selectedCard].cardScheme === 'MASTERCARD' && (
-                <Icons.masterCardLogo className="absolute top-[121px] right-[37px] w-20 h-20" />
+                <Icons.masterCardLogo className="absolute top-[121px] max-sm:top-[89px] right-[37px] w-20 h-20" />
               )}
               {paymentMethods[selectedCard].cardScheme === 'VISA' && (
-                <Icons.visaLogo className="absolute top-[120px] right-[42px] w-20 h-20" />
+                <Icons.visaLogo className="absolute top-[120px] max-sm:top-[88px] right-[42px] w-20 h-20 max-sm:w-14" />
               )}
             </div>
 
