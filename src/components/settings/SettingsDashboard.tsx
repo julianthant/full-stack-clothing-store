@@ -159,14 +159,15 @@ export function SettingsDashboard() {
             <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4 pb-2">
               {menuItems.map((item) => (
                 <Link
-                  href={`/settings?menu=${item.key}&subMenu=${getDefaultSubMenu(
-                    item.key
-                  )}`}
+                  href={`/settings?menu=${item.key}`}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
                     selectedKey === item.key && 'bg-muted text-primary'
                   )}
-                  onClick={() => setSelectedKey(item.key)}
+                  onClick={() => {
+                    setSelectedKey(item.key);
+                    setMenuKey(getDefaultSubMenu(item.key));
+                  }}
                   key={item.key}
                 >
                   {item.value}
