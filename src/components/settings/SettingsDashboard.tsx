@@ -124,7 +124,7 @@ export function SettingsDashboard() {
           </div>
 
           <div className="flex-1">
-            <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4">
+            <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4 pb-2">
               {menuItems.map((item) => (
                 <Link
                   href={`/settings?menu=${
@@ -249,7 +249,7 @@ export function SettingsDashboard() {
           </div>
         </header>
 
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 min-h-[560px]">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10 max-h-min">
           <ShowDashboard />
         </main>
       </div>
