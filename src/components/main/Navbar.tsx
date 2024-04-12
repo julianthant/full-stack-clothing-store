@@ -33,7 +33,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
       onMenuOpenChange={setIsMenuOpen}
       isBlurred={false}
       maxWidth="2xl"
-      className="border-b-2 "
+      className="border-b-2 sm:py-1"
       classNames={{
         wrapper: 'max-sm:flex-col max-sm:min-h-[6.4rem] max-sm:gap-0',
       }}
