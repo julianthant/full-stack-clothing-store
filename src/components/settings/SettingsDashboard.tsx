@@ -147,6 +147,11 @@ export function SettingsDashboard() {
     return menuLink?.value || null;
   };
 
+  const setMenus = (key: string) => {
+    setSelectedKey(key);
+    setMenuKey(getDefaultSubMenu(key));
+  };
+
   return (
     <div className="grid border rounded-[20px] w-full md:grid-cols-[250px_1fr] lg:grid-cols-[280px_1fr] mb-16">
       <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
@@ -159,15 +164,14 @@ export function SettingsDashboard() {
             <nav className="grid gap-1 items-start px-2 text-sm font-medium lg:px-4 pb-2">
               {menuItems.map((item) => (
                 <Link
-                  href={`/settings?menu=${item.key}`}
+                  href={`/settings?menu=${item.key}&subMenu=${getDefaultSubMenu(
+                    item.key
+                  )}`}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
                     selectedKey === item.key && 'bg-muted text-primary'
                   )}
-                  onClick={() => {
-                    setSelectedKey(item.key);
-                    setMenuKey(getDefaultSubMenu(item.key));
-                  }}
+                  onClick={() => setMenus(item.key)}
                   key={item.key}
                 >
                   {item.value}
@@ -211,11 +215,10 @@ export function SettingsDashboard() {
                         className="flex items-center justify-start w-full"
                       >
                         <Link
-                          href={`/settings?menu=${selectedKey}`}
-                          onClick={() => {
-                            setSelectedKey(item.key);
-                            setMenuKey(getDefaultSubMenu(item.key));
-                          }}
+                          href={`/settings?menu=${
+                            item.key
+                          }&subMenu=${getDefaultSubMenu(item.key)}`}
+                          onClick={() => setMenus(item.key)}
                           className={cn(
                             'mx-[-0.65rem] gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground',
                             selectedKey === item.key && 'bg-muted text-primary'
