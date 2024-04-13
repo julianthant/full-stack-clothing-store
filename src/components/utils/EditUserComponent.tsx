@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Skeleton } from '@nextui-org/react';
 import Link from 'next/link';
+import { Button } from '../ui/button';
 
 interface EditUserComponentProps {
   Title: string;
@@ -29,12 +30,15 @@ const EditUserComponent: FC<EditUserComponentProps> = ({
             <h3 className="font-semibold">{Title}</h3>
 
             {ShowEdit && (
-              <Link
-                href={FormLink}
-                className="font-semibold ml-auto text-green-600"
+              <Button
+                asChild
+                variant={'link'}
+                className="text-green-600 font-semibold text-sm"
               >
-                Edit
-              </Link>
+                <Link href={FormLink} className="ml-auto">
+                  Edit
+                </Link>
+              </Button>
             )}
 
             {CustomEdit}
@@ -46,7 +50,12 @@ const EditUserComponent: FC<EditUserComponentProps> = ({
           <div className="flex items-center">
             <Skeleton className="pr-4 rounded-lg h-4 w-1/6" />
 
-            <p className="font-semibold ml-auto text-green-600">Edit</p>
+            <Button
+              variant={'link'}
+              className="font-semibold ml-auto text-green-600"
+            >
+              Edit
+            </Button>
           </div>
 
           <Skeleton className="rounded-lg h-4 w-1/3 max-sm:w-36" />
