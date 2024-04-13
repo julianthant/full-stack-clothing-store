@@ -6,6 +6,7 @@ import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
 
 import EditUserComponent from '@/components/utils/EditUserComponent';
+import { Button } from '@/components/ui/button';
 
 export const AccountComponent = () => {
   const user = useCurrentUser();
@@ -66,12 +67,13 @@ export const AccountComponent = () => {
                 }
               }}
             >
-              <button
+              <Button
                 className="font-semibold ml-auto text-green-600"
                 type="submit"
+                variant={'link'}
               >
                 {user?.is2FAEnabled ? 'Turn off' : 'Turn on'}
-              </button>
+              </Button>
             </form>
           }
         />
