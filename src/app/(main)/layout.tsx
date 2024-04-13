@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import Navbar from '@/components/main/Navbar';
 import { SessionProvider } from 'next-auth/react';
-import { BreadCrumbs } from '@/components/ui/bread-crumbs';
+
 import Footer from '@/components/main/Footer';
 import { ToastContainer } from 'react-toastify';
 
@@ -26,10 +26,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         draggable={false}
         theme="dark"
       />
-
-      <div className="container py-5">
-        <BreadCrumbs />
-      </div>
 
       {children}
 
