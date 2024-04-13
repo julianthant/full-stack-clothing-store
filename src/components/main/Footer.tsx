@@ -1,11 +1,7 @@
-'use client';
-
 import Link from 'next/link';
 import { FC } from 'react';
-import { gabarito } from '../utils/Fonts';
-import { Divider, Input } from '@nextui-org/react';
-import { Icons } from '../utils/Icons';
-import { Button } from '../ui/button';
+import { Divider } from '@nextui-org/react';
+import { NewsletterComponent } from './NewsletterComponent';
 
 interface FooterProps {}
 
@@ -100,34 +96,7 @@ const Footer: FC<FooterProps> = ({}) => {
   return (
     <div className="bg-foreground-100 pb-20 pt-28 mt-40">
       <div className="container space-y-12 relative">
-        <div className="absolute container top-[-256px] left-0">
-          <div className="bg-black rounded-[23px] flex items-center justify-between h-48 px-20">
-            <div className="w-[600px]">
-              <p className="text-white text-5xl font-black">
-                STAY UPTO DATE ABOUT OUR LATEST OFFERS
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <Input
-                type="email"
-                placeholder="Enter your email address"
-                classNames={{
-                  inputWrapper: 'rounded-full w-[350px] h-[48px] bg-white',
-                }}
-                startContent={
-                  <Icons.mailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                }
-              />
-              <Button
-                variant={'outline'}
-                className="bg-white text-black rounded-full w-[350px] h-12"
-              >
-                <Link href={'/'}>Subscribe to Newsletter</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
+        <NewsletterComponent />
         <nav className="flex items-center justify-between">
           <div className="w-[261px] space-y-8 font-light">
             <Link
