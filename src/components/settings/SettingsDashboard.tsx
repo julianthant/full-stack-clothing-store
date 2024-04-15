@@ -3,6 +3,8 @@
 import Link from 'next/link';
 
 import { toast } from 'react-toastify';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
@@ -17,32 +19,27 @@ import { DashboardComponent } from './dashboard/DashboardComponent';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetOverlay,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import {
   Home,
   LineChart,
   Menu,
   Package,
-  Package2,
   Search,
   ShoppingCart,
   Users,
 } from 'lucide-react';
-import { get } from 'http';
 
 export function SettingsDashboard() {
   const searchParams = useSearchParams();
   const menuPage = searchParams.get('menu');
   const [selectedKey, setSelectedKey] = useState(menuPage || 'Account');
 
+  const user = useCurrentUser();
   const router = useRouter();
   const params = useSearchParams();
+  const queryClient = useQueryClient();
 
   const message = params.get('message');
   const success = params.get('success');
@@ -123,15 +120,31 @@ export function SettingsDashboard() {
   const subMenuPage = decodeURIComponent(searchParams.get('subMenu') || '');
 
   useEffect(() => {
-    if (!success) return;
+    (async () => {
+      if (!success) return;
 
-    if (success === 'true') {
-      toast.success(message);
-    } else if (success === 'false') {
-      toast.error(message);
-    }
+      const paymentMethodRefetch = async () => {
+        await queryClient.refetchQueries({ queryKey: ['payment-methods'] });
+      };
 
-    router.replace(`/settings?menu=${selectedKey}&subMenu=${subMenuPage}`);
+      const addressRefetch = async () => {
+        await queryClient.refetchQueries({ queryKey: ['addresses'] });
+      };
+
+      if (success === 'true') {
+        if (subMenuPage === 'Payments') {
+          await paymentMethodRefetch();
+        } else if (subMenuPage === 'Addresses') {
+          await addressRefetch();
+        }
+
+        toast.success(message);
+      } else if (success === 'false') {
+        toast.error(message);
+      }
+
+      router.replace(`/settings?menu=${selectedKey}&subMenu=${subMenuPage}`);
+    })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
