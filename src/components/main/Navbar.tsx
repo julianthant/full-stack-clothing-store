@@ -7,7 +7,7 @@ import { Icons } from '../utils/Icons';
 import { gabarito } from '../utils/Fonts';
 import { NavbarPages } from './NavbarPages';
 import { AccountDropdown } from './AccountDropdown';
-import { ShoppingCartIcon, Search } from 'lucide-react';
+import { ShoppingCartIcon } from 'lucide-react';
 
 import {
   Navbar,
@@ -38,7 +38,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
         wrapper: 'max-sm:flex-col max-sm:min-h-[6.4rem] max-sm:gap-0',
       }}
     >
-      <div className="flex items-center justify-center w-full max-sm:pt-2 pb-1 max-sm:justify-between">
+      <div className="flex items-center justify-center w-full max-sm:pt-2 pb-1 max-sm:justify-between container">
         <NavbarContent className="flex max-w-min">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
