@@ -24,7 +24,7 @@ export const AddressComponent = () => {
   const user = useCurrentUser();
   const queryClient = useQueryClient();
 
-  const { data: addresses, refetch } = useQuery({
+  const { data: addresses } = useQuery({
     queryFn: () =>
       user
         ? axios.get(`/api/addresses/getAll/${user?.id}`).then((res) => res.data)
@@ -35,7 +35,6 @@ export const AddressComponent = () => {
   const { mutateAsync: removeAddress } = useMutation({
     mutationFn: (addressID: string) => RemoveAddress(addressID),
     onSuccess: () => {
-      refetch();
       queryClient.invalidateQueries({ queryKey: ['addresses'] });
       toast.success('Address removed successfully');
     },
