@@ -1,11 +1,9 @@
 import Link from 'next/link';
-import { FC } from 'react';
 import { Divider } from '@nextui-org/react';
 import { NewsletterComponent } from './NewsletterComponent';
+import { Icons } from '../utils/Icons';
 
-interface FooterProps {}
-
-const Footer: FC<FooterProps> = ({}) => {
+export const Footer = () => {
   const FooterNavs = [
     {
       title: 'COMPANY',
@@ -94,29 +92,38 @@ const Footer: FC<FooterProps> = ({}) => {
   ];
 
   return (
-    <div className="bg-foreground-100 pb-20 pt-28 mt-40">
+    <div className="bg-foreground-100 pb-14 pt-28 lg:mt-40 mt-48">
       <div className="container space-y-12 relative">
         <NewsletterComponent />
-        <nav className="flex items-center justify-between">
-          <div className="w-[261px] space-y-8 font-light">
+        <nav className="lg:flex items-center justify-between grid w-full grid-rows-3 grid-cols-2 gap-y-4">
+          <div className="lg:w-[261px] lg:space-y-6 space-y-3 font-light place-self-stretch col-span-2 h-20">
             <Link
               href="/"
               className={`font-black text-inherit text-4xl drop-shadow-lg max-sm:text-3xl`}
             >
               CLOTHES.CO
             </Link>
-            <p className="text-sm text-foreground-500 leading-7 font-light">
+            <p className="text-sm text-foreground-500 leading-7 font-light max-lg:w-[490px] max-md:w-full">
               We have clothes that suits your style and which you&apos;re proud
-              to wear. From <br /> women to men.
+              to wear. From women to men.
             </p>
+            <div className="flex items-center gap-x-5">
+              <Icons.facebook className="w-6 h-6" />
+              <Icons.gitHub className="w-6 h-6" />
+              <Icons.twitter className="w-6 h-6" />
+              <Icons.google className="w-6 h-6" />
+            </div>
           </div>
+
           {FooterNavs.map((nav, index) => (
-            <div key={index} className="space-y-5">
-              <h3 className="font-normal text-2xl">{nav.title}</h3>
-              <ul className="space-y-5 font-light text-foreground-500">
+            <div key={index} className="lg:space-y-5 space-y-2">
+              <h3 className="font-normal lg:text-xl text-lg">{nav.title}</h3>
+              <ul className="lg:space-y-5 space-y-2 font-light text-foreground-500">
                 {nav.pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={page.link}>{page.title}</Link>
+                    <Link href={page.link} className="lg:text-sm text-xs">
+                      {page.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -136,5 +143,3 @@ const Footer: FC<FooterProps> = ({}) => {
     </div>
   );
 };
-
-export default Footer;
