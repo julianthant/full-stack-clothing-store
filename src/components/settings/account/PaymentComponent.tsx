@@ -47,7 +47,6 @@ export const PaymentComponent = () => {
     mutationFn: (paymentMethodID: string) =>
       RemovePaymentMethod(paymentMethodID),
     onSuccess: () => {
-      refetch();
       queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
       toast.success('Payment method removed successfully!');
     },
