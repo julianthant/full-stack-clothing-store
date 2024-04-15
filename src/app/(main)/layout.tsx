@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import Navbar from '@/components/main/Navbar';
 import { SessionProvider } from 'next-auth/react';
 
-import Footer from '@/components/main/Footer';
+import { Footer } from '@/components/main/Footer';
 import { ToastContainer } from 'react-toastify';
 
 interface LayoutProps {
@@ -28,6 +28,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       />
 
       {children}
+
+      <Footer />
     </SessionProvider>
   );
 };
