@@ -31,7 +31,7 @@ export const ProfileComponent = () => {
             Title="Date Of Birth"
             Name={
               (user?.dateOfBirth &&
-                format(user?.dateOfBirth as Date, 'dd MMMM, yyy')) ||
+                format(user?.dateOfBirth, 'dd MMMM, yyy')) ||
               'N/A'
             }
             FormLink={'/settings/edit/date-of-birth'}
