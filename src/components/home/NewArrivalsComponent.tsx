@@ -41,7 +41,7 @@ export const NewArrivalsComponent = ({}) => {
   return (
     <div className="container space-y-14 flex flex-col mt-5">
       <h1 className="text-5xl font-black text-center">NEW ARRIVALS</h1>
-      <div className="flex items-center justify-between">
+      <div className="grid grid-cols-4 gap-x-5">
         {clothes.map((item) => (
           <ClothesComponent
             key={item.id}
