@@ -74,14 +74,14 @@ export function PaymentEditForm() {
       UpdatePaymentMethod(values, id as string).then((data) => {
         if (data.success) {
           router.push(
-            '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
+            '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
               encodeURIComponent(data.success)
           );
         }
 
         if (data.error) {
           router.push(
-            '/settings/?menu=Account&subMenu=Profile&success=false&message=' +
+            '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
               encodeURIComponent(data.error)
           );
         }
