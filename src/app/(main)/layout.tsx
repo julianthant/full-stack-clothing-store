@@ -28,8 +28,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       />
 
       {children}
-
-      <Footer />
     </SessionProvider>
   );
 };
