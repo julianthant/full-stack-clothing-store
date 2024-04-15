@@ -54,21 +54,25 @@ export function AddPaymentMethodForm() {
 
   const onSubmit = (values: z.infer<typeof cardAddSchema>) => {
     startTransition(() => {
-      AddPaymentMethod(values).then((data) => {
-        if (data.success) {
-          router.push(
-            '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
-              encodeURIComponent(data.success)
-          );
-        }
+      AddPaymentMethod(values)
+        .then((data) => {
+          if (data.success) {
+            router.push(
+              '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
+                encodeURIComponent(data.success)
+            );
+          }
 
-        if (data.error) {
-          router.push(
-            '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
-              encodeURIComponent(data.error)
-          );
-        }
-      });
+          if (data.error) {
+            router.push(
+              '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
+                encodeURIComponent(data.error)
+            );
+          }
+        })
+        .finally(() => {
+          form.reset();
+        });
     });
   };
 
