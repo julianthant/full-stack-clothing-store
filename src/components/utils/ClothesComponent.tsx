@@ -19,12 +19,20 @@ export const ClothesComponent = ({
   const half = Rating.length > 1;
 
   return (
-    <div className="grid gap-5">
-      <div className="hover:cursor-pointer">
-        <Image src={ItemImage} alt={Name} width={350} height={350} />
-      </div>
+    <div className="flex flex-col gap-5">
+      <Image
+        src={ItemImage}
+        alt={Name}
+        width={350}
+        height={350}
+        className="hover:cursor-pointer"
+      />
+
       <div className="space-y-2">
-        <Link href={''} className="text-2xl font-semibold">
+        <Link
+          href={''}
+          className="2xl:text-2xl xl:text-xl text-lg font-semibold"
+        >
           {Name}
         </Link>
 
@@ -38,7 +46,7 @@ export const ClothesComponent = ({
           </p>
         </div>
 
-        <p className="text-3xl font-bold">${Price}</p>
+        <p className="2xl:text-3xl xl:text-2xl text-xl font-bold">${Price}</p>
       </div>
     </div>
   );
