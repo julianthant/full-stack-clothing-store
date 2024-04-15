@@ -107,7 +107,7 @@ export const Footer = () => {
               We have clothes that suits your style and which you&apos;re proud
               to wear. From women to men.
             </p>
-            <div className="flex items-center gap-x-5">
+            <div className="flex items-center gap-x-5 pt-1">
               <Icons.facebook className="w-6 h-6" />
               <Icons.gitHub className="w-6 h-6" />
               <Icons.twitter className="w-6 h-6" />
@@ -133,8 +133,8 @@ export const Footer = () => {
 
         <Divider />
 
-        <div className="flex items-center justify-betweewn">
-          <p className="text-sm text-foreground-500 leading-7 font-light">
+        <div className="flex items-center sm:justify-between justify-center">
+          <p className="text-sm text-foreground-500 leading-7 font-light ">
             Clothes.co &copy; 2000-2024. All Rights Reserved
           </p>
           <div></div>
