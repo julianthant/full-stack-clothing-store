@@ -11,6 +11,14 @@ export default function Home() {
         <HeadingComponent />
         <BrandsComponent />
       </div>
+
+      <NewArrivalsComponent />
+
+      <div className="container">
+        <Divider />
+      </div>
+
+      <TopSellingComponent />
     </section>
   );
 }
