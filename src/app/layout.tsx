@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { integral_cf, satoshi } from '@/lib/fonts';
+import { satoshi } from '@/lib/fonts';
 import './globals.css';
 import { Providers, QueryProvider } from './providers';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${satoshi.variable}`}>
+      <body className={`antialiased ${satoshi.className}`}>
         <QueryProvider>
           <Providers>{children}</Providers>
         </QueryProvider>
