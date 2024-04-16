@@ -99,7 +99,7 @@ export const Footer = () => {
           <div className="lg:w-[261px] lg:space-y-6 space-y-3 font-light place-self-stretch col-span-2 h-20">
             <Link
               href="/"
-              className={`font-black text-inherit text-4xl drop-shadow-lg max-sm:text-3xl`}
+              className={`font-bold bold-integral text-inherit text-4xl drop-shadow-lg max-sm:text-3xl `}
             >
               CLOTHES.CO
             </Link>
