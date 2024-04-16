@@ -9,8 +9,8 @@ export const NewsletterComponent = ({}) => {
   return (
     <div className="absolute container lg:top-[-256px] sm:top-[-282px] top-[-296px] left-0">
       <div className="bg-black rounded-[23px] flex items-center justify-between lg:h-48 lg:px-20 max-lg:flex-col max-lg:py-6 max-lg:gap-y-4 max-sm:px-4">
-        <div className="lg:w-[600px] lg:px-0 lg:text-left md:px-8 sm:text-center ">
-          <p className="text-white lg:text-5xl sm:text-4xl text-3xl font-black">
+        <div className="lg:w-[650px] lg:px-0 lg:text-left md:px-8 sm:text-center ">
+          <p className="text-white lg:text-5xl sm:text-4xl text-3xl font-bold bold-integral">
             STAY UPTO DATE ABOUT OUR LATEST OFFERS
           </p>
         </div>
