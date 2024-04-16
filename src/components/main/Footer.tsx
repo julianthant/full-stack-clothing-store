@@ -117,11 +117,13 @@ export const Footer = () => {
 
           {FooterNavs.map((nav, index) => (
             <div key={index} className="lg:space-y-5 space-y-2">
-              <h3 className="font-normal lg:text-xl text-lg">{nav.title}</h3>
-              <ul className="lg:space-y-5 space-y-2 font-light text-foreground-500">
+              <h3 className="font-medium text-base tracking-[0.15em]">
+                {nav.title}
+              </h3>
+              <ul className="lg:space-y-5 space-y-2 text-foreground-500">
                 {nav.pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={page.link} className="lg:text-sm text-xs">
+                    <Link href={page.link} className="text-base font-light">
                       {page.title}
                     </Link>
                   </li>
