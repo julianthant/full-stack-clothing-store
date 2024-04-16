@@ -4,7 +4,6 @@ import { Icons } from '../utils/Icons';
 import { Button } from '../ui/button';
 import { Divider } from '@nextui-org/react';
 
-import HeadingImage from '../images/HeadingImage.png';
 import Link from 'next/link';
 
 export const HeadingComponent = ({}) => {
@@ -15,7 +14,7 @@ export const HeadingComponent = ({}) => {
           <div className="space-y-6">
             <div className="space-y-6">
               <div className="space-y-4">
-                <h1 className="sm:text-6xl text-4xl font-black">
+                <h1 className="sm:text-6xl text-4xl font-bold bold-integral">
                   FIND CLOTHES THAT MATCHES YOUR STYLE
                 </h1>
                 <p className="text-sm text-foreground-400">
@@ -70,9 +69,10 @@ export const HeadingComponent = ({}) => {
         </div>
         <div className="self-end relative">
           <Image
-            src={HeadingImage}
+            src={'/images/HeadingImage.png'}
             alt="HeadingImage"
             width={'600'}
+            height={'600'}
             fetchPriority="high"
             loading="eager"
             quality={100}
