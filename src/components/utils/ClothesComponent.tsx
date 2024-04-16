@@ -19,34 +19,37 @@ export const ClothesComponent = ({
   const half = Rating.length > 1;
 
   return (
-    <div className="flex flex-col gap-5">
-      <Image
-        src={ItemImage}
-        alt={Name}
-        width={350}
-        height={350}
-        className="hover:cursor-pointer"
-      />
+    <div className="flex flex-col lg:gap-5 gap-2">
+      <div className=" max-lg:w-[200px]">
+        <Image
+          src={ItemImage}
+          alt={Name}
+          width={350}
+          className="hover:cursor-pointer h-auto"
+        />
+      </div>
 
-      <div className="space-y-2">
+      <div className="lg:space-y-2">
         <Link
           href={''}
-          className="2xl:text-2xl xl:text-xl text-lg font-semibold"
+          className="2xl:text-2xl xl:text-xl lg:text-lg text-sm font-semibold"
         >
           {Name}
         </Link>
 
         <div className="flex items-center gap-2">
           {Array.from({ length: parseInt(rating, 10) }, (_, i) => (
-            <Icons.star key={i} className="w-max" />
+            <Icons.star key={i} className="lg:w-max w-4" />
           ))}
-          {half && <Icons.halfStar />}
+          {half && <Icons.halfStar className="lg:w-max w-4" />}
           <p className="text-sm">
             {Rating}/<span className="text-sm text-foreground-400">5</span>
           </p>
         </div>
 
-        <p className="2xl:text-3xl xl:text-2xl text-xl font-bold">${Price}</p>
+        <p className="2xl:text-3xl xl:text-2xl lg:text-xl text-lg font-bold">
+          ${Price}
+        </p>
       </div>
     </div>
   );
