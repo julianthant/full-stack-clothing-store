@@ -95,15 +95,15 @@ export const Footer = () => {
     <div className="bg-foreground-100 pb-14 pt-28 lg:mt-40 mt-48">
       <div className="container space-y-12 relative">
         <NewsletterComponent />
-        <nav className="lg:flex items-center justify-between grid w-full grid-rows-3 grid-cols-2 gap-y-4">
-          <div className="lg:w-[261px] lg:space-y-6 space-y-3 font-light place-self-stretch col-span-2 h-20">
+        <nav className="lg:flex items-center justify-between grid w-full sm:grid-rows-[8rem]  grid-cols-2 gap-y-6">
+          <div className="lg:w-[261px] lg:space-y-5 space-y-3 font-light place-self-stretch col-span-2 h-min">
             <Link
               href="/"
               className={`font-bold bold-integral text-inherit text-4xl drop-shadow-lg max-sm:text-3xl `}
             >
               CLOTHES.CO
             </Link>
-            <p className="text-sm text-foreground-500 leading-7 font-light max-lg:w-[490px] max-md:w-full">
+            <p className="text-sm text-foreground-500 leading-7 font-light">
               We have clothes that suits your style and which you&apos;re proud
               to wear. From women to men.
             </p>
@@ -116,11 +116,11 @@ export const Footer = () => {
           </div>
 
           {FooterNavs.map((nav, index) => (
-            <div key={index} className="lg:space-y-5 space-y-2">
+            <div key={index} className="lg:space-y-5 space-y-4">
               <h3 className="font-medium text-base tracking-[0.15em]">
                 {nav.title}
               </h3>
-              <ul className="lg:space-y-5 space-y-2 text-foreground-500">
+              <ul className="lg:space-y-5 space-y-4 text-foreground-500">
                 {nav.pages.map((page, index) => (
                   <li key={index}>
                     <Link href={page.link} className="text-base font-light">
