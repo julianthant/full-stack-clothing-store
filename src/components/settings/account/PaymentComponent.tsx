@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import { cn } from '@/lib/utils';
-import { roboto } from '@/lib/fonts';
 import { RemovePaymentMethod } from '@/actions/accountPayments/remove-payment-method';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -94,9 +93,7 @@ export const PaymentComponent = () => {
                   </div>
 
                   <div className=" rounded-lg">
-                    <h3
-                      className={`${roboto.className} font-bold text-sm max-sm:text-xs`}
-                    >
+                    <h3 className={`font-bold text-sm max-sm:text-xs`}>
                       {card.bankName} {card.cardScheme} {card.cardType} CARD
                     </h3>
                     <p className="text-xs">
