@@ -58,7 +58,7 @@ export const TopSellingComponent = ({}) => {
       <Button
         asChild
         variant={'outline'}
-        className="rounded-full px-20 lg:h-14 h-10 lg:w-min w-full self-center"
+        className="rounded-full px-20 lg:h-14 h-10 sm:w-min w-full self-center"
       >
         <Link href={'/shop'}>View All</Link>
       </Button>
