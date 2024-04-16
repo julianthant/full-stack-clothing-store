@@ -17,7 +17,7 @@ export const HeadingComponent = ({}) => {
                 <h1 className="sm:text-6xl text-4xl font-bold bold-integral">
                   FIND CLOTHES THAT MATCHES YOUR STYLE
                 </h1>
-                <p className="text-sm text-foreground-400">
+                <p className="text-base text-foreground-400 font-light">
                   Browse through our diverse range of meticulously crafted
                   garments, designed to bring out your individuality and cater
                   to your sense of style.
@@ -34,7 +34,7 @@ export const HeadingComponent = ({}) => {
                   <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                     200+
                   </h2>
-                  <p className="text-sm text-foreground-400 text-nowrap">
+                  <p className="text-base font-light text-foreground-400 text-nowrap">
                     International Brands
                   </p>
                 </div>
@@ -45,7 +45,7 @@ export const HeadingComponent = ({}) => {
                   <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                     2000+
                   </h2>
-                  <p className="text-sm text-foreground-400 text-nowrap">
+                  <p className="text-base font-light text-foreground-400 text-nowrap">
                     High-Quality Products
                   </p>
                 </div>
@@ -60,7 +60,7 @@ export const HeadingComponent = ({}) => {
                 <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                   30,000+
                 </h2>
-                <p className="text-sm text-foreground-400 text-nowrap">
+                <p className="text-base font-light text-foreground-400 text-nowrap">
                   Happy Customers
                 </p>
               </div>
