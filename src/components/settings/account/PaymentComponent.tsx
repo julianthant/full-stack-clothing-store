@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
-import BlackCard from '../../images/black-card.png';
 
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import { cn } from '@/lib/utils';
-import { roboto } from '@/components/utils/Fonts';
+import { roboto } from '@/lib/fonts';
 import { RemovePaymentMethod } from '@/actions/accountPayments/remove-payment-method';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -77,7 +76,7 @@ export const PaymentComponent = () => {
                 <div className="relative flex items-center justify-start px-6 py-4 gap-3">
                   <div className="relative">
                     <Image
-                      src={BlackCard}
+                      src={'/images/black-card.png'}
                       className="max-w-[85px]"
                       alt="Credit Card"
                       width={85}
@@ -189,7 +188,7 @@ export const PaymentComponent = () => {
           <CardContent className="grid gap-2">
             <div className="relative font-bold text-white">
               <Image
-                src={BlackCard}
+                src={'/images/black-card.png'}
                 alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
                 width={312}
                 priority
