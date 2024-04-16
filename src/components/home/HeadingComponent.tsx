@@ -71,8 +71,8 @@ export const HeadingComponent = ({}) => {
           <Image
             src={'/images/HeadingImage.png'}
             alt="HeadingImage"
-            width={'600'}
-            height={'600'}
+            width={600}
+            height={632}
             fetchPriority="high"
             loading="eager"
             quality={100}
