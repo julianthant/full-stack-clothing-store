@@ -188,6 +188,7 @@ export const PaymentComponent = () => {
                 src={'/images/black-card.png'}
                 alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
                 width={312}
+                height={195}
                 priority
                 className="sm:max-w-[312px] max-w-full aspect-auto h-auto"
               />
