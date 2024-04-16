@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { FC, useState } from 'react';
 
 import { Icons } from '../utils/Icons';
-import { gabarito } from '../utils/Fonts';
 import { NavbarPages } from './NavbarPages';
 import { AccountDropdown } from './AccountDropdown';
 import { ShoppingCartIcon } from 'lucide-react';
@@ -20,6 +19,7 @@ import {
   Button,
   Input,
 } from '@nextui-org/react';
+import { integral_cf } from '@/lib/fonts';
 
 interface NavbarComponentProps {}
 
@@ -48,7 +48,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
           <NavbarBrand>
             <Link
               href="/"
-              className={`font-black text-inherit text-4xl ${gabarito.className} drop-shadow-lg max-sm:text-3xl`}
+              className={`font-black text-inherit text-4xl drop-shadow-md max-sm:text-3xl black-integral`}
             >
               CLOTHES.CO
             </Link>
