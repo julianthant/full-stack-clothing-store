@@ -31,7 +31,7 @@ export const HeadingComponent = ({}) => {
             <div className="h-20 flex items-center sm:justify-start justify-center gap-6 w-min max-sm:flex-wrap">
               <div className="h-20 flex items-center justify-start sm:gap-6 gap-8">
                 <div>
-                  <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold h-9">
+                  <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                     200+
                   </h2>
                   <p className="text-sm text-foreground-400 text-nowrap">
@@ -42,7 +42,7 @@ export const HeadingComponent = ({}) => {
                 <Divider orientation="vertical" className="w-[2px] h-16" />
 
                 <div>
-                  <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold h-9">
+                  <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                     2000+
                   </h2>
                   <p className="text-sm text-foreground-400 text-nowrap">
@@ -57,7 +57,7 @@ export const HeadingComponent = ({}) => {
               />
 
               <div>
-                <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold h-9">
+                <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                   30,000+
                 </h2>
                 <p className="text-sm text-foreground-400 text-nowrap">
