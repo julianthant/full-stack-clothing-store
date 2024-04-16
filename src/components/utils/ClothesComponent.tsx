@@ -1,11 +1,11 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { Icons } from './Icons';
 import Link from 'next/link';
 
 type ClothesComponentProps = {
   Name: string;
   Price: string;
-  ItemImage: StaticImageData;
+  ItemImage: string;
   Rating: string;
 };
 
@@ -24,8 +24,9 @@ export const ClothesComponent = ({
         <Image
           src={ItemImage}
           alt={Name}
-          width={350}
-          className="hover:cursor-pointer h-auto"
+          width={400}
+          height={300}
+          className="hover:cursor-pointer w-full"
         />
       </div>
 
