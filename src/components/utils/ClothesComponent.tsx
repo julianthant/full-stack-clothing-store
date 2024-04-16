@@ -24,8 +24,8 @@ export const ClothesComponent = ({
         <Image
           src={ItemImage}
           alt={Name}
-          width={400}
-          height={300}
+          width={360}
+          height={360}
           className="hover:cursor-pointer w-full"
         />
       </div>
