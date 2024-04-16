@@ -29,7 +29,7 @@ export const HeadingComponent = ({}) => {
             </div>
 
             <div className="h-20 flex items-center sm:justify-start justify-center gap-6 w-min max-sm:flex-wrap">
-              <div className="h-20 flex items-center justify-start sm:gap-6 gap-8">
+              <div className="h-20 flex items-center justify-start sm:gap-6 gap-4">
                 <div>
                   <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                     200+
