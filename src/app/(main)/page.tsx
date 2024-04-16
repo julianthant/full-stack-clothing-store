@@ -1,4 +1,5 @@
 import { BrandsComponent } from '@/components/home/BrandsComponent';
+import { DressStyleComponent } from '@/components/home/DressStyleComponent';
 import { HeadingComponent } from '@/components/home/HeadingComponent';
 import { NewArrivalsComponent } from '@/components/home/NewArrivalsComponent';
 import { TopSellingComponent } from '@/components/home/TopSellingComponent';
@@ -19,6 +20,8 @@ export default function Home() {
       </div>
 
       <TopSellingComponent />
+
+      <DressStyleComponent />
     </section>
   );
 }
