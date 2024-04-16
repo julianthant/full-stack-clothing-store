@@ -39,9 +39,11 @@ export const NewArrivalsComponent = ({}) => {
     },
   ];
   return (
-    <div className="container space-y-14 flex flex-col mt-5">
-      <h1 className="text-5xl font-black text-center">NEW ARRIVALS</h1>
-      <div className="grid grid-cols-4 gap-x-5">
+    <div className="container lg:space-y-14 space-y-7 flex flex-col lg:mt-5">
+      <h1 className="lg:text-5xl text-3xl font-black text-center">
+        NEW ARRIVALS
+      </h1>
+      <div className="flex gap-x-5 max-lg:max-w-max overflow-x-scroll overflow-visible">
         {clothes.map((item) => (
           <ClothesComponent
             key={item.id}
@@ -56,7 +58,7 @@ export const NewArrivalsComponent = ({}) => {
       <Button
         asChild
         variant={'outline'}
-        className="rounded-full px-20 h-14 w-min self-center"
+        className="rounded-full px-20 lg:h-14 h-10 lg:w-min w-full self-center"
       >
         <Link href={'/shop'}>View All</Link>
       </Button>
