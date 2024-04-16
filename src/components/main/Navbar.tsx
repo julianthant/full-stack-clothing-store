@@ -19,7 +19,6 @@ import {
   Button,
   Input,
 } from '@nextui-org/react';
-import { integral_cf } from '@/lib/fonts';
 
 interface NavbarComponentProps {}
 
@@ -35,11 +34,11 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
       maxWidth="2xl"
       className="border-b-2 sm:py-1"
       classNames={{
-        wrapper: 'max-sm:flex-col max-sm:min-h-[6.4rem] max-sm:gap-0',
+        wrapper: 'max-sm:flex-col max-sm:min-h-[6.4rem] max-sm:gap-0 px-0',
       }}
     >
       <div className="flex items-center justify-center w-full max-sm:pt-2 pb-1 max-sm:justify-between container">
-        <NavbarContent className="flex max-w-min">
+        <NavbarContent className="flex max-w-min items-center gap-2">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             className="lg:hidden"
@@ -48,7 +47,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
           <NavbarBrand>
             <Link
               href="/"
-              className={`font-black text-inherit text-4xl drop-shadow-md max-sm:text-3xl black-integral`}
+              className={`font-black text-inherit text-4xl drop-shadow-md max-sm:text-[26px] black-integral pb-1`}
             >
               CLOTHES.CO
             </Link>
@@ -112,7 +111,7 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
       <NavbarContent className="sm:hidden w-full pb-2" justify="end">
         <Input
           classNames={{
-            base: 'max-w-full h-10',
+            base: 'max-w-full max-sm:container h-10',
             mainWrapper: 'h-full',
             input: 'text-small',
             inputWrapper:
