@@ -54,6 +54,7 @@ export const {
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email as string;
+    
         session.user.country = token.country as string | undefined;
         session.user.gender = token.gender as string | undefined;
         session.user.phoneNumber = token.phoneNumber as string | undefined;
@@ -61,7 +62,7 @@ export const {
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.is2FAEnabled = token.is2FAEnabled as boolean;
       }
-
+      
       return session;
     },
 
@@ -75,7 +76,7 @@ export const {
       const existingAccount = await getAccountByUserId(existingUser.id);
 
       token.name = existingUser.name;
-      token.email = existingUser.email;
+      token.email = existingUser.email; 
       token.country = existingUser.country;
       token.phoneNumber = existingUser.phoneNumber;
 
