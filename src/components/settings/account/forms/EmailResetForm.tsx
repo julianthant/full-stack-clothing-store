@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { useRouter } from 'next/navigation';
 import { useTransition, HTMLAttributes } from 'react';
 
-import { ResetSchema } from '@/schemas';
+import { EmailSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { cn } from '@/lib/utils';
@@ -30,14 +30,14 @@ export function EmailResetForm({ className, ...props }: EmailEditProps) {
 
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof ResetSchema>>({
-    resolver: zodResolver(ResetSchema),
+  const form = useForm<z.infer<typeof EmailSchema>>({
+    resolver: zodResolver(EmailSchema),
     defaultValues: {
       email: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
+  const onSubmit = (values: z.infer<typeof EmailSchema>) => {
     startTransition(() => {
       newEmailToken(values).then((data) => {
         if (data.success) {

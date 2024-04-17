@@ -3,7 +3,7 @@
 import * as z from 'zod';
 
 import { db } from '@/database/db';
-import { ResetSchema } from '@/schemas';
+import { EmailSchema } from '@/schemas';
 import { getUserByEmail, getUserById } from '@/data/user';
 import { getVerificationTokenByToken } from '@/data/verification-token';
 
@@ -11,7 +11,7 @@ import { currentUser } from '@/lib/server-auth';
 import { generateVerificationToken } from '@/lib/token';
 import { sendLoggedInVerficationEmail } from '@/lib/mail';
 
-export const newEmailToken = async (values: z.infer<typeof ResetSchema>) => {
+export const newEmailToken = async (values: z.infer<typeof EmailSchema>) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -24,7 +24,7 @@ export const newEmailToken = async (values: z.infer<typeof ResetSchema>) => {
     return { error: 'Unauthorized' };
   }
 
-  const validatedFields = ResetSchema.safeParse(values);
+  const validatedFields = EmailSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Invalid number!' };
