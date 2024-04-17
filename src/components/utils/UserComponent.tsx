@@ -15,7 +15,7 @@ export const UserComponent = ({ page }: UserComponentProps) => {
 
   return (
     <div>
-      {!!user ? (
+      {user ? (
         <div
           className={cn(
             'py-2 flex items-center space-x-2',
@@ -34,10 +34,10 @@ export const UserComponent = ({ page }: UserComponentProps) => {
               page === 'Navbar' && 'lg:w-full w-[160]'
             )}
           >
-            <div className="truncate text-default-600 text-sm">
+            <div className="truncate text-default-600 text-sm tracking-wide">
               {user?.name}
             </div>
-            <div className="truncate text-default-500 text-xs">
+            <div className="truncate text-default-500 text-xs tracking-wider">
               {user?.email}
             </div>
           </div>
