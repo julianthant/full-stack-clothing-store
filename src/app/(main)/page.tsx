@@ -1,4 +1,5 @@
 import { BrandsComponent } from '@/components/home/BrandsComponent';
+import { CustomerFeedbackComponent } from '@/components/home/CustomerFeedbackComponent';
 import { DressStyleComponent } from '@/components/home/DressStyleComponent';
 import { HeadingComponent } from '@/components/home/HeadingComponent';
 import { NewArrivalsComponent } from '@/components/home/NewArrivalsComponent';
@@ -22,6 +23,8 @@ export default function Home() {
       <TopSellingComponent />
 
       <DressStyleComponent />
+
+      <CustomerFeedbackComponent />
     </section>
   );
 }
