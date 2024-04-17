@@ -40,7 +40,7 @@ export const NewArrivalsComponent = ({}) => {
 
   return (
     <div className="container lg:space-y-14 space-y-7 flex flex-col lg:mt-5">
-      <h1 className="lg:text-5xl text-3xl font-bold bold-integral text-center">
+      <h1 className="lg:text-5xl md:text-4xl text-3xl font-bold bold-integral text-center">
         NEW ARRIVALS
       </h1>
       <div className="flex gap-x-5 max-lg:max-w-max max-lg:overflow-x-scroll scroll-smooth">
