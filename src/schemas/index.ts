@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const ResetSchema = z.object({
+export const EmailSchema = z.object({
   email: z.string().email(),
 });
 
