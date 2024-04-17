@@ -76,6 +76,7 @@ export const HeadingComponent = ({}) => {
             fetchPriority="high"
             loading="eager"
             quality={100}
+            priority
           />
           <div className="absolute sm:top-[17rem] top-28 left-0">
             <Icons.headingStar className="w-14" />
