@@ -4,7 +4,7 @@ export const DressStyleComponent = () => {
   return (
     <div className="container">
       <div className="space-y-10 rounded-[23px] bg-foreground-100 py-16 px-8">
-        <h1 className="bold-integral font-bold lg:text-5xl text-3xl text-center">
+        <h1 className="bold-integral font-bold lg:text-5xl md:text-4xl text-3xl text-center">
           BROWSE BY DRESS STYLE
         </h1>
         <div className="grid md:grid-rows-2 md:grid-cols-5 gap-4">
