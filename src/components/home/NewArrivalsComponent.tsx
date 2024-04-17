@@ -8,28 +8,32 @@ export const NewArrivalsComponent = ({}) => {
       id: 1,
       name: 'T-shirt with Tape Details',
       price: '20',
-      image: '/images/Shirt-3.png',
+      image:
+        'https://utfs.io/f/b4618a13-9d47-4771-8a2e-3a91615e8a2e-9el43o.png',
       rating: '4.5',
     },
     {
       id: 2,
       name: 'Skinny Fit Jeans',
       price: '25',
-      image: '/images/Pants-1.png',
+      image:
+        'https://utfs.io/f/b5104dc4-d584-4934-9637-29fe30528bac-ecsyn4.png',
       rating: '4',
     },
     {
       id: 3,
       name: 'Checkered Shirt',
       price: '30',
-      image: '/images/Shirt-2.png',
+      image:
+        'https://utfs.io/f/3349146c-0257-41c9-af50-b312191f7a72-9el43p.png',
       rating: '3.5',
     },
     {
       id: 4,
       name: 'Sleeve Striped T-shirt',
       price: '35',
-      image: '/images/Shirt-1.png',
+      image:
+        'https://utfs.io/f/b4618a13-9d47-4771-8a2e-3a91615e8a2e-9el43o.png',
       rating: '2',
     },
   ];
