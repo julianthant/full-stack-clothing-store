@@ -26,7 +26,9 @@ export const ClothesComponent = ({
           alt={Name}
           width={360}
           height={360}
-          className="hover:cursor-pointer w-full"
+          className="hover:cursor-pointer"
+          priority
+          loading="eager"
         />
       </div>
 
