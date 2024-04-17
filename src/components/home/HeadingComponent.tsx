@@ -69,7 +69,7 @@ export const HeadingComponent = ({}) => {
         </div>
         <div className="self-end relative">
           <Image
-            src={'/images/HeadingImage.png'}
+            src="https://utfs.io/f/db4ed320-7511-49ff-9a44-afaea38b0e78-u8xd3t.png"
             alt="HeadingImage"
             width={600}
             height={632}
