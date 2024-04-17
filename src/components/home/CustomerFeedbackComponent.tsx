@@ -127,7 +127,7 @@ export const CustomerFeedbackComponent = () => {
           {displayedFeedbacks.map((feedback) => (
             <div
               key={feedback.id}
-              className="bg-white rounded-[23px] p-6 space-y-4 border"
+              className="bg-white rounded-[23px] p-6 space-y-4 border min-h-[295px]"
             >
               <div className="flex items-center gap-2">
                 {Array.from({ length: feedback.rating }, (_, i) => (
