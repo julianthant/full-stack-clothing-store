@@ -75,7 +75,7 @@ export const PaymentComponent = () => {
                 <div className="relative flex items-center justify-start px-6 py-4 gap-3">
                   <div className="relative">
                     <Image
-                      src={'/images/black-card.png'}
+                      src="https://utfs.io/f/5483fbf9-493f-4902-9eeb-bef7e3d52b91-rv006a.png"
                       className="max-w-[85px]"
                       alt="Credit Card"
                       width={85}
@@ -185,7 +185,7 @@ export const PaymentComponent = () => {
           <CardContent className="grid gap-2">
             <div className="relative font-bold text-white">
               <Image
-                src={'/images/black-card.png'}
+                src="https://utfs.io/f/5483fbf9-493f-4902-9eeb-bef7e3d52b91-rv006a.png"
                 alt={paymentMethods[selectedCard].cardHolder + "'s Card"}
                 width={312}
                 height={195}
