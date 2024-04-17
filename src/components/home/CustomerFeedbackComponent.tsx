@@ -89,11 +89,11 @@ export const CustomerFeedbackComponent = () => {
   return (
     <div className="space-y-10">
       <div className="container flex justify-between items-end">
-        <h1 className="bold-integral font-bold lg:text-5xl text-3xl">
+        <h1 className="bold-integral font-bold lg:text-5xl md:text-4xl text-3xl max-sm:w-[220px]">
           OUR HAPPY CUSTOMERS
         </h1>
 
-        <div className="space-x-4">
+        <div className="sm:gap-x-4 gap-2 flex">
           <Button variant={'outline'} className="w-12 p-0" onClick={handlePrev}>
             <ArrowLeftIcon />
           </Button>
@@ -104,9 +104,9 @@ export const CustomerFeedbackComponent = () => {
       </div>
 
       <div className="relative overflow-hidden">
-        <div className="container grid grid-cols-3 gap-6 relative">
+        <div className="container grid md:grid-cols-3 gap-6 relative items-stretch">
           {previousFeedback && (
-            <div className="bg-white rounded-[23px] p-6 space-y-4 border absolute w-[480px] min-h-[295px] left-[-480px] blur-[3px]">
+            <div className="bg-white rounded-[23px] p-6 space-y-4 border md:absolute max-md:hidden w-[480px] left-[-480px] bottom-0 top-0 blur-[3px]">
               <div className="flex items-center gap-2">
                 {Array.from({ length: previousFeedback.rating }, (_, i) => (
                   <Icons.star key={i} className="lg:w-max w-4" />
@@ -127,7 +127,7 @@ export const CustomerFeedbackComponent = () => {
           {displayedFeedbacks.map((feedback) => (
             <div
               key={feedback.id}
-              className="bg-white rounded-[23px] p-6 space-y-4 border min-h-[295px]"
+              className="bg-white rounded-[23px] p-6 space-y-4 border"
             >
               <div className="flex items-center gap-2">
                 {Array.from({ length: feedback.rating }, (_, i) => (
@@ -147,7 +147,7 @@ export const CustomerFeedbackComponent = () => {
           ))}
 
           {nextFeedback && (
-            <div className="bg-white rounded-[23px] p-6 space-y-4 border absolute w-[480px] min-h-[295px] right-[-480px] blur-[3px]">
+            <div className="bg-white rounded-[23px] p-6 space-y-4 border md:absolute max-md:hidden w-[480px] right-[-480px] bottom-0 top-0 blur-[3px]">
               <div className="flex items-center gap-2">
                 {Array.from({ length: nextFeedback.rating }, (_, i) => (
                   <Icons.star key={i} className="lg:w-max w-4" />
