@@ -14,7 +14,7 @@ export const DressStyleComponent = () => {
               alt="Casual"
               width={360}
               height={192}
-              className="absolute sm:right-[-120px] sm:top-[-73px] right-[-90px] top-[-70px]"
+              className="absolute sm:right-[-120px] sm:top-[-73px] right-[-90px] top-[-70px] w-auto h-auto"
               priority
               loading="eager"
             />
@@ -29,7 +29,7 @@ export const DressStyleComponent = () => {
               alt="Formal"
               width={300}
               height={192}
-              className="absolute sm:right-[-20px] right-[-90px] top-[-90px]"
+              className="absolute sm:right-[-20px] right-[-90px] top-[-90px] w-auto h-auto"
               priority
               loading="eager"
             />
@@ -44,7 +44,7 @@ export const DressStyleComponent = () => {
               alt="Party"
               width={500}
               height={192}
-              className="absolute sm:right-[-60px] right-[-50px] sm:top-[-120px] top-[-63px]"
+              className="absolute sm:right-[-60px] right-[-50px] sm:top-[-120px] top-[-63px] w-auto h-auto"
               priority
               loading="eager"
             />
@@ -59,7 +59,7 @@ export const DressStyleComponent = () => {
               alt="Gym"
               width={300}
               height={192}
-              className="absolute sm:right-[-47px] right-[-42px] sm:top-[-85px] top-[-74px]"
+              className="absolute sm:right-[-47px] right-[-42px] sm:top-[-85px] top-[-74px] w-auto h-auto"
               priority
               loading="eager"
             />
