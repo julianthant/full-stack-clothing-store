@@ -10,7 +10,7 @@ export const ProfileComponent = () => {
   return (
     <div className="space-y-8">
       <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
-        <div className="space-y-4">
+        <div className="space-y-4 tracking-wide">
           <EditUserComponent
             Title="Name"
             Name={user?.name || 'N/A'}
