@@ -11,7 +11,7 @@ export const CustomerFeedbackComponent = () => {
   const feedbacksPerPage = 3;
 
   const handleNext = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, 2));
   };
 
   const handlePrev = () => {
