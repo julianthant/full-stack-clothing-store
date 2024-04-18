@@ -32,7 +32,6 @@ export const PaymentComponent = () => {
   const {
     data: paymentMethods,
     isLoading,
-    refetch,
   } = useQuery({
     queryFn: () =>
       user
