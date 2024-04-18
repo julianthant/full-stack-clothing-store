@@ -128,7 +128,10 @@ export const Footer = () => {
                 <div className="lg:space-y-5 space-y-4 text-foreground-500">
                   {nav.pages.map((page, index) => (
                     <div key={index}>
-                      <Link href={page.link} className="text-base font-light">
+                      <Link
+                        href={page.link}
+                        className="text-base font-light hover:text-blue-600"
+                      >
                         {page.title}
                       </Link>
                     </div>
