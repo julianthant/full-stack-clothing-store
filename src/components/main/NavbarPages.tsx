@@ -36,7 +36,7 @@ export const NavbarPages = ({}) => {
           }}
           className="text-base font-light"
         >
-          <DropdownItem href="/shop/men">Men&apos;s Wear</DropdownItem>
+          <DropdownItem href="/shop">Men&apos;s Wear</DropdownItem>
           <DropdownItem href="/shop/women">Women&apos;s Wear</DropdownItem>
           <DropdownItem href="/shop/children">
             Children&apos;s Wear
@@ -61,7 +61,7 @@ export const NavbarPages = ({}) => {
       <NavbarItem>
         <Link
           color="foreground"
-          href="/shop/new-arrivals"
+          href="/shop?cid=6993"
           className="hover:font-medium transition-all text-base font-light"
         >
           New Arrivals
@@ -71,7 +71,7 @@ export const NavbarPages = ({}) => {
       <NavbarItem>
         <Link
           color="foreground"
-          href="/shop/brands"
+          href="/shop/brands?cid=1361"
           className="hover:font-medium transition-all text-base font-light"
         >
           Brands
