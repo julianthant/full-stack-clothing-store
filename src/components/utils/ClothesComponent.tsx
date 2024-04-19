@@ -18,8 +18,8 @@ export const ClothesComponent = ({
   HoverImage,
 }: ClothesComponentProps) => {
   return (
-    <div className="flex flex-col lg:gap-5 gap-2">
-      <div className="max-lg:w-[200px] relative">
+    <div className="lg:gap-5 gap-2 grid">
+      <div className="w-full relative">
         <Image
           src={ItemImage}
           alt={Name}
@@ -47,7 +47,7 @@ export const ClothesComponent = ({
         )}
       </div>
 
-      <div className="lg:space-y-2">
+      <div className="space-y-2">
         <Link href={''} className="text-sm font-light">
           {Name}
         </Link>
