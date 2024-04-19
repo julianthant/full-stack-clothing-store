@@ -16,7 +16,7 @@ export const FilterClothes = () => {
   const [isDressStyleVisible, setIsDressStyleVisible] = useState(true);
 
   return (
-    <div className="w-[350px] border rounded-[20px] h-min">
+    <div className="w-[350px] border rounded-[20px] h-min max-lg:hidden">
       <div className="px-4 py-7 grid gap-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-bold">Filter</h1>
