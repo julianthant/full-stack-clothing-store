@@ -24,11 +24,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+
 import { Divider, Spinner } from '@nextui-org/react';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Check, ChevronDown } from 'lucide-react';
 import { CommandList } from 'cmdk';
+import { Icons } from '../utils/Icons';
+import { FilterClothes } from './FilterClothes';
 
 export const ClothesGalleryComponent = () => {
   const router = useRouter();
@@ -103,8 +117,23 @@ export const ClothesGalleryComponent = () => {
       {!clothes && <div className="h-[500px]" />}
       {clothes && (
         <>
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold">Men&apos;s Clothing</h1>
+          <div className="sm:flex max-sm:space-y-2 justify-between items-start">
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-3xl font-bold">Men&apos;s Clothing</h1>
+              <Sheet>
+                <SheetTrigger asChild className="lg:hidden">
+                  <Button
+                    variant={'secondary'}
+                    className="w-9 h-9 p-2.5 rounded-full sm:hidden flex items-center justify-center"
+                  >
+                    <Icons.filterIcon />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <FilterClothes />
+                </SheetContent>
+              </Sheet>
+            </div>
             <div className="flex gap-4">
               <p className="text-sm tracking-wider text-foreground-500">
                 Showing {offset + 1}-{offset + 1 + parseInt(per_page)} of{' '}
