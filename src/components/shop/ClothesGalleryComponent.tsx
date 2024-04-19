@@ -17,13 +17,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command';
+import { Command, CommandItem } from '@/components/ui/command';
 
 import {
   Popover,
@@ -102,7 +96,7 @@ export const ClothesGalleryComponent = () => {
   return (
     <div className="space-y-4 w-full">
       {(isLoading || refetchData) && (
-        <div className="absolute inset-0 flex items-center justify-center bg-foreground-50/80 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-foreground-50/80 z-50">
           <Spinner size="lg" />
         </div>
       )}
@@ -116,15 +110,20 @@ export const ClothesGalleryComponent = () => {
                 Showing {offset + 1}-{offset + 1 + parseInt(per_page)} of{' '}
                 {clothes.itemCount} Products
               </p>
-              <div className="flex gap-1">
+              <div className="flex gap-1 max-md:hidden">
                 <p className="text-sm tracking-wider text-foreground-500">
                   Sort by:
                 </p>
-                <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger asChild>
+                <Popover
+                  open={open}
+                  onOpenChange={setOpen}
+                  aria-label="Sort options popover"
+                >
+                  <PopoverTrigger asChild aria-label="Sort options trigger">
                     <Button
                       role="combobox"
                       aria-expanded={open}
+                      aria-label="sort"
                       className="w-min justify-between p-0 h-min bg-transparent text-black shadow-none hover:bg-transparent tracking-wider"
                     >
                       {commandItems.find((item) => item.key === sort)?.value}
@@ -168,7 +167,7 @@ export const ClothesGalleryComponent = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6">
             {clothes?.products?.map((product: any) => (
               <ClothesComponent
                 key={product.id}
@@ -204,7 +203,7 @@ export const ClothesGalleryComponent = () => {
                     1
                   </PaginationLink>
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className="max-sm:hidden">
                   <PaginationLink
                     href={`/shop?page=2&per_page=${per_page}&cid=${cid}`}
                     className={cn({ 'bg-muted text-black': page === '2' })}
@@ -212,10 +211,12 @@ export const ClothesGalleryComponent = () => {
                     2
                   </PaginationLink>
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className="max-sm:hidden">
                   <PaginationLink
                     href={`/shop?page=3&per_page=${per_page}&cid=${cid}`}
-                    className={cn({ 'bg-muted text-black': page === '3' })}
+                    className={cn({
+                      'bg-muted text-black ': page === '3',
+                    })}
                   >
                     3
                   </PaginationLink>
@@ -223,7 +224,7 @@ export const ClothesGalleryComponent = () => {
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className="max-sm:hidden">
                   <PaginationLink
                     className={cn({
                       'bg-muted text-black':
@@ -237,7 +238,7 @@ export const ClothesGalleryComponent = () => {
                     {Math.floor(clothes.itemCount / parseInt(per_page)) - 2}
                   </PaginationLink>
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className="max-sm:hidden">
                   <PaginationLink
                     className={cn({
                       'bg-muted text-black':
