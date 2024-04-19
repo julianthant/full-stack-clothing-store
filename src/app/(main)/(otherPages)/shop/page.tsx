@@ -7,7 +7,9 @@ interface pageProps {}
 const page: FC<pageProps> = ({}) => {
   return (
     <div className="flex gap-6">
-      <FilterClothes />
+      <div className="max-lg:hidden">
+        <FilterClothes />
+      </div>
       <ClothesGalleryComponent />
     </div>
   );
