@@ -13,10 +13,7 @@ export const SubLink = ({ title, path }: MenuLinkProps) => {
   const pathname = usePathname();
 
   const link = `/settings/${path.toLowerCase()}`;
-
   const formattedTitle = title.replace(/-/g, ' ');
-
-  console.log(pathname, link);
 
   return (
     <Link
@@ -25,6 +22,7 @@ export const SubLink = ({ title, path }: MenuLinkProps) => {
         pathname === link && 'bg-muted text-primary'
       )}
       href={link}
+      prefetch={true}
     >
       {formattedTitle}
     </Link>

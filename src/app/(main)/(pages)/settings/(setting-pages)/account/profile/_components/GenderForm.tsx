@@ -9,8 +9,8 @@ import { genderSchema } from '@/schemas';
 import { ChangeGender } from '@/server/actions/accountProfile/change-gender';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../utils/Icons';
-import { Button } from '../../../ui/button';
+import { Icons } from '../../../../../../../../components/utils/Icons';
+import { Button } from '../../../../../../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 
 import {

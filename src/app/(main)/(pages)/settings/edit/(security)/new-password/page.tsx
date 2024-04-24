@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NewPasswordForm } from '@/components/settings/account/forms/NewPasswordForm';
+import { NewPasswordForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/login-&-security/_components/NewPasswordForm';
 
 interface pageProps {}
 

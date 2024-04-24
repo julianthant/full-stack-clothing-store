@@ -1,4 +1,4 @@
-import { GenderForm } from '@/components/settings/account/forms/GenderForm';
+import { GenderForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/profile/_components/GenderForm';
 import { FC } from 'react';
 
 interface pageProps {}

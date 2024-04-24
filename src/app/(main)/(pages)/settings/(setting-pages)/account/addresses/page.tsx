@@ -1,4 +1,4 @@
-import { AddressComponent } from '@/components/settings/account/AdresssComponent';
+import { AddressComponent } from './_components/AdresssComponent';
 
 const page = () => {
   return <AddressComponent />;

@@ -14,8 +14,8 @@ import { Validate2FACode } from '@/server/actions/accountSecurity/activate-2fa';
 import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../utils/Icons';
-import { Button } from '../../../ui/button';
+import { Icons } from '../../../../../../../../components/utils/Icons';
+import { Button } from '../../../../../../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 
 import {

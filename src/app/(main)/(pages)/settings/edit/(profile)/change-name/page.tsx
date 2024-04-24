@@ -1,4 +1,4 @@
-import { NameEditForm } from '@/components/settings/account/forms/NameEditForm';
+import { NameEditForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/profile/_components/NameEditForm';
 import { FC } from 'react';
 
 interface pageProps {}

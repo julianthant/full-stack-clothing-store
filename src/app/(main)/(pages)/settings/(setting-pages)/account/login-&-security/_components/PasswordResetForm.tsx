@@ -4,13 +4,14 @@ import * as z from 'zod';
 import { useRouter } from 'next/navigation';
 import { useTransition, HTMLAttributes } from 'react';
 
+import { Reset } from '@/server/actions/authentication/reset';
 import { EmailSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../utils/Icons';
+import { Icons } from '../../../../../../../../components/utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../../ui/button';
+import { Button } from '../../../../../../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -21,11 +22,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { newEmailToken } from '@/server/actions/accountSecurity/new-email';
 
-interface EmailEditProps extends HTMLAttributes<HTMLDivElement> {}
+interface PasswordResetProps extends HTMLAttributes<HTMLDivElement> {}
 
-export function EmailResetForm({ className, ...props }: EmailEditProps) {
+export function PasswordResetForm({ className, ...props }: PasswordResetProps) {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
@@ -39,7 +39,7 @@ export function EmailResetForm({ className, ...props }: EmailEditProps) {
 
   const onSubmit = (values: z.infer<typeof EmailSchema>) => {
     startTransition(() => {
-      newEmailToken(values).then((data) => {
+      Reset(values).then((data) => {
         if (data.success) {
           router.push(
             '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
@@ -60,8 +60,10 @@ export function EmailResetForm({ className, ...props }: EmailEditProps) {
   return (
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Reset Email</h1>
-        <p className="text-sm text-muted-foreground">Need new email?</p>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Reset Password
+        </h1>
+        <p className="text-sm text-muted-foreground">Forgot your password?</p>
       </div>
 
       <Form {...form}>

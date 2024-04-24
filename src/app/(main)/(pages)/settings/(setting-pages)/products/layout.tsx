@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const subPages = ['Product-List', 'Add Product'];
+  const subPages = ['Product-List', 'Add-Product'];
   return (
     <div>
       <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 lg:pr-9 pr-3.5 lg:h-[60px] rounded-tr-[20px] max-md:rounded-tl-[20px]">

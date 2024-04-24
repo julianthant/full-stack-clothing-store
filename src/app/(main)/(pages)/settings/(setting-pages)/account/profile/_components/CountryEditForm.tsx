@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useTransition, HTMLAttributes } from 'react';
 
 import { NameSchema } from '@/schemas';
-import { ChangeName } from '@/server/actions/accountProfile/change-name';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ChangeCountry } from '@/server/actions/accountProfile/change-country';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../utils/Icons';
-import { Input } from '@nextui-org/react';
-import { Button } from '../../../ui/button';
+import { Icons } from '../../../../../../../../components/utils/Icons';
+
+import { Button } from '../../../../../../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -23,9 +23,25 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-interface NameEditProps extends HTMLAttributes<HTMLDivElement> {}
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-export function NameEditForm({ className, ...props }: NameEditProps) {
+interface CountryEditProps extends HTMLAttributes<HTMLDivElement> {
+  countryNames: string[];
+}
+
+export function CountryEditForm({
+  countryNames,
+  className,
+  ...props
+}: CountryEditProps) {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
@@ -39,7 +55,7 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
 
   const onSubmit = (values: z.infer<typeof NameSchema>) => {
     startTransition(() => {
-      ChangeName(values).then((data) => {
+      ChangeCountry(values).then((data) => {
         if (data.success) {
           router.push(
             '/settings/?menu=Account&subMenu=Profile&success=true&message=' +
@@ -60,8 +76,10 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
   return (
     <div className={cn('grid gap-6 w-[300px]', className)} {...props}>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Name</h1>
-        <p className="text-sm text-muted-foreground">Enter your new name</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Country</h1>
+        <p className="text-sm text-muted-foreground">
+          Change your current country
+        </p>
       </div>
 
       <Form {...form}>
@@ -72,24 +90,30 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only" htmlFor="email">
-                    Name
+                  <FormLabel className="sr-only" htmlFor="country">
+                    Country
                   </FormLabel>
 
-                  <FormControl>
-                    <Input
-                      key="inside"
-                      {...field}
-                      type="name"
-                      variant="bordered"
-                      autoCapitalize="none"
-                      autoComplete="email"
-                      autoCorrect="off"
-                      placeholder="John Doe"
-                      radius="sm"
-                      disabled={isPending}
-                    />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your country" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Countries</SelectLabel>
+                        {countryNames.sort().map((country) => (
+                          <SelectItem value={country} key={country}>
+                            {country}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
                   <FormMessage />
                 </FormItem>
@@ -100,7 +124,7 @@ export function NameEditForm({ className, ...props }: NameEditProps) {
               {isPending && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Set New Name
+              Select country
             </Button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import { UpdateAddressForm } from '@/components/settings/account/forms/UpdateAddressForm';
+import { UpdateAddressForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/addresses/_components/UpdateAddressForm';
 
 const page = async ({}) => {
   try {

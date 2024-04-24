@@ -1,4 +1,4 @@
-import { TwoFAForm } from '@/components/settings/account/forms/TwoFAForm';
+import { TwoFAForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/login-&-security/_components/TwoFAForm';
 import { FC } from 'react';
 
 interface pageProps {}

@@ -1,4 +1,4 @@
-import { DateOfBirthForm } from '@/components/settings/account/forms/DateOfBirthForm';
+import { DateOfBirthForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/profile/_components/DateOfBirthForm';
 import { FC } from 'react';
 
 interface pageProps {}

@@ -1,4 +1,4 @@
-import { AddPaymentMethodForm } from '@/components/settings/account/forms/AddPaymentMethodForm';
+import { AddPaymentMethodForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/payments/_components/AddPaymentMethodForm';
 import { FC } from 'react';
 
 interface pageProps {}

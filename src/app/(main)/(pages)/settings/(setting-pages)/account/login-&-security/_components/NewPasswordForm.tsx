@@ -12,8 +12,8 @@ import { newPassword } from '@/server/actions/accountSecurity/new-password';
 import { NewPasswordSchema } from '@/schemas';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../utils/Icons';
-import { Button } from '../../../ui/button';
+import { Icons } from '../../../../../../../../components/utils/Icons';
+import { Button } from '../../../../../../../../components/ui/button';
 import { Input } from '@nextui-org/react';
 
 import {

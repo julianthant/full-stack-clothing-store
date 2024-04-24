@@ -53,14 +53,14 @@ export const PaymentComponent = () => {
   });
 
   return (
-    <div className="xl:flex grid gap-4">
+    <div className="xl:flex grid gap-4  min-h-[390px]">
       <Card className="h-min sm:w-[362px] max-sm:max-w-[295px]">
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
           <CardDescription>Methods & Accounts</CardDescription>
         </CardHeader>
         <CardContent className="grid bg-foreground-100 p-0 rounded-b-lg">
-          {!isLoading ? (
+          {paymentMethods && paymentMethods.length > 0 ? (
             paymentMethods.map((card: PaymentMethod, index: number) => (
               <div
                 key={index}

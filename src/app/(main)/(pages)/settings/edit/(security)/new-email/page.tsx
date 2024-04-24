@@ -1,4 +1,4 @@
-import { EmailResetForm } from '@/components/settings/account/forms/EmailResetForm';
+import { EmailResetForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/login-&-security/_components/EmailResetForm';
 import { FC } from 'react';
 
 interface pageProps {}

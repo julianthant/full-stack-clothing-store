@@ -1,4 +1,4 @@
-import { PaymentComponent } from '@/components/settings/account/PaymentComponent';
+import { PaymentComponent } from './_components/PaymentComponent';
 
 const page = () => {
   return <PaymentComponent />;

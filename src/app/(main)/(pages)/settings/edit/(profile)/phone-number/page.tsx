@@ -1,4 +1,4 @@
-import { PhoneNumberEditForm } from '@/components/settings/account/forms/PhoneNumberEditForm';
+import { PhoneNumberEditForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/profile/_components/PhoneNumberEditForm';
 
 const page = async ({}) => {
   const response = await fetch('https://restcountries.com/v2/all');

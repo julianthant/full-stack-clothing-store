@@ -61,7 +61,7 @@ export const AddressComponent = () => {
         </Link>
       </Card>
 
-      {!!addresses ? (
+      {addresses && addresses.length > 0 ? (
         addresses.map((address: Address) => (
           <Card
             key={address.id}

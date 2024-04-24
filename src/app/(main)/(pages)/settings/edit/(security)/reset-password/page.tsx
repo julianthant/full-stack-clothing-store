@@ -1,4 +1,4 @@
-import { PasswordResetForm } from '@/components/settings/account/forms/PasswordResetForm';
+import { PasswordResetForm } from '@/app/(main)/(pages)/settings/(setting-pages)/account/login-&-security/_components/PasswordResetForm';
 import { FC } from 'react';
 
 interface pageProps {}

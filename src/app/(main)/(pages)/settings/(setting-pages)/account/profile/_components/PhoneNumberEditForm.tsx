@@ -9,9 +9,9 @@ import { PhoneNumberSchema } from '@/schemas';
 import { ChangePhoneNumber } from '@/server/actions/accountProfile/change-phone-number';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../utils/Icons';
+import { Icons } from '../../../../../../../../components/utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../../ui/button';
+import { Button } from '../../../../../../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
