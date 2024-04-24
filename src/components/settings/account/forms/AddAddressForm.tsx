@@ -12,7 +12,7 @@ import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AddAddress } from '@/actions/accountAddresses/add-new-address';
+import { AddAddress } from '@/server/actions/accountAddresses/add-new-address';
 
 import {
   Card,

@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
@@ -7,7 +9,7 @@ import { useState } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import { cn } from '@/lib/utils';
-import { RemovePaymentMethod } from '@/actions/accountPayments/remove-payment-method';
+import { RemovePaymentMethod } from '@/server/actions/accountPayments/remove-payment-method';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Icons } from '@/components/utils/Icons';
@@ -29,10 +31,7 @@ export const PaymentComponent = () => {
   const user = useCurrentUser();
   const queryClient = useQueryClient();
 
-  const {
-    data: paymentMethods,
-    isLoading,
-  } = useQuery({
+  const { data: paymentMethods, isLoading } = useQuery({
     queryFn: () =>
       user
         ? axios.get(`/api/payments/getAll/${user?.id}`).then((res) => res.data)

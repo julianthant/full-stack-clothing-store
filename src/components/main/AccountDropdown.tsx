@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { SignOut } from '@/actions/authentication/signout';
+import { SignOut } from '@/server/actions/authentication/signout';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import { User2Icon } from 'lucide-react';
@@ -66,7 +66,7 @@ export const AccountDropdown = () => {
         </DropdownSection>
 
         <DropdownSection aria-label="Preferences" showDivider>
-          <DropdownItem key="settings" href="/settings">
+          <DropdownItem key="settings" href="/settings/account/profile">
             Settings
           </DropdownItem>
           <DropdownItem

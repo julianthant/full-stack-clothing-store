@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { useRouter } from 'next/navigation';
 import { useTransition, HTMLAttributes } from 'react';
 
-import { ChangeDOB } from '@/actions/accountProfile/change-dateOfBirth';
+import { ChangeDOB } from '@/server/actions/accountProfile/change-dateOfBirth';
 import { dateSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 

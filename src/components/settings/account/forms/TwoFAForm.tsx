@@ -7,10 +7,10 @@ import { useState, useEffect, useTransition, HTMLAttributes } from 'react';
 import { toast } from 'react-toastify';
 import { TwoFASchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
+import { sendTwoFactorActivationCode } from '@/server/actions/authentication/send-code';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { Validate2FACode } from '@/actions/accountSecurity/activate-2fa';
+import { Validate2FACode } from '@/server/actions/accountSecurity/activate-2fa';
 import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';

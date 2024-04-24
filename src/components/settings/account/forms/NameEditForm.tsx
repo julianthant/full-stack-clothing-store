@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTransition, HTMLAttributes } from 'react';
 
 import { NameSchema } from '@/schemas';
-import { ChangeName } from '@/actions/accountProfile/change-name';
+import { ChangeName } from '@/server/actions/accountProfile/change-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { cn } from '@/lib/utils';

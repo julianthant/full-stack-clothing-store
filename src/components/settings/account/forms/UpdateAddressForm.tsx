@@ -9,7 +9,7 @@ import { useTransition, useState, useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addressSchema } from '@/schemas';
-import { UpdateAddress } from '@/actions/accountAddresses/update-address';
+import { UpdateAddress } from '@/server/actions/accountAddresses/update-address';
 
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';

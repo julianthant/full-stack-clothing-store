@@ -1,3 +1,5 @@
+'use client';
+
 import { format } from 'date-fns';
 import { Divider } from '@nextui-org/react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';

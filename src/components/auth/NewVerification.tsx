@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { newVerification } from '@/actions/authentication/new-verification';
+import { newVerification } from '@/server/actions/authentication/new-verification';
 import { useCallback, useEffect, useState } from 'react';
 
 import { Spinner } from '@nextui-org/react';

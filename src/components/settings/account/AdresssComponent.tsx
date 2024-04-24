@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import axios from 'axios';
 
@@ -6,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
 import { toast } from 'react-toastify';
-import { RemoveAddress } from '@/actions/accountAddresses/remove-address';
+import { RemoveAddress } from '@/server/actions/accountAddresses/remove-address';
 
 import { Button } from '@/components/ui/button';
 import { Divider, Skeleton } from '@nextui-org/react';

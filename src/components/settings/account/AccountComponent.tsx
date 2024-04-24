@@ -1,9 +1,11 @@
+'use client';
+
 import { toast } from 'react-toastify';
 import { Divider } from '@nextui-org/react';
 
 import { useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { sendTwoFactorActivationCode } from '@/actions/authentication/send-code';
+import { sendTwoFactorActivationCode } from '@/server/actions/authentication/send-code';
 
 import EditUserComponent from '@/components/utils/EditUserComponent';
 import { Button } from '@/components/ui/button';

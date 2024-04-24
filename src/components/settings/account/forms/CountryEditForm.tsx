@@ -6,7 +6,7 @@ import { useTransition, HTMLAttributes } from 'react';
 
 import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangeCountry } from '@/actions/accountProfile/change-country';
+import { ChangeCountry } from '@/server/actions/accountProfile/change-country';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';

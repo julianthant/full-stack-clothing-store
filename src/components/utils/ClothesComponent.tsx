@@ -1,8 +1,11 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type ClothesComponentProps = {
+  ID: string;
   Name: string;
   Price: string;
   ItemImage: string;
@@ -11,14 +14,19 @@ type ClothesComponentProps = {
 };
 
 export const ClothesComponent = ({
+  ID,
   Name,
   Price,
   ItemImage,
-  Rating,
   HoverImage,
 }: ClothesComponentProps) => {
+  const router = useRouter();
+
   return (
-    <div className="lg:gap-5 gap-2 grid">
+    <div
+      onClick={() => router.push(`/shop/${ID}`)}
+      className="lg:gap-5 gap-2 grid"
+    >
       <div className="w-full relative">
         <Image
           src={ItemImage}
@@ -48,9 +56,7 @@ export const ClothesComponent = ({
       </div>
 
       <div className="space-y-2">
-        <Link href={''} className="text-sm font-light">
-          {Name}
-        </Link>
+        <p className="text-sm font-light">{Name}</p>
 
         <p className="text-sm text-foreground-500 font-bold">{Price}</p>
       </div>

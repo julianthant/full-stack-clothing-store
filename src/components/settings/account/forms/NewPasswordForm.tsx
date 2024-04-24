@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 
-import { newPassword } from '@/actions/accountSecurity/new-password';
+import { newPassword } from '@/server/actions/accountSecurity/new-password';
 import { NewPasswordSchema } from '@/schemas';
 
 import { cn } from '@/lib/utils';

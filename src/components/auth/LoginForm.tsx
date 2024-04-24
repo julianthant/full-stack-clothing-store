@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 
-import { Login } from '@/actions/authentication/login';
-import { SignIn } from '@/actions/authentication/oauth-login';
+import { Login } from '@/server/actions/authentication/login';
+import { SignIn } from '@/server/actions/authentication/oauth-login';
 import { LoginSchema } from '@/schemas';
 
 import { FormError } from '../utils/FormError';

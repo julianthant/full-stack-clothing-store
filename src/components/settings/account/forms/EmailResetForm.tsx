@@ -21,7 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { newEmailToken } from '@/actions/accountSecurity/new-email';
+import { newEmailToken } from '@/server/actions/accountSecurity/new-email';
 
 interface EmailEditProps extends HTMLAttributes<HTMLDivElement> {}
 

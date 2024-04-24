@@ -6,7 +6,7 @@ import { useTransition, HTMLAttributes } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { genderSchema } from '@/schemas';
-import { ChangeGender } from '@/actions/accountProfile/change-gender';
+import { ChangeGender } from '@/server/actions/accountProfile/change-gender';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';

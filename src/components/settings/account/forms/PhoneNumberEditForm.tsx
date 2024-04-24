@@ -6,7 +6,7 @@ import { useTransition, HTMLAttributes } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PhoneNumberSchema } from '@/schemas';
-import { ChangePhoneNumber } from '@/actions/accountProfile/change-phone-number';
+import { ChangePhoneNumber } from '@/server/actions/accountProfile/change-phone-number';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '../../../utils/Icons';

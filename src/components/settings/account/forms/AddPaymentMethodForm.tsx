@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
-import { AddPaymentMethod } from '@/actions/accountPayments/add-payment-method';
+import { AddPaymentMethod } from '@/server/actions/accountPayments/add-payment-method';
 
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';

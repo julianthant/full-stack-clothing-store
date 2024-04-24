@@ -25,16 +25,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import { Divider, Spinner } from '@nextui-org/react';
 import { cn } from '@/lib/utils';
@@ -81,8 +72,7 @@ export const ClothesGalleryComponent = () => {
           lang: 'en-US',
         },
         headers: {
-          'X-RapidAPI-Key':
-            '243f2f4360msh0fde5d7c9ea3303p18912fjsnbde763fe320a',
+          'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
         },
       };
@@ -117,7 +107,7 @@ export const ClothesGalleryComponent = () => {
       {!clothes && <div className="h-[500px]" />}
       {clothes && (
         <>
-          <div className="sm:flex max-sm:space-y-2 justify-between items-start">
+          <div className="sm:flex max-sm:space-y-2 justify-between items-center">
             <div className="flex items-center justify-between w-full">
               <h1 className="text-3xl font-bold">Men&apos;s Clothing</h1>
               <Sheet>
@@ -134,7 +124,7 @@ export const ClothesGalleryComponent = () => {
                 </SheetContent>
               </Sheet>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 text-nowrap">
               <p className="text-sm tracking-wider text-foreground-500">
                 Showing {offset + 1}-{offset + 1 + parseInt(per_page)} of{' '}
                 {clothes.itemCount} Products
@@ -200,6 +190,7 @@ export const ClothesGalleryComponent = () => {
             {clothes?.products?.map((product: any) => (
               <ClothesComponent
                 key={product.id}
+                ID={product.id}
                 Name={product.name}
                 Price={product.price.current.text}
                 ItemImage={`https://${product.imageUrl}`}

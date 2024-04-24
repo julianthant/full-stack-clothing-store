@@ -9,7 +9,7 @@ import { useEffect, useTransition, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CardEditSchema } from '@/schemas';
-import { UpdatePaymentMethod } from '@/actions/accountPayments/update-payment-method';
+import { UpdatePaymentMethod } from '@/server/actions/accountPayments/update-payment-method';
 
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';

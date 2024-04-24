@@ -3,7 +3,7 @@
 import * as z from 'zod';
 import * as React from 'react';
 
-import { Reset } from '@/actions/authentication/reset';
+import { Reset } from '@/server/actions/authentication/reset';
 import { EmailSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
