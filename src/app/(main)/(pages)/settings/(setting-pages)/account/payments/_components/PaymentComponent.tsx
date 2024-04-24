@@ -29,15 +29,16 @@ export const PaymentComponent = () => {
   const [selectedCard, setSelectedCard] = useState(0);
 
   const user = useCurrentUser();
+  const userId = user?.id;
+
   const queryClient = useQueryClient();
 
   const { data: paymentMethods } = useQuery({
     queryFn: () =>
-      user
-        ? axios.get(`/api/payments/getAll/${user?.id}`).then((res) => res.data)
-        : [],
-    queryKey: ['payment-methods', { userId: user?.id }],
+      axios.get(`/api/payments/getAll/${userId}`).then((res) => res.data),
+    queryKey: ['payment-methods', userId],
     staleTime: 1000 * 60 * 10,
+    enabled: !!userId,
   });
 
   const { mutateAsync: removePaymentMethod } = useMutation({
