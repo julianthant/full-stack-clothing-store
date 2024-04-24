@@ -195,7 +195,6 @@ export const ClothesGalleryComponent = () => {
                 Price={product.price.current.text}
                 ItemImage={`https://${product.imageUrl}`}
                 HoverImage={`https://${product.additionalImageUrls[0]}`}
-                Rating={'5'}
               />
             ))}
           </div>
