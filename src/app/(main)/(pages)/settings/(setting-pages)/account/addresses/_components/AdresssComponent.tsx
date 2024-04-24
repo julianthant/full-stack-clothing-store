@@ -32,6 +32,7 @@ export const AddressComponent = () => {
         ? axios.get(`/api/addresses/getAll/${user?.id}`).then((res) => res.data)
         : [],
     queryKey: ['addresses', { userId: user?.id as string }],
+    staleTime: 1000 * 60 * 10,
   });
 
   const { mutateAsync: removeAddress } = useMutation({
