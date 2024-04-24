@@ -22,7 +22,6 @@ export const SubLink = ({ title, path }: MenuLinkProps) => {
         pathname === link && 'bg-muted text-primary'
       )}
       href={link}
-      prefetch={true}
     >
       {formattedTitle}
     </Link>
