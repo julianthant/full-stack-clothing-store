@@ -10,7 +10,6 @@ export const NewArrivalsComponent = ({}) => {
       price: '$20.00',
       image:
         'https://utfs.io/f/b4618a13-9d47-4771-8a2e-3a91615e8a2e-9el43o.png',
-      rating: '4.5',
     },
     {
       id: 2,
@@ -18,7 +17,6 @@ export const NewArrivalsComponent = ({}) => {
       price: '$25.00',
       image:
         'https://utfs.io/f/b5104dc4-d584-4934-9637-29fe30528bac-ecsyn4.png',
-      rating: '4',
     },
     {
       id: 3,
@@ -26,7 +24,6 @@ export const NewArrivalsComponent = ({}) => {
       price: '$30.00',
       image:
         'https://utfs.io/f/3349146c-0257-41c9-af50-b312191f7a72-9el43p.png',
-      rating: '3.5',
     },
     {
       id: 4,
@@ -34,7 +31,6 @@ export const NewArrivalsComponent = ({}) => {
       price: '$35.00',
       image:
         'https://utfs.io/f/b4618a13-9d47-4771-8a2e-3a91615e8a2e-9el43o.png',
-      rating: '2',
     },
   ];
 
@@ -47,10 +43,10 @@ export const NewArrivalsComponent = ({}) => {
         {clothes.map((item) => (
           <ClothesComponent
             key={item.id}
+            ID={item.id.toString()}
             Name={item.name}
             Price={item.price}
             ItemImage={item.image}
-            Rating={item.rating}
           />
         ))}
       </div>
