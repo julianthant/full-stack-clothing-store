@@ -37,6 +37,7 @@ export const PaymentComponent = () => {
         ? axios.get(`/api/payments/getAll/${user?.id}`).then((res) => res.data)
         : [],
     queryKey: ['payment-methods', { userId: user?.id as string }],
+    staleTime: 1000 * 60 * 10,
   });
 
   const { mutateAsync: removePaymentMethod } = useMutation({
