@@ -31,7 +31,7 @@ export const PaymentComponent = () => {
   const user = useCurrentUser();
   const queryClient = useQueryClient();
 
-  const { data: paymentMethods, isLoading } = useQuery({
+  const { data: paymentMethods } = useQuery({
     queryFn: () =>
       user
         ? axios.get(`/api/payments/getAll/${user?.id}`).then((res) => res.data)
