@@ -9,7 +9,6 @@ type ClothesComponentProps = {
   Name: string;
   Price: string;
   ItemImage: string;
-  Rating: string;
   HoverImage?: string;
 };
 
