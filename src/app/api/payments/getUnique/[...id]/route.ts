@@ -1,4 +1,4 @@
-import { db } from '@/database/db';
+import { db } from '@/server/database/db';
 
 import { NextResponse, NextRequest } from 'next/server';
 
