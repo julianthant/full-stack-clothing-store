@@ -26,7 +26,7 @@ export const AddressComponent = () => {
   const user = useCurrentUser();
   const queryClient = useQueryClient();
 
-  const { data: addresses } = useQuery({
+  const { data: addresses, isLoading } = useQuery({
     queryFn: () =>
       user
         ? axios.get(`/api/addresses/getAll/${user?.id}`).then((res) => res.data)
@@ -55,7 +55,7 @@ export const AddressComponent = () => {
             <PlusIcon size={70} className="text-foreground-400 mx-auto" />
             <div className="flex items-center justify-center">
               <p className="text-2xl font-bold text-foreground-600">
-                Add Address
+                Add Address {isLoading && 'Loading...'}
               </p>
             </div>
           </CardContent>
