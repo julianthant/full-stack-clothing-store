@@ -24,15 +24,16 @@ import {
 
 export const AddressComponent = () => {
   const user = useCurrentUser();
+  const userId = user?.id;
+
   const queryClient = useQueryClient();
 
   const { data: addresses } = useQuery({
     queryFn: () =>
-      user
-        ? axios.get(`/api/addresses/getAll/${user?.id}`).then((res) => res.data)
-        : [],
-    queryKey: ['addresses', { userId: user?.id }],
+      axios.get(`/api/addresses/getAll/${userId}`).then((res) => res.data),
+    queryKey: ['addresses', userId],
     staleTime: 1000 * 60 * 10,
+    enabled: !!userId,
   });
 
   const { mutateAsync: removeAddress } = useMutation({
