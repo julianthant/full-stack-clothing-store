@@ -36,7 +36,7 @@ export const PaymentComponent = () => {
       user
         ? axios.get(`/api/payments/getAll/${user?.id}`).then((res) => res.data)
         : [],
-    queryKey: ['payment-methods', { userId: user?.id as string }],
+    queryKey: ['payment-methods', { userId: user?.id }],
     staleTime: 1000 * 60 * 10,
   });
 
