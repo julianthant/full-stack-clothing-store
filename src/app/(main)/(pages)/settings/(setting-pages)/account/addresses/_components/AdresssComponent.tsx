@@ -21,12 +21,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useSearchParams } from 'next/navigation';
 
 export const AddressComponent = () => {
   const user = useCurrentUser();
   const userId = user?.id;
 
   const queryClient = useQueryClient();
+
+  const success = useSearchParams();
 
   const { data: addresses } = useQuery({
     queryFn: () =>
@@ -51,7 +54,7 @@ export const AddressComponent = () => {
   return (
     <div className="grid gap-4 relative 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2">
       <Card className="rounded-lg p-4 min-h-[319px]">
-        <Link href="/settings/edit/add-new-address">
+        <Link href="/settings/forms/address/add-new-address">
           <CardContent className="hover:bg-foreground-200 bg-foreground-100 cursor-pointer flex flex-col items-center justify-center p-0 rounded-lg h-full border-2 border-dashed border-foreground-400">
             <PlusIcon size={70} className="text-foreground-400 mx-auto" />
             <div className="flex items-center justify-center">
@@ -63,7 +66,7 @@ export const AddressComponent = () => {
         </Link>
       </Card>
 
-      {addresses && addresses.length > 0 ? (
+      {addresses || (addresses && addresses.length > 0) ? (
         addresses.map((address: Address) => (
           <Card
             key={address.id}
@@ -122,7 +125,7 @@ export const AddressComponent = () => {
               <div className="flex gap-4">
                 <Button asChild className="p-0 text-teal-600" variant={'link'}>
                   <Link
-                    href={`/settings/edit/edit-address?address-id=${address.id}`}
+                    href={`/settings/forms/address/edit-address?address-id=${address.id}`}
                   >
                     Edit
                   </Link>

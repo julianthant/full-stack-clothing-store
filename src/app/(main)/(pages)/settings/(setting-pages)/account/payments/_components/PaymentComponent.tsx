@@ -62,7 +62,7 @@ export const PaymentComponent = () => {
           <CardDescription>Methods & Accounts</CardDescription>
         </CardHeader>
         <CardContent className="grid bg-foreground-100 p-0 rounded-b-lg">
-          {paymentMethods && paymentMethods.length > 0 ? (
+          {paymentMethods || (paymentMethods && paymentMethods.length > 0) ? (
             paymentMethods.map((card: PaymentMethod, index: number) => (
               <div
                 key={index}

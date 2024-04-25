@@ -62,25 +62,6 @@ export async function getClothesByCategory(category: string, offset: number, per
   return clothes
 }
 
-export async function getCountriesAndStates() {
-  const [countriesResponse, statesResponse] = await Promise.all([
-      axios.get('https://restcountries.com/v3.1/all'),
-      axios.get('https://api.census.gov/data/2010/dec/sf1?get=NAME&for=state:*'),
-    ]);
-
-    const countriesRaw = await countriesResponse.data;
-    const statesRaw = await statesResponse.data;
-
-    const countryNames = countriesRaw.map(
-      (country: { name: { common: string } }) => country.name.common
-    );
-
-    statesRaw.shift();
-    const states = statesRaw.map((stateData: String) => stateData[0]);
-
-    return { countryNames, states }
-}
-
 export async function getCountryDialCodes() {
   const response = await axios.get('https://restcountries.com/v2/all');
   const phoneCodes = response.data

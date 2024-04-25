@@ -19,9 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased ${satoshi.className}`}>
         <Providers>
-          <Suspense fallback={null}>
-            <QueryProvider>{children}</QueryProvider>
-          </Suspense>
+          <QueryProvider>
+            <Suspense fallback={null}>{children}</Suspense>
+          </QueryProvider>
         </Providers>
       </body>
     </html>
