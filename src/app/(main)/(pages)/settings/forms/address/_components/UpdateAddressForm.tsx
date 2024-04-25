@@ -108,7 +108,7 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
   };
 
   return (
-    <Card className="border-0 shadow-none p-0 w-[500px]">
+    <Card className="border-0 shadow-none  p-0 sm:w-[500px] rounded-t-3xl">
       <CardHeader>
         <CardTitle>Update Address</CardTitle>
         <CardDescription>Edit your existing address.</CardDescription>
@@ -220,7 +220,7 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
                 />
               </div>
 
-              <div className="flex justify-between w-full gap-2">
+              <div className="sm:flex justify-between w-full gap-2">
                 <FormField
                   control={form.control}
                   name="city"
