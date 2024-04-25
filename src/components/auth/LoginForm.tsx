@@ -4,6 +4,7 @@ import * as z from 'zod';
 import * as React from 'react';
 
 import Link from 'next/link';
+import { Link as NextLink } from '@nextui-org/react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -256,14 +257,14 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
               <FormError message={error || urlError} />
               <FormSuccess message={success} />
 
-              <Link
+              <NextLink
                 href="/auth/reset"
                 size="sm"
                 className="text-blue-700 text-center ml-auto mt-2 mb-3"
                 underline="hover"
               >
                 Forgot Password?
-              </Link>
+              </NextLink>
 
               <Button disabled={isPending} className="mt-1" type="submit">
                 {isPending && (
