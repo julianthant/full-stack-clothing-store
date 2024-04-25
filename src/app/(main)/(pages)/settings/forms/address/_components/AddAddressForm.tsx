@@ -3,6 +3,7 @@
 import * as z from 'zod';
 import { useTransition } from 'react';
 
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -59,17 +60,13 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
     startTransition(() => {
       AddAddress(values).then((data) => {
         if (data.success) {
-          router.push(
-            '/settings/?menu=Account&subMenu=Addresses&success=true&message=' +
-              encodeURIComponent(data.success)
-          );
+          toast.success(data.success);
+          router.push('/settings/account/addresses?success=true');
         }
 
         if (data.error) {
-          router.push(
-            '/settings/?menu=Account&subMenu=Addresses&success=false&message=' +
-              encodeURIComponent(data.error)
-          );
+          toast.error(data.error);
+          router.push('/settings/account/addresses');
         }
       });
     });
