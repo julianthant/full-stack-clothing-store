@@ -1,12 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { Icons } from '../../../../components/utils/Icons';
 import { NavbarPages } from './NavbarPages';
 import { AccountDropdown } from './AccountDropdown';
 import { ShoppingCartIcon } from 'lucide-react';
+
+import { Input } from '@nextui-org/input';
+import { Button } from '@nextui-org/button';
+import { IntegralCF } from '@/app/fonts/fonts';
 
 import {
   Navbar,
@@ -16,13 +20,9 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Button,
-  Input,
-} from '@nextui-org/react';
+} from '@nextui-org/navbar';
 
-interface NavbarComponentProps {}
-
-const NavbarComponent: FC<NavbarComponentProps> = () => {
+export const NavbarComponent = ({ SatoshiFont }: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = ['Shop', 'On Sale', 'New Arrivals', 'Brands'];
@@ -47,9 +47,9 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
           <NavbarBrand>
             <Link
               href="/"
-              className={`font-black text-inherit text-4xl drop-shadow-md max-sm:text-[26px] black-integral pb-1`}
+              className={`font-black text-inherit text-4xl drop-shadow-md max-sm:text-[26px] pb-1 ${IntegralCF.className}`}
             >
-              CLOTHES.CO
+              CHICORY
             </Link>
           </NavbarBrand>
         </NavbarContent>
@@ -126,5 +126,3 @@ const NavbarComponent: FC<NavbarComponentProps> = () => {
     </Navbar>
   );
 };
-
-export default NavbarComponent;

@@ -19,7 +19,6 @@ const EditUserComponent: FC<EditUserComponentProps> = ({
 }) => {
   return (
     <div className="space-y-2 max-sm:space-y-1">
-      {' '}
       <div className="flex items-center">
         <h3 className="font-semibold">{Title}</h3>
 
@@ -37,7 +36,7 @@ const EditUserComponent: FC<EditUserComponentProps> = ({
 
         {CustomEdit}
       </div>
-      <p>{Name}</p>{' '}
+      <p>{Name}</p>
     </div>
   );
 };

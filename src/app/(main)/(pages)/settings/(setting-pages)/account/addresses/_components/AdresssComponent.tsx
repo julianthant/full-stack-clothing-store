@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import axios from 'axios';
 
+import { useEffect } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useSearchParams } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
@@ -11,7 +13,8 @@ import { toast } from 'react-toastify';
 import { RemoveAddress } from '@/server/actions/accountAddresses/remove-address';
 
 import { Button } from '@/components/ui/button';
-import { Divider, Skeleton } from '@nextui-org/react';
+import { Divider } from '@nextui-org/divider';
+import { Skeleton } from '@nextui-org/skeleton';
 import { PlusIcon } from 'lucide-react';
 
 import {
@@ -21,8 +24,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 
 export const AddressComponent = () => {
   const user = useCurrentUser();

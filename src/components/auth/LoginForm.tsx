@@ -4,7 +4,7 @@ import * as z from 'zod';
 import * as React from 'react';
 
 import Link from 'next/link';
-import { Link as NextLink } from '@nextui-org/react';
+import { Link as NextLink } from '@nextui-org/link';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +20,7 @@ import { FormSuccess } from '../utils/Form.Success';
 import { cn } from '@/lib/utils';
 import { Icons } from '../utils/Icons';
 import { Button } from '../ui/button';
-import { Input } from '@nextui-org/react';
+import { Input } from '@nextui-org/input';
 
 import {
   Form,

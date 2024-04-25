@@ -1,9 +1,11 @@
-import type { Metadata } from 'next';
-import { satoshi } from '@/lib/fonts';
 import './globals.css';
-import { Providers, QueryProvider } from './providers';
 import 'react-toastify/dist/ReactToastify.css';
+
+import type { Metadata } from 'next';
+
+import { Satoshi } from './fonts/fonts';
 import { Suspense } from 'react';
+import { Providers, QueryProvider } from './providers';
 
 export const metadata: Metadata = {
   title: 'Clothes.co',
@@ -17,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${satoshi.className}`}>
+      <body className={`antialiased ${Satoshi.className}`}>
         <Providers>
           <QueryProvider>
             <Suspense fallback={null}>{children}</Suspense>

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon, Check } from 'lucide-react';
 import { Icons } from '../../../../components/utils/Icons';
 import { Button } from '../../../../components/ui/button';
+import { IntegralCF } from '@/app/fonts/fonts';
 
 export const CustomerFeedbackComponent = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -89,7 +90,9 @@ export const CustomerFeedbackComponent = () => {
   return (
     <div className="space-y-10">
       <div className="container flex justify-between items-end">
-        <h1 className="bold-integral font-bold lg:text-5xl md:text-4xl text-3xl max-sm:w-[220px]">
+        <h1
+          className={`lg:text-5xl md:text-4xl text-3xl font-bold ${IntegralCF.className} text-center max-sm:w-[220px]`}
+        >
           OUR HAPPY CUSTOMERS
         </h1>
 

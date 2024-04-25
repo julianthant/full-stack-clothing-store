@@ -4,18 +4,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
 
-import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
-
 import { cn } from '@/lib/utils';
+import { toast } from 'react-toastify';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useEffect, useState } from 'react';
+
+import { useSearchParams } from 'next/navigation';
 import { RemovePaymentMethod } from '@/server/actions/accountPayments/remove-payment-method';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
+import { Divider } from '@nextui-org/divider';
+import { Skeleton } from '@nextui-org/skeleton';
 import { PlusCircle } from 'lucide-react';
-import { Divider, Skeleton } from '@nextui-org/react';
 
 import {
   Card,
@@ -24,7 +26,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useSearchParams } from 'next/navigation';
 
 export const PaymentComponent = () => {
   const [selectedCard, setSelectedCard] = useState(0);

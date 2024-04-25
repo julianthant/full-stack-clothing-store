@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { Divider } from '@nextui-org/react';
+import { Divider } from '@nextui-org/divider';
 import { currentUser } from '@/lib/server-auth';
 
 import EditUserComponent from '@/components/utils/EditUserComponent';

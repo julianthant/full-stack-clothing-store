@@ -1,6 +1,7 @@
 import { ClothesComponent } from '../../../../components/utils/ClothesComponent';
 import { Button } from '../../../../components/ui/button';
 import Link from 'next/link';
+import { IntegralCF } from '@/app/fonts/fonts';
 
 export const TopSellingComponent = ({}) => {
   const clothes = [
@@ -36,7 +37,9 @@ export const TopSellingComponent = ({}) => {
 
   return (
     <div className="container lg:space-y-14 space-y-7 flex flex-col lg:mt-5">
-      <h1 className="lg:text-5xl md:text-4xl text-3xl font-bold bold-integral text-center">
+      <h1
+        className={`lg:text-5xl md:text-4xl text-3xl font-bold ${IntegralCF.className} text-center`}
+      >
         TOP SELLING
       </h1>
       <div className="flex gap-x-5 max-lg:max-w-max max-lg:overflow-x-scroll scroll-smooth">

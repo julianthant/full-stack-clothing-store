@@ -1,15 +1,14 @@
-import { Icons } from '../../../../components/utils/Icons';
+import { Link } from '@nextui-org/link';
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@nextui-org/button';
+import { NavbarContent, NavbarItem } from '@nextui-org/navbar';
 
 import {
-  NavbarContent,
-  NavbarItem,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Button,
-  Link,
-} from '@nextui-org/react';
+} from '@nextui-org/dropdown';
 
 export const NavbarPages = ({}) => {
   return (

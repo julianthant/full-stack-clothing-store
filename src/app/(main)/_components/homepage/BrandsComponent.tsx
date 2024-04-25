@@ -1,4 +1,4 @@
-import { Icons } from '../../../../components/utils/Icons';
+import { Icons } from '@/components/utils/Icons';
 
 export const BrandsComponent = ({}) => {
   return (

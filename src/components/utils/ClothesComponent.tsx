@@ -37,7 +37,6 @@ export const ClothesComponent = ({
           })}
           priority
           loading="eager"
-          quality={100}
         />
 
         {HoverImage && (
@@ -49,7 +48,6 @@ export const ClothesComponent = ({
             className="hover:cursor-pointer absolute inset-0 opacity-0 transition-opacity hover:opacity-100 z-20"
             priority
             loading="eager"
-            quality={100}
           />
         )}
       </div>

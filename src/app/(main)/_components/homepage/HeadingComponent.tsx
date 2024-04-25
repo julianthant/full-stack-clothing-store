@@ -5,6 +5,7 @@ import { Button } from '../../../../components/ui/button';
 import { Divider } from '@nextui-org/react';
 
 import Link from 'next/link';
+import { IntegralCF } from '@/app/fonts/fonts';
 
 export const HeadingComponent = ({}) => {
   return (
@@ -14,7 +15,9 @@ export const HeadingComponent = ({}) => {
           <div className="space-y-6">
             <div className="space-y-6">
               <div className="space-y-4">
-                <h1 className="sm:text-6xl text-4xl font-bold bold-integral">
+                <h1
+                  className={`sm:text-6xl text-4xl font-bold ${IntegralCF.className} font-black`}
+                >
                   FIND CLOTHES THAT MATCHES YOUR STYLE
                 </h1>
                 <p className="text-base text-foreground-400 font-light">

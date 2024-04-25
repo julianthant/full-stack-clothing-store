@@ -1,7 +1,7 @@
 import EditUserComponent from '@/components/utils/EditUserComponent';
 
 import { Button } from '@/components/ui/button';
-import { Divider } from '@nextui-org/react';
+import { Divider } from '@nextui-org/divider';
 
 import { currentUser } from '@/lib/server-auth';
 const page = async () => {

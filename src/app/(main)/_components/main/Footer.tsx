@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { Divider } from '@nextui-org/react';
-import { NewsletterComponent } from './NewsletterComponent';
+
 import { Icons } from '../../../../components/utils/Icons';
+import { Divider } from '@nextui-org/react';
+import { IntegralCF } from '@/app/fonts/fonts';
+import { NewsletterComponent } from './NewsletterComponent';
 
 export const Footer = () => {
   const FooterNavs = [
@@ -95,7 +97,7 @@ export const Footer = () => {
     <div className="flex flex-col pt-16">
       <div className="relative">
         <NewsletterComponent />
-        <div className="bg-foreground-100 w-full absolute top-1/2 h-1/2"></div>
+        <div className="bg-foreground-100 w-full absolute top-1/2 h-1/2" />
       </div>
 
       <div className="bg-foreground-100 pb-14 pt-12">
@@ -104,9 +106,9 @@ export const Footer = () => {
             <div className="lg:w-[261px] lg:space-y-5 space-y-3 font-light place-self-stretch col-span-2 h-min">
               <Link
                 href="/"
-                className={`font-bold bold-integral text-inherit text-4xl drop-shadow-lg max-sm:text-3xl`}
+                className={`font-bold ${IntegralCF.className} text-inherit text-4xl drop-shadow-lg max-sm:text-3xl`}
               >
-                CLOTHES.CO
+                CHICORY
               </Link>
               <p className="text-sm text-foreground-500 leading-7 font-light">
                 We have clothes that suits your style and which you&apos;re
@@ -145,7 +147,7 @@ export const Footer = () => {
 
           <div className="flex items-center sm:justify-between justify-center">
             <p className="text-sm text-foreground-500 leading-7 font-light ">
-              Clothes.co &copy; 2000-2024. All Rights Reserved
+              Chicory &copy; 2000-2024. All Rights Reserved
             </p>
           </div>
         </div>

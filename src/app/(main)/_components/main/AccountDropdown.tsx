@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
 import { SignOut } from '@/server/actions/authentication/signout';
+import { ThemeSwitcher } from './ThemeSwitcher';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
+import { Button } from '@nextui-org/button';
 import { User2Icon } from 'lucide-react';
 import { UserComponent } from '../../../../components/utils/UserComponent';
-import { ThemeSwitcher } from './ThemeSwitcher';
 
 import {
   Dropdown,
@@ -13,8 +14,7 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownItem,
-  Button,
-} from '@nextui-org/react';
+} from '@nextui-org/dropdown';
 
 export const AccountDropdown = () => {
   const user = useCurrentUser();

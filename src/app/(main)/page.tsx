@@ -1,9 +1,28 @@
+import dynamic from 'next/dynamic';
+
 import { BrandsComponent } from './_components/homepage/BrandsComponent';
-import { CustomerFeedbackComponent } from './_components/homepage/CustomerFeedbackComponent';
-import { DressStyleComponent } from './_components/homepage/DressStyleComponent';
 import { HeadingComponent } from './_components/homepage/HeadingComponent';
-import { NewArrivalsComponent } from './_components/homepage/NewArrivalsComponent';
-import { TopSellingComponent } from './_components/homepage/TopSellingComponent';
+
+const CustomerFeedbackComponent = dynamic(() =>
+  import('./_components/homepage/CustomerFeedbackComponent').then(
+    (mod) => mod.CustomerFeedbackComponent
+  )
+);
+const DressStyleComponent = dynamic(() =>
+  import('./_components/homepage/DressStyleComponent').then(
+    (mod) => mod.DressStyleComponent
+  )
+);
+const NewArrivalsComponent = dynamic(() =>
+  import('./_components/homepage/NewArrivalsComponent').then(
+    (mod) => mod.NewArrivalsComponent
+  )
+);
+const TopSellingComponent = dynamic(() =>
+  import('./_components/homepage/TopSellingComponent').then(
+    (mod) => mod.TopSellingComponent
+  )
+);
 
 import { Divider } from '@nextui-org/react';
 

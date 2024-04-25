@@ -1,9 +1,9 @@
 'use client';
 
-import { Skeleton } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/skeleton';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { AvatarIcon } from '@nextui-org/react';
+import { AvatarIcon } from '@nextui-org/shared-icons';
 import { cn } from '@/lib/utils';
 
 type UserComponentProps = {

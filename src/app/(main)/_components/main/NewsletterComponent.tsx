@@ -3,16 +3,16 @@
 import * as z from 'zod';
 import Link from 'next/link';
 
-import { Input } from '@nextui-org/react';
-import { Icons } from '../../../../components/utils/Icons';
-import { Button } from '../../../../components/ui/button';
+import { Input } from '@nextui-org/input';
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@/components/ui/button';
+import { IntegralCF } from '@/app/fonts/fonts';
+import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 import { useForm } from 'react-hook-form';
 import { EmailSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
-
-import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 export const NewsletterComponent = () => {
   const [isPending, startTransition] = useTransition();
@@ -31,7 +31,9 @@ export const NewsletterComponent = () => {
     <div className="container relative z-10">
       <div className="bg-black rounded-[23px] flex items-center justify-between lg:h-48 h-full lg:px-20 max-lg:flex-col max-lg:py-6 max-lg:gap-y-4 max-sm:px-4">
         <div className="lg:w-[650px] w-full lg:px-0 lg:text-left md:px-8 sm:text-center ">
-          <p className="text-white lg:text-5xl sm:text-4xl text-3xl font-bold bold-integral">
+          <p
+            className={`text-white lg:text-5xl sm:text-4xl text-3xl font-bold ${IntegralCF.className}`}
+          >
             STAY UPTO DATE ABOUT OUR LATEST OFFERS
           </p>
         </div>
