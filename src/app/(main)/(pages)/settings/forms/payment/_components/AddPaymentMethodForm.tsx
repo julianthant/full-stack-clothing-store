@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
 import { AddPaymentMethod } from '@/server/actions/accountPayments/add-payment-method';
 
+import { toast } from 'react-toastify';
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
@@ -57,17 +58,13 @@ export function AddPaymentMethodForm() {
       AddPaymentMethod(values)
         .then((data) => {
           if (data.success) {
-            router.push(
-              '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
-                encodeURIComponent(data.success)
-            );
+            toast.success(data.success);
+            router.push('/settings/account/payments?success=true');
           }
 
           if (data.error) {
-            router.push(
-              '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
-                encodeURIComponent(data.error)
-            );
+            toast.error(data.error);
+            router.push('/settings/account/payments');
           }
         })
         .finally(() => {
