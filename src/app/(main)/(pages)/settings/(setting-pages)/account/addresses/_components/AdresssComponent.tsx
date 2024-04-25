@@ -61,7 +61,7 @@ export const AddressComponent = () => {
   }, [success]);
 
   return (
-    <div className="grid gap-4 relative 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2">
+    <div className="grid gap-4 relative 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 dark:bg-black">
       <Card className="rounded-lg p-4 min-h-[319px]">
         <Link href="/settings/forms/address/add-new-address">
           <CardContent className="hover:bg-foreground-200 bg-foreground-100 cursor-pointer flex flex-col items-center justify-center p-0 rounded-lg h-full border-2 border-dashed border-foreground-400">

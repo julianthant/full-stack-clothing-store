@@ -1,9 +1,10 @@
-import { BrandsComponent } from '@/components/home/BrandsComponent';
-import { CustomerFeedbackComponent } from '@/components/home/CustomerFeedbackComponent';
-import { DressStyleComponent } from '@/components/home/DressStyleComponent';
-import { HeadingComponent } from '@/components/home/HeadingComponent';
-import { NewArrivalsComponent } from '@/components/home/NewArrivalsComponent';
-import { TopSellingComponent } from '@/components/home/TopSellingComponent';
+import { BrandsComponent } from './_components/homepage/BrandsComponent';
+import { CustomerFeedbackComponent } from './_components/homepage/CustomerFeedbackComponent';
+import { DressStyleComponent } from './_components/homepage/DressStyleComponent';
+import { HeadingComponent } from './_components/homepage/HeadingComponent';
+import { NewArrivalsComponent } from './_components/homepage/NewArrivalsComponent';
+import { TopSellingComponent } from './_components/homepage/TopSellingComponent';
+
 import { Divider } from '@nextui-org/react';
 
 export default function Home() {

@@ -1,3 +1,4 @@
+import 'server-only'
 import { db } from '@/server/database/db';
 
 export const getTwoFactorTokenByToken = async (token: string) => {
