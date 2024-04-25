@@ -54,6 +54,9 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
 
   const form = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
+    defaultValues: {
+      country: 'United States',
+    },
   });
 
   const onSubmit = (values: z.infer<typeof addressSchema>) => {
