@@ -22,6 +22,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const AddressComponent = () => {
   const user = useCurrentUser();
@@ -29,12 +30,13 @@ export const AddressComponent = () => {
 
   const queryClient = useQueryClient();
 
-  const success = useSearchParams();
+  const params = useSearchParams();
+  const success = params.get('success');
 
-  const { data: addresses } = useQuery({
+  const { data: addresses, refetch } = useQuery({
     queryFn: () =>
       axios.get(`/api/addresses/getAll/${userId}`).then((res) => res.data),
-    queryKey: ['addresses', userId],
+    queryKey: ['addresses', { userId: userId }],
     staleTime: 1000 * 60 * 10,
     enabled: !!userId,
   });
@@ -50,6 +52,13 @@ export const AddressComponent = () => {
       console.error(error);
     },
   });
+
+  useEffect(() => {
+    if (success) {
+      refetch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
 
   return (
     <div className="grid gap-4 relative 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2">
@@ -125,7 +134,7 @@ export const AddressComponent = () => {
               <div className="flex gap-4">
                 <Button asChild className="p-0 text-teal-600" variant={'link'}>
                   <Link
-                    href={`/settings/forms/address/edit-address?address-id=${address.id}`}
+                    href={`/settings/forms/address/update-address?address-id=${address.id}`}
                   >
                     Edit
                   </Link>
