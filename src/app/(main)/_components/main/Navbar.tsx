@@ -74,7 +74,7 @@ export const NavbarComponent = ({ SatoshiFont }: any) => {
 
         <NavbarContent className="max-w-min gap-1">
           <NavbarItem>
-            <Link prefetch href={'/cart'}>
+            <Link href={'/cart'}>
               <Button
                 isIconOnly
                 className="bg-transparent hover:bg-gray-100/80"

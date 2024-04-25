@@ -59,26 +59,18 @@ export const AccountDropdown = () => {
             <UserComponent page="Navbar" />
           </DropdownItem>
           <DropdownItem key="dashboard" href="/settings/account/profile">
-            <Link
-              className="size-full"
-              prefetch
-              href="/settings/account/profile"
-            >
+            <Link className="size-full" href="/settings/account/profile">
               Profile
             </Link>
           </DropdownItem>
           <DropdownItem key="dashboard" href="/settings/dashboard/overview">
-            <Link prefetch href="/settings/dashboard/overview">
-              Dashboard
-            </Link>
+            <Link href="/settings/dashboard/overview">Dashboard</Link>
           </DropdownItem>
         </DropdownSection>
 
         <DropdownSection aria-label="Preferences" showDivider>
           <DropdownItem key="orders" href="/settings/orders/order-history">
-            <Link prefetch href="/settings/orders/order-history">
-              Orders
-            </Link>
+            <Link href="/settings/orders/order-history">Orders</Link>
           </DropdownItem>
           <DropdownItem
             isReadOnly
