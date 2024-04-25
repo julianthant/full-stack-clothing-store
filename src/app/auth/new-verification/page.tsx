@@ -1,6 +1,12 @@
 import { FC } from 'react';
 import { cn } from '@/lib/utils';
-import { EmailVerification } from '@/components/auth/NewVerification';
+import dynamic from 'next/dynamic';
+
+const EmailVerification = dynamic(() =>
+  import('@/components/auth/NewVerification').then(
+    (mod) => mod.EmailVerification
+  )
+);
 
 import Link from 'next/link';
 

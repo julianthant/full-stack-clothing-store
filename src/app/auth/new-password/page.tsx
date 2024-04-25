@@ -1,6 +1,10 @@
 import { FC } from 'react';
 import { cn } from '@/lib/utils';
-import { NewPassword } from '@/components/auth/NewPassword';
+import dynamic from 'next/dynamic';
+
+const NewPassword = dynamic(() =>
+  import('@/components/auth/NewPassword').then((mod) => mod.NewPassword)
+);
 
 import Link from 'next/link';
 

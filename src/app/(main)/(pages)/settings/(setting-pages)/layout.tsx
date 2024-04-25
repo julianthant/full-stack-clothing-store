@@ -1,20 +1,14 @@
-import Link from 'next/link';
-import { SubLink } from '@/components/utils/SubLink';
+import dynamic from 'next/dynamic';
+
+import { MenuLink } from '@/components/utils/MenuLink';
 import { FC, ReactNode } from 'react';
 
-import { Button } from '@/components/ui/button';
-import { MenuLink } from '@/components/utils/MenuLink';
 import { UserComponent } from '@/components/utils/UserComponent';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Home, LineChart, Package, ShoppingCart, Users } from 'lucide-react';
 
-import {
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  ShoppingCart,
-  Users,
-} from 'lucide-react';
+const MobileNav = dynamic(() =>
+  import('./_components/MobileNav').then((mod) => mod.MobileNav)
+);
 
 interface LayoutProps {
   children: ReactNode;
@@ -75,65 +69,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
         <div className="flex flex-col">
           <div className="flex flex-col relative">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="shrink-0 absolute top-2.5 left-4 lg:hidden"
-                >
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle navigation menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent
-                side="left"
-                className="flex flex-col overflow-y-auto max-h-screen"
-              >
-                <nav className="grid text-lg font-medium">
-                  <Link
-                    href="/"
-                    className="flex items-center gap-2 text-lg font-semibold pb-2"
-                  >
-                    CLOTHES.CO
-                    <span className="sr-only">Clothes.CO</span>
-                  </Link>
-
-                  <div className="grid gap-2">
-                    {NavigationLinks.map((link) => (
-                      <div className="grid gap-2" key={link.mainPage}>
-                        <Button
-                          asChild
-                          variant={'ghost'}
-                          className="flex items-center justify-start w-full"
-                        >
-                          <MenuLink
-                            title={link.mainPage}
-                            path={link.subPages[0]}
-                          />
-                        </Button>
-
-                        <div className="grid place-items-start pl-4 gap-1">
-                          {link.subPages.map((subPage) => (
-                            <Button
-                              key={subPage}
-                              asChild
-                              variant="ghost"
-                              className="w-52 flex items-center justify-start"
-                            >
-                              <SubLink
-                                title={subPage}
-                                path={`${link.mainPage}/${subPage}`}
-                              />
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
+            <MobileNav />
 
             {children}
           </div>

@@ -1,6 +1,10 @@
 import { FC } from 'react';
 import { cn } from '@/lib/utils';
-import { ResetForm } from '@/components/auth/ResetForm';
+import dynamic from 'next/dynamic';
+
+const ResetForm = dynamic(() =>
+  import('@/components/auth/ResetForm').then((mod) => mod.ResetForm)
+);
 
 import Link from 'next/link';
 
