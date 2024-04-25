@@ -5,7 +5,7 @@ import Image from 'next/image';
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import { cn } from '@/lib/utils';
@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useSearchParams } from 'next/navigation';
 
 export const PaymentComponent = () => {
   const [selectedCard, setSelectedCard] = useState(0);
@@ -31,9 +32,12 @@ export const PaymentComponent = () => {
   const user = useCurrentUser();
   const userId = user?.id;
 
+  const params = useSearchParams();
+  const success = params.get('success');
+
   const queryClient = useQueryClient();
 
-  const { data: paymentMethods } = useQuery({
+  const { data: paymentMethods, refetch } = useQuery({
     queryFn: () =>
       axios.get(`/api/payments/getAll/${userId}`).then((res) => res.data),
     queryKey: ['payment-methods', userId],
@@ -53,6 +57,13 @@ export const PaymentComponent = () => {
       console.error(error);
     },
   });
+
+  useEffect(() => {
+    if (success) {
+      refetch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
 
   return (
     <div className="xl:flex grid gap-4  min-h-[390px]">
