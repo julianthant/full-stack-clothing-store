@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CardEditSchema } from '@/schemas';
 import { UpdatePaymentMethod } from '@/server/actions/accountPayments/update-payment-method';
 
+import { toast } from 'react-toastify';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/utils/Icons';
@@ -73,17 +74,13 @@ export function PaymentEditForm() {
     startTransition(() => {
       UpdatePaymentMethod(values, id as string).then((data) => {
         if (data.success) {
-          router.push(
-            '/settings/?menu=Account&subMenu=Payments&success=true&message=' +
-              encodeURIComponent(data.success)
-          );
+          toast.success(data.success);
+          router.push('/settings/account/payments?success=true');
         }
 
         if (data.error) {
-          router.push(
-            '/settings/?menu=Account&subMenu=Payments&success=false&message=' +
-              encodeURIComponent(data.error)
-          );
+          toast.error(data.error);
+          router.push('/settings/account/payments');
         }
       });
     });
