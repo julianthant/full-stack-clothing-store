@@ -4,7 +4,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -58,11 +58,13 @@ export const AddressComponent = () => {
         </Link>
       </Card>
 
-      {isPending ? (
-        <AddressComponentSkeleton />
-      ) : (
-        <AddressCards addresses={addresses} />
-      )}
+      <Suspense fallback={<AddressComponentSkeleton />}>
+        {isPending ? (
+          <AddressComponentSkeleton />
+        ) : (
+          <AddressCards addresses={addresses} />
+        )}
+      </Suspense>
     </div>
   );
 };
