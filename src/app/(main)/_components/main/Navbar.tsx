@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { Icons } from '@/components/utils/Icons';
 import { NavbarPages } from './NavbarPages';
-import { ShoppingCartIcon } from 'lucide-react';
+import { Search, ShoppingCartIcon } from 'lucide-react';
 
 const AccountDropdown = dynamic(() =>
   import('./AccountDropdown').then((mod) => mod.AccountDropdown)
@@ -39,12 +39,13 @@ export const NavbarComponent = ({ user }: any) => {
       onMenuOpenChange={setIsMenuOpen}
       isBlurred={false}
       maxWidth="2xl"
-      className="border-b-2 sm:py-1"
+      className="border-b-2 p-0"
       classNames={{
-        wrapper: 'max-sm:flex-col max-sm:min-h-[6.4rem] max-sm:gap-0 px-0',
+        wrapper: 'p-0 h-14',
+        base: 'p-0',
       }}
     >
-      <div className="flex items-center justify-center w-full max-sm:pt-2 pb-1 max-sm:justify-between container">
+      <div className="flex items-center justify-between w-full container">
         <NavbarContent className="flex max-w-min items-center gap-2">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -62,23 +63,17 @@ export const NavbarComponent = ({ user }: any) => {
 
         <NavbarPages />
 
-        <NavbarContent className="max-sm:hidden px-4" justify="end">
-          <Input
-            classNames={{
-              base: 'max-w-full h-10',
-              mainWrapper: 'h-full',
-              input: 'text-small',
-              inputWrapper:
-                'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20',
-            }}
-            placeholder="Type to search..."
-            size="sm"
-            startContent={<Icons.searchIcon size={18} />}
-            type="search"
-          />
-        </NavbarContent>
-
         <NavbarContent className="max-w-min gap-1">
+          <NavbarItem className="pr-1">
+            <Button
+              className="w-52 h-10 flex items-center hover:cursor-pointer rounded-full justify-start px-3 text-default-500 bg-default-400/20 dark:bg-default-500/20 font-normal text-[14px]"
+              disabled
+            >
+              <Search size={20} />
+              <span className="ml-2">Click to search...</span>
+            </Button>
+          </NavbarItem>
+
           <NavbarItem>
             <Link href={'/cart'}>
               <Button
@@ -130,22 +125,6 @@ export const NavbarComponent = ({ user }: any) => {
           ))}
         </NavbarMenu>
       </div>
-
-      <NavbarContent className="sm:hidden w-full pb-2" justify="end">
-        <Input
-          classNames={{
-            base: 'max-w-full max-sm:container h-10',
-            mainWrapper: 'h-full',
-            input: 'text-small',
-            inputWrapper:
-              'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20',
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<Icons.searchIcon size={18} />}
-          type="search"
-        />
-      </NavbarContent>
     </Navbar>
   );
 };
