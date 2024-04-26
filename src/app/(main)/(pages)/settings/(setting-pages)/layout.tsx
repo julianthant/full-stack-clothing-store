@@ -66,6 +66,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                     key={link.mainPage}
                     title={link.mainPage}
                     path={link.subPages[0]}
+                    Icon={link.icon}
                   />
                 ))}
               </nav>
