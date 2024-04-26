@@ -104,7 +104,7 @@ export const NavbarComponent = ({ user }: any) => {
             </Dropdown>
           ) : (
             <NavbarItem>
-              <Button asChild variant={'outline'} className="font-medium">
+              <Button asChild variant={'outline'} className="font-medium h-9">
                 <Link prefetch className="font-medium" href="/auth/login">
                   Sign In
                 </Link>
