@@ -15,8 +15,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useState } from 'react';
 
 export const AddressCards = ({ addresses }: any) => {
+  const [loadMore, setLoadMore] = useState(false);
+
   const queryClient = useQueryClient();
 
   const { mutateAsync: removeAddress } = useMutation({
@@ -31,12 +34,14 @@ export const AddressCards = ({ addresses }: any) => {
     },
   });
 
+  const ModifiedAddresses = loadMore ? addresses : addresses.slice(0, 1);
+
   return (
-    <>
-      {addresses.map((address: Address) => (
+    <div className="flex flex-col gap-4">
+      {ModifiedAddresses.map((address: Address) => (
         <Card
           key={address.id}
-          className="h-full rounded-lg flex justify-between flex-col min-h-[319px]"
+          className="rounded-lg flex justify-between flex-col h-[319px]"
         >
           {address.defaultAddress && (
             <CardHeader className="px-5 py-2 border-b">
@@ -119,6 +124,12 @@ export const AddressCards = ({ addresses }: any) => {
           </CardFooter>
         </Card>
       ))}
-    </>
+
+      {addresses.length > 1 && !loadMore && (
+        <Button onClick={() => setLoadMore(true)} className="w-full lg:hidden">
+          Load More
+        </Button>
+      )}
+    </div>
   );
 };
