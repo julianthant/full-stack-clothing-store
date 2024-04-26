@@ -77,7 +77,11 @@ export const MobileNav = () => {
                   variant={'ghost'}
                   className="flex items-center justify-start w-full"
                 >
-                  <MenuLink title={link.mainPage} path={link.subPages[0]} />
+                  <MenuLink
+                    title={link.mainPage}
+                    path={link.subPages[0]}
+                    Icon={link.icon}
+                  />
                 </Button>
 
                 <div className="grid place-items-start pl-4 gap-1">
