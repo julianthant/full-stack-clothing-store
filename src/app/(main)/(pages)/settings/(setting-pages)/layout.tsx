@@ -102,7 +102,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
               </SheetTrigger>
               <SheetContent
                 side="left"
-                className="flex flex-col overflow-y-auto max-h-screen"
+                className="flex flex-col overflow-y-auto max-h-screen lg:hidden"
               >
                 <MobileNav />
               </SheetContent>

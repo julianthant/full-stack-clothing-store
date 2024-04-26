@@ -25,6 +25,7 @@ export const MenuLink = ({ title, path, Icon }: MenuLinkProps) => {
         pathnameMenuLink === menuLink && 'bg-muted text-primary'
       )}
       href={link}
+      prefetch
     >
       {Icon && Icon}
       {title}

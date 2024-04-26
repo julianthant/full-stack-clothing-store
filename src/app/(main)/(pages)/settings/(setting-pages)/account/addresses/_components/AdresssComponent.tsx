@@ -4,8 +4,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 
-import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -13,7 +12,6 @@ import { useQuery } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { AddressComponentSkeleton } from '@/components/skeleton/AddressComponentSkeleton';
-import { Button } from '@/components/ui/button';
 
 const AddressCards = dynamic(() =>
   import('./AddressCards').then((mod) => mod.AddressCards)
