@@ -1,14 +1,7 @@
 import dynamic from 'next/dynamic';
 
-import { AddressComponentSkeleton } from '@/components/skeleton/AddressComponentSkeleton';
-import { AddressAddSkeleton } from '@/components/skeleton/AddressAddSkeleton';
-
-const AddressComponent = dynamic(
-  () =>
-    import('./_components/AdresssComponent').then(
-      (mod) => mod.AddressComponent
-    ),
-  { loading: () => <AddressAddSkeleton /> }
+const AddressComponent = dynamic(() =>
+  import('./_components/AdresssComponent').then((mod) => mod.AddressComponent)
 );
 
 const page = () => {
