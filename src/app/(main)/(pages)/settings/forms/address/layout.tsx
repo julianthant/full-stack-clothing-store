@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="w-full  rounded-3xl">
+    <div className="w-full rounded-3xl">
       {children}
       <div className="flex items-center justify-center pb-6">
         <Link

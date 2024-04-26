@@ -76,7 +76,7 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
   };
 
   return (
-    <Card className="border-0 shadow-none p-0 w-[500px]">
+    <Card className="border-0 shadow-none p-0 rounded-t-3xl sm:w-[500px]">
       <CardHeader>
         <CardTitle>Address</CardTitle>
         <CardDescription>Add a new address to your account.</CardDescription>
@@ -185,7 +185,7 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
               />
             </div>
 
-            <div className="flex gap-2">
+            <div className="sm:flex justify-between w-full gap-2">
               <FormField
                 control={form.control}
                 name="city"

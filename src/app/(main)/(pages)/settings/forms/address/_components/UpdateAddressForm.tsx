@@ -108,12 +108,12 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
   };
 
   return (
-    <Card className="border-0 shadow-none  p-0 sm:w-[500px] rounded-t-3xl">
+    <Card className="border-0 shadow-none p-0 rounded-t-3xl sm:w-[500px]">
       <CardHeader>
         <CardTitle>Update Address</CardTitle>
         <CardDescription>Edit your existing address.</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-6 relative">
+      <CardContent className="grid gap-6">
         {!isLoading ? (
           <Form {...form}>
             <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
