@@ -6,7 +6,7 @@ import { FC, ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
-import { UserComponent } from '@/components/utils/UserComponent';
+import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';
 
 import {
   Home,
@@ -22,6 +22,11 @@ const MobileNav = dynamic(
   { ssr: false }
 );
 
+const UserComponent = dynamic(
+  () =>
+    import('@/components/utils/UserComponent').then((mod) => mod.UserComponent),
+  { loading: () => <UserComponentSkeleton /> }
+);
 interface LayoutProps {
   children: ReactNode;
 }
