@@ -9,9 +9,8 @@ const Footer = dynamic(() =>
   import('./_components/main/Footer').then((mod) => mod.Footer)
 );
 
-const ToastContainer = dynamic(
-  () => import('react-toastify').then((mod) => mod.ToastContainer),
-  { ssr: false }
+const ToastContainer = dynamic(() =>
+  import('react-toastify').then((mod) => mod.ToastContainer)
 );
 
 interface LayoutProps {

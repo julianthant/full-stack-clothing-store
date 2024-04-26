@@ -25,7 +25,7 @@ const MobileNav = dynamic(
 const UserComponent = dynamic(
   () =>
     import('@/components/utils/UserComponent').then((mod) => mod.UserComponent),
-  { ssr: false, loading: () => <UserComponentSkeleton /> }
+  { loading: () => <UserComponentSkeleton /> }
 );
 
 interface LayoutProps {

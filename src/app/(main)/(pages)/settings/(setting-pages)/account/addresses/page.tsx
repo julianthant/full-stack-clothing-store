@@ -8,7 +8,7 @@ const AddressComponent = dynamic(
     import('./_components/AdresssComponent').then(
       (mod) => mod.AddressComponent
     ),
-  { ssr: false, loading: () => <AddressAddSkeleton /> }
+  { loading: () => <AddressAddSkeleton /> }
 );
 
 const page = () => {

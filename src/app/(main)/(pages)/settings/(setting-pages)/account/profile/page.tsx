@@ -8,7 +8,7 @@ import { UserEditFormSkeleton } from '@/components/skeleton/UserEditFormsSkeleto
 const EditUserComponent = dynamic(
   () =>
     import('@/components/utils/EditUserComponent').then((mod) => mod.default),
-  { ssr: false, loading: () => <UserEditFormSkeleton /> }
+  { loading: () => <UserEditFormSkeleton /> }
 );
 
 const page = async () => {

@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 const AddressCards = dynamic(
   () => import('./AddressCards').then((mod) => mod.AddressCards),
-  { ssr: false, loading: () => <AddressComponentSkeleton /> }
+  { loading: () => <AddressComponentSkeleton /> }
 );
 
 export const AddressComponent = () => {

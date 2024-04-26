@@ -7,7 +7,7 @@ const PaymentComponent = dynamic(
     import('./_components/PaymentComponent').then(
       (mod) => mod.PaymentComponent
     ),
-  { ssr: false, loading: () => <PaymentComponentSkeleton /> }
+  { loading: () => <PaymentComponentSkeleton /> }
 );
 
 const page = () => {

@@ -14,7 +14,7 @@ import {
 const UserComponent = dynamic(
   () =>
     import('@/components/utils/UserComponent').then((mod) => mod.UserComponent),
-  { ssr: false, loading: () => <UserComponentSkeleton /> }
+  { loading: () => <UserComponentSkeleton /> }
 );
 
 export const AccountDropdown = ({ user }: any) => {
