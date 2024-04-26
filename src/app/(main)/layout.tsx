@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { FC, ReactNode } from 'react';
 import { NavbarComponent } from './_components/main/Navbar';
 import { SessionProvider } from 'next-auth/react';
+import { currentUser } from '@/lib/server-auth';
 
 const Footer = dynamic(() =>
   import('./_components/main/Footer').then((mod) => mod.Footer)
@@ -17,9 +18,11 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const user = currentUser();
+
   return (
     <SessionProvider>
-      <NavbarComponent SatoshiFont={''} />
+      <NavbarComponent user={user} />
 
       <ToastContainer
         pauseOnFocusLoss={false}

@@ -7,6 +7,7 @@ import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Button } from '@nextui-org/button';
 import { User2Icon } from 'lucide-react';
 import { UserComponent } from '../../../../components/utils/UserComponent';
+import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';
 
 import {
   Dropdown,
@@ -15,10 +16,9 @@ import {
   DropdownSection,
   DropdownItem,
 } from '@nextui-org/dropdown';
+import { Suspense } from 'react';
 
-export const AccountDropdown = () => {
-  const user = useCurrentUser();
-
+export const AccountDropdown = ({ user }: any) => {
   return (
     <Dropdown
       radius="sm"
@@ -56,7 +56,9 @@ export const AccountDropdown = () => {
             key="profile"
             className="h-14 gap-2 opacity-100"
           >
-            <UserComponent page="Navbar" />
+            <Suspense fallback={<UserComponentSkeleton />}>
+              <UserComponent user={user} page="Navbar" />
+            </Suspense>
           </DropdownItem>
           <DropdownItem key="dashboard" href="/settings/account/profile">
             <Link className="size-full" href="/settings/account/profile">

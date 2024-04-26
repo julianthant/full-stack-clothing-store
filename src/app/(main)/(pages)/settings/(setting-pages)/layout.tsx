@@ -1,10 +1,12 @@
 import dynamic from 'next/dynamic';
 
 import { MenuLink } from '@/components/utils/MenuLink';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, Suspense } from 'react';
 
 import { UserComponent } from '@/components/utils/UserComponent';
 import { Home, LineChart, Package, ShoppingCart, Users } from 'lucide-react';
+import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';
+import { currentUser } from '@/lib/server-auth';
 
 const MobileNav = dynamic(() =>
   import('./_components/MobileNav').then((mod) => mod.MobileNav)
@@ -15,6 +17,8 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const user = currentUser();
+
   const NavigationLinks = [
     {
       mainPage: 'Dashboard',
@@ -50,7 +54,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
           <div className="flex h-full max-h-dvh flex-col gap-2">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-              <UserComponent page="Profile" />
+              <Suspense fallback={<UserComponentSkeleton />}>
+                <UserComponent user={user} page="Profile" />
+              </Suspense>
             </div>
 
             <div className="flex-1">

@@ -1,4 +1,4 @@
-import 'server-only'
+import 'server-only';
 import { db } from '@/server/database/db';
 
 export const getAddressById = async (id: string) => {

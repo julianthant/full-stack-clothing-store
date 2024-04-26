@@ -1,18 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 import { Icons } from '@/components/utils/Icons';
+import { NavbarPages } from './NavbarPages';
+import { AccountDropdown } from './AccountDropdown';
 import { ShoppingCartIcon } from 'lucide-react';
-
-const NavbarPages = dynamic(() =>
-  import('./NavbarPages').then((mod) => mod.NavbarPages)
-);
-const AccountDropdown = dynamic(() =>
-  import('./AccountDropdown').then((mod) => mod.AccountDropdown)
-);
 
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
@@ -28,7 +22,7 @@ import {
   NavbarMenuItem,
 } from '@nextui-org/navbar';
 
-export const NavbarComponent = ({ SatoshiFont }: any) => {
+export const NavbarComponent = ({ user }: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = ['Shop', 'On Sale', 'New Arrivals', 'Brands'];
@@ -90,7 +84,7 @@ export const NavbarComponent = ({ SatoshiFont }: any) => {
             </Link>
           </NavbarItem>
 
-          <AccountDropdown />
+          <AccountDropdown user={user} />
         </NavbarContent>
 
         <NavbarMenu>
