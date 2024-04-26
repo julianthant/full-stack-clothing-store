@@ -7,9 +7,10 @@ import Link from 'next/link';
 type MenuLinkProps = {
   title: string;
   path: string;
+  Icon?: JSX.Element;
 };
 
-export const MenuLink = ({ title, path }: MenuLinkProps) => {
+export const MenuLink = ({ title, path, Icon }: MenuLinkProps) => {
   const pathname = usePathname();
 
   const link = `/settings/${title.toLowerCase()}/${path.toLowerCase()}`;
@@ -25,6 +26,7 @@ export const MenuLink = ({ title, path }: MenuLinkProps) => {
       )}
       href={link}
     >
+      {Icon && Icon}
       {title}
     </Link>
   );
