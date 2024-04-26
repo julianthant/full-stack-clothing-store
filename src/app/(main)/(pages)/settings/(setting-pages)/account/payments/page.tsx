@@ -1,14 +1,4 @@
-import dynamic from 'next/dynamic';
-
-import { PaymentComponentSkeleton } from '@/components/skeleton/PaymentComponentSkeleton';
-
-const PaymentComponent = dynamic(
-  () =>
-    import('./_components/PaymentComponent').then(
-      (mod) => mod.PaymentComponent
-    ),
-  { loading: () => <PaymentComponentSkeleton /> }
-);
+import { PaymentComponent } from './_components/PaymentComponent';
 
 const page = () => {
   return (

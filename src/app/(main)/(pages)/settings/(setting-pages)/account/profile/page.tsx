@@ -1,16 +1,8 @@
-import dynamic from 'next/dynamic';
-
 import { format } from 'date-fns';
 import { Divider } from '@nextui-org/divider';
 import { currentUser } from '@/lib/server-auth';
 import { UserEditFormSkeleton } from '@/components/skeleton/UserEditFormsSkeleton';
-
-const EditUserComponent = dynamic(
-  () =>
-    import('@/components/utils/EditUserComponent').then((mod) => mod.default),
-  { loading: () => <UserEditFormSkeleton /> }
-);
-
+import EditUserComponent from '@/components/utils/EditUserComponent';
 const page = async () => {
   const user = await currentUser();
 
