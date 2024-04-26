@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title: 'StyleZ - The only fashion store you need',
   description: 'Buy your favorite clothes here',
   icons: {
-    icon: ['/favicon.svg'],
-    apple: ['/favicon.svg'],
+    icon: ['/favicon.ico'],
+    apple: ['/favicon.ico'],
   },
 };
 
