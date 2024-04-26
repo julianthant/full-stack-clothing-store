@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
-import { Icons } from '../../../../components/utils/Icons';
-import { Button } from '../../../../components/ui/button';
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@/components/ui/button';
 import { Divider } from '@nextui-org/react';
 
 import Link from 'next/link';

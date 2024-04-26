@@ -1,5 +1,5 @@
-import { ClothesComponent } from '../../../../components/utils/ClothesComponent';
-import { Button } from '../../../../components/ui/button';
+import { ClothesComponent } from '@/components/utils/ClothesComponent';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { IntegralCF } from '@/app/fonts/fonts';
 
