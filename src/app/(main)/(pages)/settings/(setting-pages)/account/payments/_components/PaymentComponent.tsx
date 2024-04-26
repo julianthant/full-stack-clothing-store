@@ -67,7 +67,7 @@ export const PaymentComponent = () => {
   }, [success]);
 
   return (
-    <div className="xl:flex grid gap-4 min-h-[390px]">
+    <div className="xl:flex grid gap-4">
       <Card className="h-min sm:w-[362px] max-sm:max-w-[295px]">
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
@@ -124,25 +124,25 @@ export const PaymentComponent = () => {
             ))
           ) : (
             <>
-              <div className="px-6 py-4 w-min flex items-center gap-3 justify-start">
+              <div className="px-6 py-4 w-full flex items-center gap-3 justify-start">
                 <div>
-                  <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
+                  <Skeleton className="flex rounded-md min-w-[85px] h-[53.45px]" />
                 </div>
                 <div className="w-full flex flex-col gap-2">
-                  <Skeleton className="h-4 w rounded-lg" />
-                  <Skeleton className="h-4 w-3/5 rounded-lg" />
+                  <Skeleton className="h-4 w-2/5 rounded-lg" />
+                  <Skeleton className="h-4 w-full rounded-lg" />
                 </div>
               </div>
 
               <Divider />
 
-              <div className="px-6 py-4 w-min flex items-center gap-3 justify-start">
+              <div className="px-6 py-4 w-full flex items-center gap-3 justify-start">
                 <div>
-                  <Skeleton className="flex rounded-md w-[85px] h-[53.45px]" />
+                  <Skeleton className="flex rounded-md min-w-[85px] h-[53.45px]" />
                 </div>
                 <div className="w-full flex flex-col gap-2">
-                  <Skeleton className="h-4 w rounded-lg" />
-                  <Skeleton className="h-4 w-3/5 rounded-lg" />
+                  <Skeleton className="h-4 w-2/5 rounded-lg" />
+                  <Skeleton className="h-4 w-full rounded-lg" />
                 </div>
               </div>
 

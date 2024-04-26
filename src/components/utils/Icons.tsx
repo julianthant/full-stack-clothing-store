@@ -99,7 +99,7 @@ export const Icons = {
                           stroke="transparent"
                           data-fill-palette-color="accent"
                           x="0"
-                          fill-opacity="1"
+                          fillOpacity="1"
                         ></rect>
                         <rect
                           width="54.675359058074775"
@@ -108,7 +108,7 @@ export const Icons = {
                           stroke="transparent"
                           data-fill-palette-color="accent"
                           x="66.67726714399363"
-                          fill-opacity="0.75"
+                          fillOpacity="0.75"
                         ></rect>
                         <rect
                           width="54.675359058074775"
@@ -117,7 +117,7 @@ export const Icons = {
                           stroke="transparent"
                           data-fill-palette-color="accent"
                           x="133.35453428798726"
-                          fill-opacity="0.5"
+                          fillOpacity="0.5"
                         ></rect>
                       </g>
                     </svg>

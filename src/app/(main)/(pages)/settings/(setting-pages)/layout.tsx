@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 import { MenuLink } from '@/components/utils/MenuLink';
 import { currentUser } from '@/lib/server-auth';
-import { FC, ReactNode, Suspense } from 'react';
+import { FC, ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
@@ -17,20 +17,23 @@ import {
   Menu,
 } from 'lucide-react';
 
-const MobileNav = dynamic(() =>
-  import('./_components/MobileNav').then((mod) => mod.MobileNav)
+const MobileNav = dynamic(
+  () => import('./_components/MobileNav').then((mod) => mod.MobileNav),
+  { ssr: false }
 );
 
-const UserComponent = dynamic(() =>
-  import('@/components/utils/UserComponent').then((mod) => mod.UserComponent)
+const UserComponent = dynamic(
+  () =>
+    import('@/components/utils/UserComponent').then((mod) => mod.UserComponent),
+  { ssr: false, loading: () => <UserComponentSkeleton /> }
 );
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
-  const user = currentUser();
+const Layout: FC<LayoutProps> = async ({ children }) => {
+  const user = await currentUser();
 
   const NavigationLinks = [
     {
@@ -67,9 +70,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <div className="hidden border-r bg-muted/40 md:block rounded-l-[20px]">
           <div className="flex h-full max-h-dvh flex-col gap-2">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-              <Suspense fallback={<UserComponentSkeleton />}>
-                <UserComponent user={user} page="Profile" />
-              </Suspense>
+              <UserComponent user={user} page="Profile" />
             </div>
 
             <div className="flex-1">

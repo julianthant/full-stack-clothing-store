@@ -16,15 +16,24 @@ export const SubLink = ({ title, path }: MenuLinkProps) => {
   const formattedTitle = title.replace(/-/g, ' ');
 
   return (
-    <Link
-      className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-        pathname === link && 'bg-muted text-primary'
-      )}
-      href={link}
-      prefetch
-    >
-      {formattedTitle}
-    </Link>
+    <div className="relative h-full flex items-center justify-center">
+      <Link
+        className={cn(
+          'flex items-center text-muted-foreground hover:bg-muted hover:py-2 hover:rounded-sm hover:shadow-sm hover:text-black px-4',
+          pathname === link &&
+            'text-primary h-full hover:bg-transparent hover:rounded-none hover:shadow-none'
+        )}
+        href={link}
+        prefetch
+      >
+        {formattedTitle}
+      </Link>
+
+      <div
+        className={cn('absolute', {
+          'bottom-0 h-1 w-full bg-black': pathname === link,
+        })}
+      />
+    </div>
   );
 };

@@ -2,76 +2,67 @@ import dynamic from 'next/dynamic';
 
 import { format } from 'date-fns';
 import { Divider } from '@nextui-org/divider';
-import { Suspense } from 'react';
 import { currentUser } from '@/lib/server-auth';
+import { UserEditFormSkeleton } from '@/components/skeleton/UserEditFormsSkeleton';
 
-const EditUserComponent = dynamic(() =>
-  import('@/components/utils/EditUserComponent').then((mod) => mod.default)
+const EditUserComponent = dynamic(
+  () =>
+    import('@/components/utils/EditUserComponent').then((mod) => mod.default),
+  { ssr: false, loading: () => <UserEditFormSkeleton /> }
 );
 
 const page = async () => {
   const user = await currentUser();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 h-[538px]">
       <div className="w-full rounded-lg border border-dashed shadow-sm p-8">
         <div className="space-y-4 tracking-wide">
-          <Suspense fallback={<div>Loading...</div>}>
-            <EditUserComponent
-              Title="Name"
-              Name={user?.name || 'N/A'}
-              FormLink={'/settings/edit/change-name'}
-            />
-          </Suspense>
+          <EditUserComponent
+            Title="Name"
+            Name={user?.name || 'N/A'}
+            FormLink={'/settings/edit/change-name'}
+          />
 
           <Divider />
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <EditUserComponent
-              Title="Country"
-              Name={user?.country || 'N/A'}
-              FormLink={'/settings/edit/change-country'}
-            />
-          </Suspense>
+          <EditUserComponent
+            Title="Country"
+            Name={user?.country || 'N/A'}
+            FormLink={'/settings/edit/change-country'}
+          />
 
           <Divider />
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <EditUserComponent
-              Title="Date Of Birth"
-              Name={
-                (user?.dateOfBirth &&
-                  format(user?.dateOfBirth, 'dd MMMM, yyy')) ||
-                'N/A'
-              }
-              FormLink={'/settings/edit/date-of-birth'}
-            />
-          </Suspense>
+          <EditUserComponent
+            Title="Date Of Birth"
+            Name={
+              (user?.dateOfBirth &&
+                format(user?.dateOfBirth, 'dd MMMM, yyy')) ||
+              'N/A'
+            }
+            FormLink={'/settings/edit/date-of-birth'}
+          />
 
           <Divider />
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <EditUserComponent
-              Title="Gender"
-              Name={
-                (user?.gender &&
-                  user?.gender.charAt(0).toUpperCase() +
-                    user?.gender.slice(1)) ||
-                'N/A'
-              }
-              FormLink={'/settings/edit/gender'}
-            />
-          </Suspense>
+          <EditUserComponent
+            Title="Gender"
+            Name={
+              (user?.gender &&
+                user?.gender.charAt(0).toUpperCase() + user?.gender.slice(1)) ||
+              'N/A'
+            }
+            FormLink={'/settings/edit/gender'}
+          />
 
           <Divider />
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <EditUserComponent
-              Title="Primary Mobile Number"
-              Name={user?.phoneNumber || 'N/A'}
-              FormLink={'/settings/edit/phone-number'}
-            />
-          </Suspense>
+          <EditUserComponent
+            Title="Primary Mobile Number"
+            Name={user?.phoneNumber || 'N/A'}
+            FormLink={'/settings/edit/phone-number'}
+          />
         </div>
       </div>
     </div>

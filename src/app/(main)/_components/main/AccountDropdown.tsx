@@ -2,7 +2,6 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 import { SignOut } from '@/server/actions/authentication/signout';
-import { Suspense } from 'react';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';
 
@@ -12,8 +11,10 @@ import {
   DropdownItem,
 } from '@nextui-org/dropdown';
 
-const UserComponent = dynamic(() =>
-  import('@/components/utils/UserComponent').then((mod) => mod.UserComponent)
+const UserComponent = dynamic(
+  () =>
+    import('@/components/utils/UserComponent').then((mod) => mod.UserComponent),
+  { ssr: false, loading: () => <UserComponentSkeleton /> }
 );
 
 export const AccountDropdown = ({ user }: any) => {
@@ -41,9 +42,7 @@ export const AccountDropdown = ({ user }: any) => {
           key="profile"
           className="h-14 gap-2 opacity-100"
         >
-          <Suspense fallback={<UserComponentSkeleton />}>
-            <UserComponent user={user} page="Navbar" />
-          </Suspense>
+          <UserComponent user={user} page="Navbar" />
         </DropdownItem>
         <DropdownItem key="dashboard" href="/settings/account/profile">
           <Link className="size-full" href="/settings/account/profile">

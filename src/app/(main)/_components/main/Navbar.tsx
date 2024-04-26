@@ -10,6 +10,7 @@ import { Search, ShoppingCartIcon } from 'lucide-react';
 const AccountDropdown = dynamic(() =>
   import('./AccountDropdown').then((mod) => mod.AccountDropdown)
 );
+
 import { Button } from '@/components/ui/button';
 import { User2Icon } from 'lucide-react';
 import { Button as NextButton } from '@nextui-org/button';
@@ -21,6 +22,7 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/navbar';
+import { ScrollShadow } from '@nextui-org/react';
 
 export const NavbarComponent = ({ user }: any) => {
   return (
@@ -119,9 +121,12 @@ export const NavbarComponent = ({ user }: any) => {
         justify="start"
       >
         <div className="container">
-          <div className="gap-0 font-medium flex max-md:overflow-x-scroll scrollbar-hide scroll-smooth">
+          <ScrollShadow
+            orientation="horizontal"
+            className="gap-0 font-medium flex max-md:overflow-x-scroll scrollbar-hide scroll-smooth"
+          >
             <NavbarPages />
-          </div>
+          </ScrollShadow>
         </div>
       </NavbarContent>
     </Navbar>

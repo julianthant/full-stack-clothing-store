@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { SubLink } from '@/components/utils/SubLink';
-import { Button } from '@/components/ui/button';
+
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 
@@ -10,14 +10,17 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   const subPages = ['Profile', 'Login-&-Security', 'Payments', 'Addresses'];
+
   return (
     <div>
-      <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 lg:pr-9 pr-3.5 lg:h-[60px] rounded-tr-[20px] max-md:rounded-tl-[20px]">
-        <nav className="hidden flex-col gap-3 text-lg font-medium lg:flex lg:flex-row md:items-center md:text-sm lg:gap-2">
+      <header className="flex h-14 items-center gap-4 border-b bg-muted/40 pl-6 lg:pr-9 pr-3.5 lg:h-[60px] max-md:rounded-tr-[20px] max-md:rounded-tl-[20px]">
+        <nav className="hidden flex-col gap-3 text-lg font-medium lg:flex lg:flex-row md:items-center md:text-sm lg:gap-2 h-full rounded-none">
           {subPages.map((link) => (
-            <Button key={link} asChild variant="ghost">
-              <SubLink title={link} path={`account/${link.toLowerCase()}`} />
-            </Button>
+            <SubLink
+              key={link}
+              title={link}
+              path={`account/${link.toLowerCase()}`}
+            />
           ))}
         </nav>
 
