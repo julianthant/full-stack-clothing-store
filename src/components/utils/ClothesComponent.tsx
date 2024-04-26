@@ -22,11 +22,8 @@ export const ClothesComponent = ({
   const router = useRouter();
 
   return (
-    <div
-      onClick={() => router.push(`/shop/${ID}`)}
-      className="lg:gap-5 gap-2 grid"
-    >
-      <div className="w-full relative">
+    <div className="lg:gap-5 gap-2 grid w-">
+      <div className="max-lg:w-[200px] relative">
         <Image
           src={ItemImage}
           alt={Name}
