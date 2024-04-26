@@ -3,7 +3,7 @@ import { Skeleton } from '@nextui-org/skeleton';
 
 export const AddressComponentSkeleton = () => {
   return (
-    <Card className="rounded-lg flex flex-col justify-between">
+    <Card className="rounded-lg flex flex-col justify-between h-[319px]">
       <div className="grid gap-3  p-5">
         <Skeleton className="h-4 w-2/3 rounded-md" />
 
