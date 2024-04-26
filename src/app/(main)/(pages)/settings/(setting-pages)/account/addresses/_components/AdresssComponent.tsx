@@ -12,11 +12,7 @@ import { AddressComponentSkeleton } from '@/components/skeleton/AddressComponent
 import { PlusIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
-
-const AddressCards = dynamic(
-  () => import('./AddressCards').then((mod) => mod.AddressCards),
-  { loading: () => <AddressComponentSkeleton /> }
-);
+import { AddressCards } from './AddressCards';
 
 export const AddressComponent = () => {
   const user = useCurrentUser();

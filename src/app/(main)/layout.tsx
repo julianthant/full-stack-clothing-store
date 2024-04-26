@@ -4,10 +4,7 @@ import { FC, ReactNode } from 'react';
 import { NavbarComponent } from './_components/main/Navbar';
 import { SessionProvider } from 'next-auth/react';
 import { currentUser } from '@/lib/server-auth';
-
-const Footer = dynamic(() =>
-  import('./_components/main/Footer').then((mod) => mod.Footer)
-);
+import { Footer } from './_components/main/Footer';
 
 const ToastContainer = dynamic(() =>
   import('react-toastify').then((mod) => mod.ToastContainer)
