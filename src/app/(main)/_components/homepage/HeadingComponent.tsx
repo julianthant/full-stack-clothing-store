@@ -72,7 +72,7 @@ export const HeadingComponent = ({}) => {
         </div>
         <div className="self-end relative">
           <Image
-            src="https://utfs.io/f/db4ed320-7511-49ff-9a44-afaea38b0e78-u8xd3t.png"
+            src="https://utfs.io/f/58cf1ba9-e2aa-4683-86e4-fb435245d884-u8xd3t.webp"
             alt="HeadingImage"
             width={600}
             height={632}

@@ -10,28 +10,28 @@ export const NewArrivalsComponent = ({}) => {
       name: 'T-shirt with Tape Details',
       price: '$20.00',
       image:
-        'https://utfs.io/f/b4618a13-9d47-4771-8a2e-3a91615e8a2e-9el43o.png',
+        'https://utfs.io/f/cdbcca1e-f99b-4058-9aef-ac5f28d14ede-9el43q.webp',
     },
     {
       id: 2,
       name: 'Skinny Fit Jeans',
       price: '$25.00',
       image:
-        'https://utfs.io/f/b5104dc4-d584-4934-9637-29fe30528bac-ecsyn4.png',
+        'https://utfs.io/f/43e29efe-99b3-4749-8a83-14c468bb4717-ecsyn4.webp',
     },
     {
       id: 3,
       name: 'Checkered Shirt',
       price: '$30.00',
       image:
-        'https://utfs.io/f/3349146c-0257-41c9-af50-b312191f7a72-9el43p.png',
+        'https://utfs.io/f/257fcd23-44b4-4fdb-95da-ca4257b6ce98-9el43p.webp',
     },
     {
       id: 4,
       name: 'Sleeve Striped T-shirt',
       price: '$35.00',
       image:
-        'https://utfs.io/f/b4618a13-9d47-4771-8a2e-3a91615e8a2e-9el43o.png',
+        'https://utfs.io/f/b68cb261-ef8c-46fa-ac63-00e2e417e691-9el43o.webp',
     },
   ];
 

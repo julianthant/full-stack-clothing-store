@@ -43,7 +43,7 @@ export const DressStyleComponent = () => {
 
           <div className="relative rounded-2xl md:col-span-3 h-[192px] overflow-hidden bg-white/95">
             <Image
-              src="https://utfs.io/f/76a530ff-9b52-4bdd-961b-189284974839-19rwli.jpg"
+              src="https://utfs.io/f/3534301a-4f36-4ddd-888b-a1e898f83ec2-19rwli.webp"
               alt="Party"
               width={500}
               height={192}
