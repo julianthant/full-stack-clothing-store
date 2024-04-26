@@ -13,6 +13,7 @@ export const IntegralCF = localFont({
       style: 'normal',
     },
   ],
+  display: 'swap',
 });
 
 export const Satoshi = localFont({
@@ -38,4 +39,5 @@ export const Satoshi = localFont({
       style: 'normal',
     },
   ],
+  display: 'swap',
 });
