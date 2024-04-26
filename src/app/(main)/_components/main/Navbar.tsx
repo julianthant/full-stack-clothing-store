@@ -10,8 +10,7 @@ import { Search, ShoppingCartIcon } from 'lucide-react';
 const AccountDropdown = dynamic(() =>
   import('./AccountDropdown').then((mod) => mod.AccountDropdown)
 );
-import { Button } from '@nextui-org/button';
-
+import { Button } from '@/components/ui/button';
 import { User2Icon } from 'lucide-react';
 import { Button as NextButton } from '@nextui-org/button';
 import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
@@ -55,51 +54,63 @@ export const NavbarComponent = ({ user }: any) => {
 
         <NavbarContent className="max-w-min gap-1">
           <NavbarItem className="sm:pr-1">
-            <Button
+            <NextButton
               className="w-52 h-10 sm:flex hidden items-center hover:cursor-pointer rounded-full justify-start px-3 text-default-500 bg-default-400/20 dark:bg-default-500/20 font-normal text-[14px]"
               disabled
             >
               <Search size={20} />
               <span className="ml-2">Click to search...</span>
-            </Button>
+            </NextButton>
 
-            <Button
+            <NextButton
               isIconOnly
               className="bg-transparent hover:bg-gray-100/80 sm:hidden"
             >
               <Search size={26} height={26} />
-            </Button>
+            </NextButton>
           </NavbarItem>
 
-          <NavbarItem>
-            <Link href={'/cart'}>
-              <Button
-                isIconOnly
-                className="bg-transparent hover:bg-gray-100/80"
-              >
-                <ShoppingCartIcon size={26} height={26} />
+          {user && (
+            <NavbarItem>
+              <Link href={'/cart'}>
+                <NextButton
+                  isIconOnly
+                  className="bg-transparent hover:bg-gray-100/80"
+                >
+                  <ShoppingCartIcon size={26} height={26} />
+                </NextButton>
+              </Link>
+            </NavbarItem>
+          )}
+
+          {user ? (
+            <Dropdown
+              radius="sm"
+              classNames={{
+                base: 'before:bg-default-200 mt-4', // change arrow background
+                content: 'p-0 border-divider bg-background',
+              }}
+              placement="bottom-end"
+            >
+              <DropdownTrigger>
+                <NextButton
+                  isIconOnly
+                  className="bg-transparent hover:bg-gray-100/80"
+                >
+                  <User2Icon size={26} height={26} />
+                </NextButton>
+              </DropdownTrigger>
+              <AccountDropdown user={user} />
+            </Dropdown>
+          ) : (
+            <NavbarItem>
+              <Button asChild variant={'outline'} className="font-medium">
+                <Link prefetch className="font-medium" href="/auth/login">
+                  Sign In
+                </Link>
               </Button>
-            </Link>
-          </NavbarItem>
-
-          <Dropdown
-            radius="sm"
-            classNames={{
-              base: 'before:bg-default-200 mt-4', // change arrow background
-              content: 'p-0 border-divider bg-background',
-            }}
-            placement="bottom-end"
-          >
-            <DropdownTrigger>
-              <NextButton
-                isIconOnly
-                className="bg-transparent hover:bg-gray-100/80"
-              >
-                <User2Icon size={26} height={26} />
-              </NextButton>
-            </DropdownTrigger>
-            <AccountDropdown user={user} />
-          </Dropdown>
+            </NavbarItem>
+          )}
         </NavbarContent>
       </div>
 

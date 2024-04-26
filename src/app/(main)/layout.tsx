@@ -17,8 +17,8 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
-  const user = currentUser();
+const Layout: FC<LayoutProps> = async ({ children }) => {
+  const user = await currentUser();
 
   return (
     <SessionProvider>

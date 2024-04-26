@@ -28,7 +28,7 @@ export const sendVerficationEmail = async (email: string, token: string) => {
 
 export const sendPasswordEmail = async (email: string, token: string) => {
   const resendLink = localEnvironment
-    ? `http://localhost:3000//auth/new-password?token=${token}`
+    ? `http://localhost:3000/auth/new-password?token=${token}`
     : `https://${process.env.APP_URL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({

@@ -42,7 +42,7 @@ export const NewArrivalsComponent = ({}) => {
       >
         NEW ARRIVALS
       </h1>
-      <div className="flex gap-x-5 max-lg:max-w-max max-lg:overflow-x-scroll scroll-smooth">
+      <div className="flex gap-x-5 max-lg:max-w-max max-lg:overflow-x-scroll">
         {clothes.map((item) => (
           <ClothesComponent
             key={item.id}

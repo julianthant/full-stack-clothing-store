@@ -1,10 +1,6 @@
-'use client';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AvatarIcon } from '@nextui-org/shared-icons';
 import { cn } from '@/lib/utils';
-import { use } from 'react';
-import { User } from '@prisma/client';
 
 type UserComponentProps = {
   page: 'Navbar' | 'Profile';
@@ -12,7 +8,6 @@ type UserComponentProps = {
 };
 
 export const UserComponent = ({ page, user }: UserComponentProps) => {
-  const currentUser: User = use(user);
   return (
     <div>
       <div
@@ -24,7 +19,7 @@ export const UserComponent = ({ page, user }: UserComponentProps) => {
         <Avatar className="w-9 h-9">
           <AvatarImage src={user?.image as string} />
           <AvatarFallback>
-            <AvatarIcon />
+            <AvatarIcon className="w-6 h-6" />
           </AvatarFallback>
         </Avatar>
         <div
@@ -34,10 +29,10 @@ export const UserComponent = ({ page, user }: UserComponentProps) => {
           )}
         >
           <div className="truncate text-default-600 text-sm tracking-wide">
-            {currentUser.name}
+            {user.name}
           </div>
           <div className="truncate text-default-500 text-xs tracking-wider">
-            {currentUser.email}
+            {user.email}
           </div>
         </div>
       </div>
