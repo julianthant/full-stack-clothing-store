@@ -1,8 +1,4 @@
-import dynamic from 'next/dynamic';
-
-const AddressComponent = dynamic(() =>
-  import('./_components/AdresssComponent').then((mod) => mod.AddressComponent)
-);
+import { AddressComponent } from './_components/AdresssComponent';
 
 const page = () => {
   return (
