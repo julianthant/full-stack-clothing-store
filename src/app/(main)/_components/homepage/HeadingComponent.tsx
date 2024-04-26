@@ -72,13 +72,13 @@ export const HeadingComponent = ({}) => {
         </div>
         <div className="self-end relative">
           <Image
-            src="https://utfs.io/f/58cf1ba9-e2aa-4683-86e4-fb435245d884-u8xd3t.webp"
+            src="https://utfs.io/f/b473adf8-5198-453f-8f42-ab399b88211a-hf3ps.webp"
             alt="HeadingImage"
             width={600}
             height={632}
             fetchPriority="high"
             loading="eager"
-            quality={100}
+            quality={75}
             priority
           />
           <div className="absolute sm:top-[17rem] top-28 left-0">
