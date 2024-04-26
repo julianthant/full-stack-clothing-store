@@ -1,15 +1,28 @@
 import dynamic from 'next/dynamic';
 
 import { MenuLink } from '@/components/utils/MenuLink';
+import { currentUser } from '@/lib/server-auth';
 import { FC, ReactNode, Suspense } from 'react';
 
-import { UserComponent } from '@/components/utils/UserComponent';
-import { Home, LineChart, Package, ShoppingCart, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';
-import { currentUser } from '@/lib/server-auth';
+
+import {
+  Home,
+  LineChart,
+  Package,
+  ShoppingCart,
+  Users,
+  Menu,
+} from 'lucide-react';
 
 const MobileNav = dynamic(() =>
   import('./_components/MobileNav').then((mod) => mod.MobileNav)
+);
+
+const UserComponent = dynamic(() =>
+  import('@/components/utils/UserComponent').then((mod) => mod.UserComponent)
 );
 
 interface LayoutProps {
@@ -76,7 +89,24 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
         <div className="flex flex-col">
           <div className="flex flex-col relative">
-            <MobileNav />
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="shrink-0 absolute top-2.5 left-4 lg:hidden"
+                >
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle navigation menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="left"
+                className="flex flex-col overflow-y-auto max-h-screen"
+              >
+                <MobileNav />
+              </SheetContent>
+            </Sheet>
 
             {children}
           </div>

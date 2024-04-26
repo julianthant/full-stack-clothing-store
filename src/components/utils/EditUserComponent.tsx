@@ -1,9 +1,11 @@
-import { FC, ReactNode } from 'react';
+'use client';
+
+import { FC, ReactNode, use } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 
 interface EditUserComponentProps {
-  Title: string;
+  Title: String;
   Name: string;
   FormLink: string;
   ShowEdit?: boolean;

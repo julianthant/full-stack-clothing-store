@@ -1,16 +1,24 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 import { Icons } from '@/components/utils/Icons';
 import { NavbarPages } from './NavbarPages';
-import { AccountDropdown } from './AccountDropdown';
 import { ShoppingCartIcon } from 'lucide-react';
+
+const AccountDropdown = dynamic(() =>
+  import('./AccountDropdown').then((mod) => mod.AccountDropdown)
+);
 
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import { IntegralCF } from '@/app/fonts/fonts';
+
+import { User2Icon } from 'lucide-react';
+import { Button as NextButton } from '@nextui-org/button';
+import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
 
 import {
   Navbar,
@@ -84,7 +92,24 @@ export const NavbarComponent = ({ user }: any) => {
             </Link>
           </NavbarItem>
 
-          <AccountDropdown user={user} />
+          <Dropdown
+            radius="sm"
+            classNames={{
+              base: 'before:bg-default-200 mt-4', // change arrow background
+              content: 'p-0 border-divider bg-background',
+            }}
+            placement="bottom-end"
+          >
+            <DropdownTrigger>
+              <NextButton
+                isIconOnly
+                className="bg-transparent hover:bg-gray-100/80"
+              >
+                <User2Icon size={26} height={26} />
+              </NextButton>
+            </DropdownTrigger>
+            <AccountDropdown user={user} />
+          </Dropdown>
         </NavbarContent>
 
         <NavbarMenu>
