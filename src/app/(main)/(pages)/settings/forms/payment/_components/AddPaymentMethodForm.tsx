@@ -74,7 +74,7 @@ export function AddPaymentMethodForm() {
   };
 
   return (
-    <Card className="border-0 shadow-none p-0 w-[500px]">
+    <Card className="border-0 shadow-none p-0 rounded-t-3xl sm:w-[500px]">
       <CardHeader>
         <CardTitle>Payment Method</CardTitle>
         <CardDescription>

@@ -67,7 +67,7 @@ export const PaymentComponent = () => {
   }, [success]);
 
   return (
-    <div className="xl:flex grid gap-4  min-h-[390px]">
+    <div className="xl:flex grid gap-4 min-h-[390px]">
       <Card className="h-min sm:w-[362px] max-sm:max-w-[295px]">
         <CardHeader>
           <CardTitle>Wallet</CardTitle>
@@ -150,7 +150,7 @@ export const PaymentComponent = () => {
             </>
           )}
 
-          <Link href="/settings/edit/add-payment-method">
+          <Link href="/settings/forms/payment/add-payment-method">
             <div className="flex hover:cursor-pointer hover:bg-foreground-200 bg-foreground-100 px-6 py-4 gap-3 rounded-b-lg">
               <div className="border-2 border-dotted w-[95px] h-14 border-foreground-400 flex items-center justify-center">
                 <PlusCircle size={24} className="text-foreground-400" />

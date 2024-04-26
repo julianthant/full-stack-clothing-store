@@ -56,6 +56,7 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
     resolver: zodResolver(addressSchema),
     defaultValues: {
       country: 'United States',
+      states: 'California',
     },
   });
 

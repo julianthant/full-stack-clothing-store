@@ -108,7 +108,7 @@ export const Footer = () => {
                 href="/"
                 className={`font-bold ${IntegralCF.className} text-inherit text-4xl drop-shadow-lg max-sm:text-3xl`}
               >
-                CHICORY
+                <Icons.logo />
               </Link>
               <p className="text-sm text-foreground-500 leading-7 font-light">
                 We have clothes that suits your style and which you&apos;re
@@ -147,7 +147,7 @@ export const Footer = () => {
 
           <div className="flex items-center sm:justify-between justify-center">
             <p className="text-sm text-foreground-500 leading-7 font-light ">
-              Chicory &copy; 2000-2024. All Rights Reserved
+              StyleZ &copy; 2000-2024. All Rights Reserved
             </p>
           </div>
         </div>

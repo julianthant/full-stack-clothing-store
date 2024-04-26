@@ -10,6 +10,9 @@ import { Providers, QueryProvider } from './providers';
 export const metadata: Metadata = {
   title: 'Clothes.co',
   description: 'Buy your favorite clothes here',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

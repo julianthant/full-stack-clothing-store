@@ -14,7 +14,6 @@ const AccountDropdown = dynamic(() =>
 
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
-import { IntegralCF } from '@/app/fonts/fonts';
 
 import { User2Icon } from 'lucide-react';
 import { Button as NextButton } from '@nextui-org/button';
@@ -51,13 +50,12 @@ export const NavbarComponent = ({ user }: any) => {
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             className="lg:hidden"
           />
-
           <NavbarBrand>
             <Link
               href="/"
-              className={`font-black text-inherit text-4xl drop-shadow-md max-sm:text-[26px] pb-1 ${IntegralCF.className}`}
+              className="text-inherit text-4xl drop-shadow-md max-sm:text-[26px]"
             >
-              CHICORY
+              <Icons.logo />
             </Link>
           </NavbarBrand>
         </NavbarContent>
