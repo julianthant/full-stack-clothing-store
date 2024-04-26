@@ -32,8 +32,6 @@ export const ClothesComponent = ({
           className={cn('hover:cursor-pointer z-10 transition-opacity', {
             'hover:opacity-0': HoverImage,
           })}
-          priority
-          loading="eager"
         />
 
         {HoverImage && (
@@ -43,8 +41,6 @@ export const ClothesComponent = ({
             width={360}
             height={360}
             className="hover:cursor-pointer absolute inset-0 opacity-0 transition-opacity hover:opacity-100 z-20"
-            priority
-            loading="eager"
           />
         )}
       </div>

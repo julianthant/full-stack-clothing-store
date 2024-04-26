@@ -18,8 +18,6 @@ export const DressStyleComponent = () => {
               width={360}
               height={192}
               className="absolute sm:right-[-120px] sm:top-[-73px] right-[-90px] top-[-70px] w-auto h-auto"
-              priority
-              loading="eager"
             />
             <p className="absolute 2xl:top-6 top-4 2xl:left-10 xl:left-8 left-6 2xl:text-3xl xl:text-2xl text-xl font-bold">
               Casual
@@ -33,8 +31,6 @@ export const DressStyleComponent = () => {
               width={300}
               height={192}
               className="absolute sm:right-[-20px] right-[-90px] top-[-90px] w-auto h-auto"
-              priority
-              loading="eager"
             />
             <p className="absolute 2xl:top-6 top-4 2xl:left-10 xl:left-8 left-6 2xl:text-3xl xl:text-2xl text-xl font-bold">
               Formal
@@ -48,8 +44,6 @@ export const DressStyleComponent = () => {
               width={500}
               height={192}
               className="absolute sm:right-[-60px] right-[-50px] sm:top-[-120px] top-[-63px] w-auto h-auto"
-              priority
-              loading="eager"
             />
             <p className="absolute 2xl:top-6 top-4 2xl:left-10 xl:left-8 left-6 2xl:text-3xl xl:text-2xl text-xl font-bold">
               Party
@@ -63,8 +57,6 @@ export const DressStyleComponent = () => {
               width={300}
               height={192}
               className="absolute sm:right-[-47px] right-[-42px] sm:top-[-85px] top-[-74px] w-auto h-auto"
-              priority
-              loading="eager"
             />
             <p className="absolute 2xl:top-6 top-4 2xl:left-10 xl:left-8 left-6 2xl:text-3xl xl:text-2xl text-xl font-bold">
               Gym
