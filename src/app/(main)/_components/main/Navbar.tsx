@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 
 import { Icons } from '@/components/utils/Icons';
 import { NavbarPages } from './NavbarPages';
@@ -22,34 +21,21 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from '@nextui-org/navbar';
 
 export const NavbarComponent = ({ user }: any) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const menuItems = ['Shop', 'On Sale', 'New Arrivals', 'Brands'];
-
   return (
     <Navbar
-      onMenuOpenChange={setIsMenuOpen}
       isBlurred={false}
       maxWidth="2xl"
-      className="border-b-2 p-0"
+      className="xl:border-b-2 p-0"
       classNames={{
-        wrapper:
-          'p-0 xl:h-14 max-xl:flex-col h-full max-xl:pt-2 max-xl:gap-2 max-md:pb-2',
+        wrapper: 'p-0 xl:h-14 max-xl:flex-col h-full max-xl:pt-2 max-xl:gap-2',
         base: 'p-0',
       }}
     >
       <div className="flex items-center justify-between w-full container">
         <NavbarContent className="flex max-w-min items-center gap-4">
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            className="md:hidden h-12"
-          />
           <NavbarBrand>
             <Link
               href="/"
@@ -115,34 +101,16 @@ export const NavbarComponent = ({ user }: any) => {
             <AccountDropdown user={user} />
           </Dropdown>
         </NavbarContent>
-
-        <NavbarMenu>
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? 'primary'
-                    : index === menuItems.length - 1
-                    ? 'danger'
-                    : 'foreground'
-                }
-                className="w-full"
-                href="#"
-              >
-                {item}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
       </div>
 
       <NavbarContent
-        className="xl:hidden max-md:hidden max-xl:bg-slate-400/80 w-full"
+        className="bg-[#0a0a0a]/80 w-full xl:hidden"
         justify="start"
       >
-        <div className="gap-0 font-medium flex container">
-          <NavbarPages />
+        <div className="container">
+          <div className="gap-0 font-medium flex max-md:overflow-x-scroll scrollbar-hide scroll-smooth">
+            <NavbarPages />
+          </div>
         </div>
       </NavbarContent>
     </Navbar>
