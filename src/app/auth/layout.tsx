@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, Suspense } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -45,7 +45,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
-            {children}
+            <Suspense>{children}</Suspense>
             <p className="px-8 text-center text-sm text-muted-foreground">
               By using clothes.co, you agree to our{' '}
               <Link
