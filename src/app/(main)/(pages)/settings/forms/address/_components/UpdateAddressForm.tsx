@@ -96,6 +96,7 @@ export function UpdateAddressForm({
           queryKey: ['address', { addressId: id }],
         });
         toast({
+          duration: 5000,
           title: 'Address: Update',
           description: data.success,
         });
@@ -104,6 +105,7 @@ export function UpdateAddressForm({
 
       if (data.error) {
         toast({
+          duration: 5000,
           title: 'Address: Update',
           description: data.error,
         });

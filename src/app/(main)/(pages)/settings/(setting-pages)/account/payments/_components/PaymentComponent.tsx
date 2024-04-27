@@ -53,12 +53,14 @@ export const PaymentComponent = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
       toast({
+        duration: 5000,
         title: 'Payment Method: Remove',
         description: 'Payment method removed successfully!',
       });
     },
     onError: () => {
       toast({
+        duration: 5000,
         variant: 'destructive',
         title: 'Payment Method: Remove',
         description: 'Failed to remove payment method!',

@@ -69,6 +69,7 @@ export function AddAddressForm({
       AddAddress(values).then((data) => {
         if (data.success) {
           toast({
+            duration: 5000,
             title: 'Address: Add',
             description: data.success,
           });
@@ -77,6 +78,7 @@ export function AddAddressForm({
 
         if (data.error) {
           toast({
+            duration: 5000,
             title: 'Address: Add',
             description: data.error,
           });

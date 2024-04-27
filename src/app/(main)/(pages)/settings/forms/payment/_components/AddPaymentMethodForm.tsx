@@ -60,6 +60,7 @@ export function AddPaymentMethodForm() {
         .then((data) => {
           if (data.success) {
             toast({
+        duration: 5000,
               title: 'Payment Method: Add',
               description: data.success,
             });
@@ -68,6 +69,7 @@ export function AddPaymentMethodForm() {
 
           if (data.error) {
             toast({
+        duration: 5000,
               variant: 'destructive',
               title: 'Payment Method: Add',
               description: data.error,

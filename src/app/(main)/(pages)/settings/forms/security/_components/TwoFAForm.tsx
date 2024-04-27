@@ -169,12 +169,14 @@ export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
               await sendTwoFactorActivationCode(user?.email as string)
                 .then(() =>
                   toast({
+                    duration: 5000,
                     title: 'Two Factor Authentication',
                     description: 'Verification code sent!',
                   })
                 )
                 .catch(() =>
                   toast({
+                    duration: 5000,
                     variant: 'destructive',
                     title: 'Two Factor Authentication',
                     description: 'Failed to send code!',

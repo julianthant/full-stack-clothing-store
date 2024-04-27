@@ -29,12 +29,14 @@ export const AddressCards = ({ addresses }: any) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['addresses'] });
       toast({
+        duration: 5000,
         title: 'Address: Remove',
         description: 'Address removed successfully!',
       });
     },
     onError: (error) => {
       toast({
+        duration: 5000,
         variant: 'destructive',
         title: 'Address: Remove',
         description: 'Unable to remove address!',
