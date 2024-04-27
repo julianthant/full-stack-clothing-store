@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CardEditSchema } from '@/schemas';
 import { UpdatePaymentMethod } from '@/server/actions/accountPayments/update-payment-method';
 
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/utils/Icons';
@@ -45,6 +45,8 @@ export function PaymentEditForm() {
   const params = useSearchParams();
   const id = params.get('card-id');
 
+  const { toast } = useToast();
+
   useEffect(() => {
     (async () => {
       const paymentMethod = await axios.get(
@@ -60,7 +62,7 @@ export function PaymentEditForm() {
   });
 
   useEffect(() => {
-    if (!!card) {
+    if (card) {
       form.reset({
         cardHolder: card?.cardHolder,
         expiryMonth: card?.expiryMonth,
@@ -74,12 +76,19 @@ export function PaymentEditForm() {
     startTransition(() => {
       UpdatePaymentMethod(values, id as string).then((data) => {
         if (data.success) {
-          toast.success(data.success);
+          toast({
+            title: 'Payment Method: Update',
+            description: data.success,
+          });
           router.push('/settings/account/payments?success=true');
         }
 
         if (data.error) {
-          toast.error(data.error);
+          toast({
+            variant: 'destructive',
+            title: 'Payment Method: Update',
+            description: data.error,
+          });
           router.push('/settings/account/payments');
         }
       });

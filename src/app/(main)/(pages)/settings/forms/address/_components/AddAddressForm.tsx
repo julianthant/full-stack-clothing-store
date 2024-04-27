@@ -3,7 +3,7 @@
 import * as z from 'zod';
 import { useTransition } from 'react';
 
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -47,10 +47,14 @@ type CountryEditProps = {
   states: string[];
 };
 
-export function AddAddressForm({ countryNames, states }: CountryEditProps) {
+export function AddAddressForm({
+  countryNames,
+  states,
+}: Readonly<CountryEditProps>) {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
@@ -64,12 +68,18 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
     startTransition(() => {
       AddAddress(values).then((data) => {
         if (data.success) {
-          toast.success(data.success);
+          toast({
+            title: 'Address: Add',
+            description: data.success,
+          });
           router.push('/settings/account/addresses?success=true');
         }
 
         if (data.error) {
-          toast.error(data.error);
+          toast({
+            title: 'Address: Add',
+            description: data.error,
+          });
           router.push('/settings/account/addresses');
         }
       });
@@ -105,11 +115,13 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Countries</SelectLabel>
-                        {countryNames.sort().map((country) => (
-                          <SelectItem value={country} key={country}>
-                            {country}
-                          </SelectItem>
-                        ))}
+                        {countryNames
+                          .toSorted((a, b) => a.localeCompare(b))
+                          .map((country) => (
+                            <SelectItem value={country} key={country}>
+                              {country}
+                            </SelectItem>
+                          ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -222,11 +234,13 @@ export function AddAddressForm({ countryNames, states }: CountryEditProps) {
                         <SelectContent>
                           <SelectGroup>
                             <SelectLabel>Countries</SelectLabel>
-                            {states.sort().map((state) => (
-                              <SelectItem value={state} key={state}>
-                                {state}
-                              </SelectItem>
-                            ))}
+                            {states
+                              .toSorted((a, b) => a.localeCompare(b))
+                              .map((state) => (
+                                <SelectItem value={state} key={state}>
+                                  {state}
+                                </SelectItem>
+                              ))}
                           </SelectGroup>
                         </SelectContent>
                       </Select>

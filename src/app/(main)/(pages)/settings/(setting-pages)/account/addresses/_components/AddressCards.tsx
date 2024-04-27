@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Divider } from '@nextui-org/divider';
 
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { RemoveAddress } from '@/server/actions/accountAddresses/remove-address';
 
@@ -20,16 +20,25 @@ import { useState } from 'react';
 export const AddressCards = ({ addresses }: any) => {
   const [loadMore, setLoadMore] = useState(false);
 
+  const { toast } = useToast();
+
   const queryClient = useQueryClient();
 
   const { mutateAsync: removeAddress } = useMutation({
     mutationFn: (addressID: string) => RemoveAddress(addressID),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['addresses'] });
-      toast.success('Address removed successfully');
+      toast({
+        title: 'Address: Remove',
+        description: 'Address removed successfully!',
+      });
     },
     onError: (error) => {
-      toast.error('Failed to remove address');
+      toast({
+        variant: 'destructive',
+        title: 'Address: Remove',
+        description: 'Unable to remove address!',
+      });
       console.error(error);
     },
   });

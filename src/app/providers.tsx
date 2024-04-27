@@ -4,7 +4,9 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="light">
@@ -17,7 +19,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 import { useState } from 'react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-export function QueryProvider({ children }: { children: React.ReactNode }) {
+export function QueryProvider({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   const [queryClient] = useState(
     () =>
       new QueryClient({

@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
 import { AddPaymentMethod } from '@/server/actions/accountPayments/add-payment-method';
 
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
@@ -45,6 +45,7 @@ export function AddPaymentMethodForm() {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
     resolver: zodResolver(cardAddSchema),
@@ -58,12 +59,19 @@ export function AddPaymentMethodForm() {
       AddPaymentMethod(values)
         .then((data) => {
           if (data.success) {
-            toast.success(data.success);
+            toast({
+              title: 'Payment Method: Add',
+              description: data.success,
+            });
             router.push('/settings/account/payments?success=true');
           }
 
           if (data.error) {
-            toast.error(data.error);
+            toast({
+              variant: 'destructive',
+              title: 'Payment Method: Add',
+              description: data.error,
+            });
             router.push('/settings/account/payments');
           }
         })

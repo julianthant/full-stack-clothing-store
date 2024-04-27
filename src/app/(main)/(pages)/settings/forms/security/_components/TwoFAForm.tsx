@@ -1,17 +1,16 @@
 'use client';
 
 import * as z from 'zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useTransition, HTMLAttributes } from 'react';
 
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { TwoFASchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { sendTwoFactorActivationCode } from '@/server/actions/authentication/send-code';
 
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Validate2FACode } from '@/server/actions/accountSecurity/activate-2fa';
-import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '@/components/utils/Icons';
@@ -45,6 +44,7 @@ export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
 
   const user = useCurrentUser();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (formType !== 'activate' && formType !== 'deactivate') {
@@ -167,8 +167,19 @@ export function TwoFAForm({ className, ...props }: TwoFAEditProps) {
             onSubmit={async (event) => {
               event.preventDefault();
               await sendTwoFactorActivationCode(user?.email as string)
-                .then(() => toast.success('Verification code sent!'))
-                .catch(() => toast.error('Failed to send code!'));
+                .then(() =>
+                  toast({
+                    title: 'Two Factor Authentication',
+                    description: 'Verification code sent!',
+                  })
+                )
+                .catch(() =>
+                  toast({
+                    variant: 'destructive',
+                    title: 'Two Factor Authentication',
+                    description: 'Failed to send code!',
+                  })
+                );
             }}
           >
             <Button

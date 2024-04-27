@@ -43,7 +43,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { Spinner } from '@nextui-org/react';
 
 interface CountryEditProps {
@@ -51,7 +51,10 @@ interface CountryEditProps {
   states: string[];
 }
 
-export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
+export function UpdateAddressForm({
+  countryNames,
+  states,
+}: Readonly<CountryEditProps>) {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
@@ -59,6 +62,8 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
   const queryClient = useQueryClient();
 
   const id = params.get('address-id');
+
+  const { toast } = useToast();
 
   const { data: address, isLoading } = useQuery({
     queryFn: () =>
@@ -90,12 +95,18 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
         queryClient.invalidateQueries({
           queryKey: ['address', { addressId: id }],
         });
-        toast.success(data.success);
+        toast({
+          title: 'Address: Update',
+          description: data.success,
+        });
         router.push('/settings/account/addresses?success=true');
       }
 
       if (data.error) {
-        toast.error(data.error);
+        toast({
+          title: 'Address: Update',
+          description: data.error,
+        });
         router.push('/settings/account/addresses');
       }
     },
@@ -136,11 +147,13 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {countryNames.sort().map((country) => (
-                          <SelectItem value={country} key={country}>
-                            {country}
-                          </SelectItem>
-                        ))}
+                        {countryNames
+                          .toSorted((a, b) => a.localeCompare(b))
+                          .map((country) => (
+                            <SelectItem value={country} key={country}>
+                              {country}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </Select>
 
@@ -259,11 +272,13 @@ export function UpdateAddressForm({ countryNames, states }: CountryEditProps) {
                           <SelectContent>
                             <SelectGroup>
                               <SelectLabel>Countries</SelectLabel>
-                              {states.sort().map((state) => (
-                                <SelectItem value={state} key={state}>
-                                  {state}
-                                </SelectItem>
-                              ))}
+                              {states
+                                .toSorted((a, b) => a.localeCompare(b))
+                                .map((state) => (
+                                  <SelectItem value={state} key={state}>
+                                    {state}
+                                  </SelectItem>
+                                ))}
                             </SelectGroup>
                           </SelectContent>
                         </Select>

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 
 import { Satoshi } from './fonts/fonts';
 import { Providers, QueryProvider } from './providers';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'StyleZ - The only fashion store you need',
@@ -24,7 +25,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased ${Satoshi.className}`}>
         <Providers>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            {children}
+            <Toaster />
+          </QueryProvider>
         </Providers>
       </body>
     </html>

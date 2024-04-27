@@ -15,6 +15,4 @@ export const sendTwoFactorActivationCode = async (email: string) => {
   const twoFAToken = await generateTwoFAToken(existingUser.email);
 
   await sendTwoFAEmail(twoFAToken.email, twoFAToken.token);
-
-  return;
 };

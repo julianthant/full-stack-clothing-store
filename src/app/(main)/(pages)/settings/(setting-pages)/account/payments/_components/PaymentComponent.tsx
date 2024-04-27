@@ -5,7 +5,7 @@ import Image from 'next/image';
 import axios from 'axios';
 
 import { cn } from '@/lib/utils';
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ui/use-toast';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useEffect, useState } from 'react';
 
@@ -36,6 +36,7 @@ export const PaymentComponent = () => {
   const params = useSearchParams();
   const success = params.get('success');
 
+  const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const { data: paymentMethods, refetch } = useQuery({
@@ -51,11 +52,17 @@ export const PaymentComponent = () => {
       RemovePaymentMethod(paymentMethodID),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
-      toast.success('Payment method removed successfully!');
+      toast({
+        title: 'Payment Method: Remove',
+        description: 'Payment method removed successfully!',
+      });
     },
-    onError: (error) => {
-      toast.error('Failed to remove payment method!');
-      console.error(error);
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Payment Method: Remove',
+        description: 'Failed to remove payment method!',
+      });
     },
   });
 
