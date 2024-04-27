@@ -56,30 +56,26 @@ export function AddPaymentMethodForm() {
 
   const onSubmit = (values: z.infer<typeof cardAddSchema>) => {
     startTransition(() => {
-      AddPaymentMethod(values)
-        .then((data) => {
-          if (data.success) {
-            toast({
-        duration: 5000,
-              title: 'Payment Method: Add',
-              description: data.success,
-            });
-            router.push('/settings/account/payments?success=true');
-          }
+      AddPaymentMethod(values).then((data) => {
+        if (data.success) {
+          toast({
+            duration: 5000,
+            title: 'Payment Method: Add',
+            description: data.success,
+          });
+          router.push('/settings/account/payments?success=true');
+        }
 
-          if (data.error) {
-            toast({
-        duration: 5000,
-              variant: 'destructive',
-              title: 'Payment Method: Add',
-              description: data.error,
-            });
-            router.push('/settings/account/payments');
-          }
-        })
-        .finally(() => {
-          form.reset();
-        });
+        if (data.error) {
+          toast({
+            duration: 5000,
+            variant: 'destructive',
+            title: 'Payment Method: Add',
+            description: data.error,
+          });
+          router.push('/settings/account/payments');
+        }
+      });
     });
   };
 

@@ -91,7 +91,7 @@ export const AddPaymentMethod = async (
     params: { bin: cardNumber.slice(0, 6) },
     headers: {
       'content-type': 'application/json',
-      'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
       'X-RapidAPI-Host': 'bin-ip-checker.p.rapidapi.com',
     },
     data: { bin: cardNumber },

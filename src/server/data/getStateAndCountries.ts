@@ -14,7 +14,7 @@ export const getStateAndCountries = cache(async () => {
   );
 
   statesRaw.shift();
-  const states = statesRaw.map((stateData: String) => stateData[0]);
+  const states = statesRaw.map((stateData: string) => stateData[0]);
 
   return { countryNames, states };
 });

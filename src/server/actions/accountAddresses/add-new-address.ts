@@ -66,14 +66,14 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     const statesRaw = await response.json();
 
     statesRaw.shift();
-    const statesList = statesRaw.map((stateData: String) => stateData[0]);
+    const statesList = statesRaw.map((stateData: string) => stateData[0]);
 
     if (!statesList.includes(states)) {
       return { error: 'Invalid state!' };
     }
   }
 
-  if (!zipCode.match(/^\d{5}(?:[-\s]\d{4})?$/)) {
+  if (!RegExp(/^\d{5}(?:[-\s]\d{4})?$/).exec(zipCode)) {
     return { error: 'Invalid zip code!' };
   }
 
