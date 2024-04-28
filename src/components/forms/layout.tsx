@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="container">
+    <div className="main-container">
       <div className="mx-auto min-h-[300px] sm:w-min">
         <div className="grid space-y-3 border sm:p-10 rounded-3xl mt-6">
           <div className="flex items-center justify-center">

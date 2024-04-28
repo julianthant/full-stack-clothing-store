@@ -27,7 +27,12 @@ import { cn } from '@/lib/utils';
 
 export const NavbarComponent = ({ user }: any) => {
   return (
-    <Navbar isBlurred={false} maxWidth="full" className="xl:border-b-2">
+    <Navbar
+      isBlurred={false}
+      maxWidth="full"
+      className="border-b-2"
+      classNames={{ wrapper: 'px-4' }}
+    >
       <NavbarContent
         className="flex max-w-min items-center gap-4"
         justify="start"

@@ -89,7 +89,7 @@ export const CustomerFeedbackComponent = () => {
 
   return (
     <div className="space-y-10">
-      <div className="container flex justify-between items-end">
+      <div className="main-container flex justify-between items-end">
         <h1
           className={`lg:text-5xl md:text-4xl text-3xl font-bold ${IntegralCF.className} text-center max-sm:w-[220px]`}
         >
@@ -107,7 +107,7 @@ export const CustomerFeedbackComponent = () => {
       </div>
 
       <div className="relative overflow-hidden">
-        <div className="container grid md:grid-cols-3 gap-6 relative items-stretch">
+        <div className="main-container grid md:grid-cols-3 gap-6 relative items-stretch">
           {previousFeedback && (
             <div className="bg-white rounded-[23px] p-6 space-y-4 border md:absolute max-md:hidden w-[480px] left-[-480px] bottom-0 top-0 blur-[3px]">
               <div className="flex items-center gap-2">

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const DressStyleComponent = () => {
   return (
-    <div className="container">
+    <div className="main-container w-full">
       <div className="space-y-10 rounded-[23px] bg-foreground-100 py-16 px-8">
         <h1
           className={`lg:text-5xl md:text-4xl text-3xl font-bold ${IntegralCF.className} text-center`}

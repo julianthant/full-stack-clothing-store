@@ -22,14 +22,15 @@ export const ClothesComponent = ({
   const router = useRouter();
 
   return (
-    <div className="lg:gap-5 gap-2 grid w-">
-      <div className="max-lg:w-[200px] relative">
+    <div className="flex flex-col gap-y-2 flex-shrink">
+      <div className="relative w-full">
         <Image
           src={ItemImage}
           alt={Name}
-          width={360}
-          height={360}
-          className={cn('hover:cursor-pointer z-10 transition-opacity', {
+          width={471}
+          height={600}
+          quality={100}
+          className={cn('hover:cursor-pointer z-10 transition-opacity w-full', {
             'hover:opacity-0': HoverImage,
           })}
         />
@@ -38,9 +39,10 @@ export const ClothesComponent = ({
           <Image
             src={HoverImage}
             alt={Name}
-            width={360}
-            height={360}
-            className="hover:cursor-pointer absolute inset-0 opacity-0 transition-opacity hover:opacity-100 z-20"
+            width={471}
+            height={600}
+            quality={100}
+            className="hover:cursor-pointer absolute inset-0 opacity-0 transition-opacity hover:opacity-100 z-20 w-full"
           />
         )}
       </div>

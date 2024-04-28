@@ -8,7 +8,7 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <div>
-      <div className="container py-5">
+      <div className="main-container py-5">
         <BreadCrumbs />
       </div>
 

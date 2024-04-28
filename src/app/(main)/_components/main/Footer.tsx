@@ -101,7 +101,7 @@ export const Footer = () => {
       </div>
 
       <div className="bg-foreground-100 pb-14 pt-12">
-        <div className="container space-y-12 relative">
+        <div className="main-container space-y-12 relative">
           <nav className="lg:flex items-center justify-between grid w-full sm:grid-rows-[8rem]  grid-cols-2 gap-y-6">
             <div className="lg:w-[261px] lg:space-y-5 space-y-3 font-light place-self-stretch col-span-2 h-min">
               <Link

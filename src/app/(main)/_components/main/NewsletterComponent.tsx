@@ -28,7 +28,7 @@ export const NewsletterComponent = () => {
   };
 
   return (
-    <div className="container relative z-10">
+    <div className="main-container relative z-10">
       <div className="bg-black rounded-[23px] flex items-center justify-between lg:h-48 h-full lg:px-20 max-lg:flex-col max-lg:py-6 max-lg:gap-y-4 max-sm:px-4">
         <div className="lg:w-[650px] w-full lg:px-0 lg:text-left md:px-8 sm:text-center ">
           <p

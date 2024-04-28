@@ -9,7 +9,7 @@ import { PhoneNumberSchema } from '@/schemas';
 import { ChangePhoneNumber } from '@/server/actions/accountProfile/change-phone-number';
 
 import { Icons } from '@/components/utils/Icons';
-import { Input } from '@nextui-org/react';
+import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -39,7 +39,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
   const form = useForm<z.infer<typeof PhoneNumberSchema>>({
     resolver: zodResolver(PhoneNumberSchema),
     defaultValues: {
-      number: UserNumber || null,
+      number: UserNumber || '',
     },
   });
 
@@ -95,12 +95,10 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
                     <Input
                       key="inside"
                       {...field}
-                      variant="bordered"
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
                       placeholder="+1 (000)-000-0000"
-                      radius="sm"
                       disabled={isPending}
                       onChange={field.onChange}
                     />

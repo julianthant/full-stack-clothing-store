@@ -33,18 +33,12 @@ export default function Home() {
         <HeadingComponent />
         <BrandsComponent />
       </div>
-
       <NewArrivalsComponent />
-
-      <div className="container">
+      <div className="main-container">
         <Divider />
       </div>
-
       <TopSellingComponent />
-
       <DressStyleComponent />
-
-      <CustomerFeedbackComponent />
     </section>
   );
 }

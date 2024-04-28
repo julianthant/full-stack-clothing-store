@@ -14,9 +14,12 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: '24px',
+      padding: '16px',
     },
     extend: {
+      gridTemplateColumns: {
+        custom: '1fr auto 1fr',
+      },
       backgroundImage: {
         'dark-overlay':
           'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))',

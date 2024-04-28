@@ -7,10 +7,10 @@ import { Divider } from '@nextui-org/react';
 import Link from 'next/link';
 import { IntegralCF } from '@/app/fonts/fonts';
 
-export const HeadingComponent = ({}) => {
+export const HeadingComponent = () => {
   return (
     <div className="w-full bg-foreground-100">
-      <div className="container xl:flex xl:justify-between grid place-items-center">
+      <div className="main-container xl:flex xl:justify-between grid place-items-center">
         <div className="flex items-center justify-start sm:w-[560px] w-full xl:py-20 xl:pb-20 max-xl:pt-16 max-xl:pb-12 max-md:pt-8 max-md:pb-4 max-sm:pt-4">
           <div className="space-y-6">
             <div className="space-y-6">
@@ -31,40 +31,41 @@ export const HeadingComponent = ({}) => {
               </Button>
             </div>
 
-            <div className="flex items-center sm:justify-start justify-center gap-6 w-min max-sm:flex-wrap">
-              <div className="flex items-center justify-start sm:gap-6 gap-4">
-                <div>
-                  <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
-                    200+
-                  </h2>
-                  <p className="text-base font-light text-foreground-400 text-nowrap">
-                    International Brands
-                  </p>
-                </div>
-
-                <Divider orientation="vertical" className="w-[2px] h-16" />
-
-                <div>
-                  <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
-                    2000+
-                  </h2>
-                  <p className="text-base font-light text-foreground-400 text-nowrap">
-                    High-Quality Products
-                  </p>
-                </div>
+            <div className="grid min-[500px]:grid-flow-col max-[500px]:grid-cols-custom max-[500px]:place-items-center gap-6">
+              <div>
+                <h2 className="xl:text-4xl md:text-3xl sm:text-[27px] text-[22px] font-semibold">
+                  200+
+                </h2>
+                <p className="sm:text-base text-sm font-light text-foreground-400 text-nowrap">
+                  International Brands
+                </p>
               </div>
 
               <Divider
                 orientation="vertical"
-                className="max-sm:hidden w-[2px] h-16"
+                className="w-[2px] h-16 auto-cols-min shrink"
               />
 
               <div>
-                <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
+                <h2 className="xl:text-4xl md:text-3xl sm:text-[27px] text-[22px] font-semibold">
                   30,000+
                 </h2>
-                <p className="text-base font-light text-foreground-400 text-nowrap">
+                <p className="sm:text-base text-sm font-light text-foreground-400 text-nowrap">
                   Happy Customers
+                </p>
+              </div>
+
+              <Divider
+                orientation="vertical"
+                className="max-[500px]:hidden w-[2px] h-16"
+              />
+
+              <div className="max-[500px]:col-span-3">
+                <h2 className="xl:text-4xl md:text-3xl sm:text-[27px] text-[22px] font-semibold">
+                  2000+
+                </h2>
+                <p className="sm:text-base text-sm font-light text-foreground-400 text-nowrap">
+                  High-Quality Products
                 </p>
               </div>
             </div>

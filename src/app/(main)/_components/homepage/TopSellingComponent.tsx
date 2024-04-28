@@ -1,65 +1,67 @@
+'use client';
+
 import { ClothesComponent } from '@/components/utils/ClothesComponent';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { IntegralCF } from '@/app/fonts/fonts';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { cn } from '@/lib/utils';
 
-export const TopSellingComponent = ({}) => {
-  const clothes = [
-    {
-      id: 1,
-      name: 'T-shirt with Tape Details',
-      price: '$20.00',
-      image:
-        'https://utfs.io/f/cdbcca1e-f99b-4058-9aef-ac5f28d14ede-9el43q.webp',
+export const TopSellingComponent = () => {
+  const { data: clothes, isFetching } = useQuery({
+    queryFn: async () => {
+      const options = {
+        method: 'GET',
+        url: 'https://asos2.p.rapidapi.com/products/v2/list',
+        params: {
+          store: 'US',
+          offset: 0,
+          categoryId: 6993,
+          limit: 8,
+          country: 'US',
+          sort: 'freshness',
+          currency: 'USD',
+          sizeSchema: 'US',
+          lang: 'en-US',
+        },
+        headers: {
+          'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+          'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
+        },
+      };
+
+      return axios.request(options).then((res) => res.data);
     },
-    {
-      id: 2,
-      name: 'Skinny Fit Jeans',
-      price: '$25.00',
-      image:
-        'https://utfs.io/f/43e29efe-99b3-4749-8a83-14c468bb4717-ecsyn4.webp',
-    },
-    {
-      id: 3,
-      name: 'Checkered Shirt',
-      price: '$30.00',
-      image:
-        'https://utfs.io/f/257fcd23-44b4-4fdb-95da-ca4257b6ce98-9el43p.webp',
-    },
-    {
-      id: 4,
-      name: 'Sleeve Striped T-shirt',
-      price: '$35.00',
-      image:
-        'https://utfs.io/f/b68cb261-ef8c-46fa-ac63-00e2e417e691-9el43o.webp',
-    },
-  ];
+    queryKey: ['landing-page-new-arrivals'],
+  });
 
   return (
-    <div className="container lg:space-y-14 space-y-7 flex flex-col lg:mt-5">
-      <h1
-        className={`lg:text-5xl md:text-4xl text-3xl font-bold ${IntegralCF.className} text-center`}
-      >
+    <div className="main-container lg:space-y-10 space-y-7 flex flex-col lg:mt-5">
+      <h1 className="lg:text-3xl md:text-4xl text-3xl font-bold text-center tracking-wide">
         TOP SELLING
       </h1>
-      <div className="flex gap-x-5 max-lg:max-w-max max-lg:overflow-x-scroll scroll-smooth">
-        {clothes.map((item) => (
-          <ClothesComponent
-            key={item.id}
-            ID={item.id.toString()}
-            Name={item.name}
-            Price={item.price}
-            ItemImage={item.image}
-          />
-        ))}
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 min-[400px]:grid-cols-2 gap-4">
+        {!isFetching &&
+          clothes.products.map((product: any) => (
+            <ClothesComponent
+              key={product.id}
+              ID={product.id}
+              Name={product.name}
+              Price={product.price.current.text}
+              ItemImage={`https://${product.imageUrl}`}
+              HoverImage={`https://${product.additionalImageUrls[0]}`}
+            />
+          ))}
       </div>
 
       <Button
         asChild
         variant={'outline'}
-        className="rounded-full px-20 lg:h-14 h-10 sm:w-min w-full self-center"
+        className={cn(
+          'w-40 mx-auto rounded-none border-3 border-gray-500 py-2'
+        )}
       >
-        <Link href={'/shop'}>View All</Link>
+        <Link href={'/shop'}>SEE MORE</Link>
       </Button>
     </div>
   );
