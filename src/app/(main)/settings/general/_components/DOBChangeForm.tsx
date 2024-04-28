@@ -54,21 +54,28 @@ export function DOBChangeForm({ UserDOB }: any) {
 
   const onSubmit = (values: z.infer<typeof dateSchema>) => {
     startTransition(() => {
-      ChangeDOB(values).then((data) => {
-        if (data.success) {
+      ChangeDOB(values)
+        .then((data) => {
+          if (data.success) {
+            toast({
+              title: 'Date of Birth Change',
+              description: 'Your date of birth has been successfully changed!',
+            });
+          }
+
+          if (data.error) {
+            toast({
+              title: 'Date of Birth Change',
+              description: data.error,
+            });
+          }
+        })
+        .catch((error) => {
           toast({
             title: 'Date of Birth Change',
-            description: 'Date of birth has changed successfully!',
+            description: error,
           });
-        }
-
-        if (data.error) {
-          toast({
-            title: 'Date of birth Change',
-            description: data.error,
-          });
-        }
-      });
+        });
     });
   };
 
@@ -130,7 +137,7 @@ export function DOBChangeForm({ UserDOB }: any) {
             />
           </CardContent>
 
-          <CardFooter className="flex justify-between border-t px-6 py-3">
+          <CardFooter className="flex justify-between gap-2 border-t px-6 py-3">
             <CardDescription>
               This will help us provide you with the best experience.
             </CardDescription>

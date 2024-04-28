@@ -45,21 +45,28 @@ export function NameChangeForm({ UserName }: any) {
 
   const onSubmit = (values: z.infer<typeof NameSchema>) => {
     startTransition(() => {
-      ChangeName(values).then((data) => {
-        if (data.success) {
-          toast({
-            title: 'Name Change',
-            description: 'Your name has been successfully changed',
-          });
-        }
+      ChangeName(values)
+        .then((data) => {
+          if (data.success) {
+            toast({
+              title: 'Name Change',
+              description: 'Your name has been successfully changed!',
+            });
+          }
 
-        if (data.error) {
+          if (data.error) {
+            toast({
+              title: 'Name Change',
+              description: data.error,
+            });
+          }
+        })
+        .catch((error) => {
           toast({
             title: 'Name Change',
-            description: data.error,
+            description: error,
           });
-        }
-      });
+        });
     });
   };
 
@@ -105,7 +112,7 @@ export function NameChangeForm({ UserName }: any) {
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-between border-t px-6 py-3">
+          <CardFooter className="flex justify-between gap-2 border-t px-6 py-3">
             <CardDescription>
               Please use 32 characters at maximum.
             </CardDescription>

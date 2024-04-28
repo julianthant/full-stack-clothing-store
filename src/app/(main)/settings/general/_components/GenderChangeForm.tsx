@@ -54,21 +54,28 @@ export function GenderChangeForm({ UserGender }: any) {
 
   const onSubmit = (values: z.infer<typeof genderSchema>) => {
     startTransition(() => {
-      ChangeGender(values).then((data) => {
-        if (data.success) {
-          toast({
-            title: 'Gender Change',
-            description: 'Gender has changed successfully!',
-          });
-        }
+      ChangeGender(values)
+        .then((data) => {
+          if (data.success) {
+            toast({
+              title: 'Gender Change',
+              description: 'Your gender has been successfully changed',
+            });
+          }
 
-        if (data.error) {
+          if (data.error) {
+            toast({
+              title: 'Gender Change',
+              description: data.error,
+            });
+          }
+        })
+        .catch((error) => {
           toast({
             title: 'Gender Change',
-            description: data.error,
+            description: error,
           });
-        }
-      });
+        });
     });
   };
 
@@ -105,6 +112,7 @@ export function GenderChangeForm({ UserGender }: any) {
                         <SelectLabel>Gender</SelectLabel>
                         <SelectItem value="male">Male</SelectItem>
                         <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="others">Others</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -114,7 +122,7 @@ export function GenderChangeForm({ UserGender }: any) {
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-between border-t px-6 py-3">
+          <CardFooter className="flex justify-between gap-2 border-t px-6 py-3">
             <CardDescription>
               This will help us provide you with the best experience.
             </CardDescription>

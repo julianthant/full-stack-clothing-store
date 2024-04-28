@@ -61,21 +61,28 @@ export function CountryChangeForm({ UserCountry }: any) {
 
   const onSubmit = (values: z.infer<typeof NameSchema>) => {
     startTransition(() => {
-      ChangeCountry(values).then((data) => {
-        if (data.success) {
-          toast({
-            title: 'Country Change',
-            description: 'Country has changed successfully!',
-          });
-        }
+      ChangeCountry(values)
+        .then((data) => {
+          if (data.success) {
+            toast({
+              title: 'Country Change',
+              description: 'Your country has been successfully changed!',
+            });
+          }
 
-        if (data.error) {
+          if (data.error) {
+            toast({
+              title: 'Country Change',
+              description: data.error,
+            });
+          }
+        })
+        .catch((error) => {
           toast({
             title: 'Country Change',
-            description: data.error,
+            description: error,
           });
-        }
-      });
+        });
     });
   };
 
@@ -127,7 +134,7 @@ export function CountryChangeForm({ UserCountry }: any) {
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-between border-t px-6 py-3">
+          <CardFooter className="flex justify-between gap-2 border-t px-6 py-3">
             <CardDescription>
               This will help us provide you with the best experience.
             </CardDescription>

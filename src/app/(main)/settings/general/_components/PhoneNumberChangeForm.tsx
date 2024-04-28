@@ -3,13 +3,13 @@
 import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
-import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
-import { ChangeCountry } from '@/server/actions/accountProfile/change-country';
+import { PhoneNumberSchema } from '@/schemas';
+import { ChangePhoneNumber } from '@/server/actions/accountProfile/change-phone-number';
 
 import { Icons } from '@/components/utils/Icons';
+import { Input } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -31,60 +31,51 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { getCountries } from '@/server/data/getStateAndCountries';
-
-export function CountryChangeForm({ UserCountry }: any) {
+export function PhoneNumberChangeForm({ UserNumber }: any) {
   const [isPending, startTransition] = useTransition();
 
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof NameSchema>>({
-    resolver: zodResolver(NameSchema),
+  const form = useForm<z.infer<typeof PhoneNumberSchema>>({
+    resolver: zodResolver(PhoneNumberSchema),
     defaultValues: {
-      name: UserCountry || null,
+      number: UserNumber || null,
     },
   });
 
-  const { data: countries, isFetching } = useQuery({
-    queryFn: async () => await getCountries(),
-    queryKey: ['countries'],
-  });
-
-  const onSubmit = (values: z.infer<typeof NameSchema>) => {
+  const onSubmit = (values: z.infer<typeof PhoneNumberSchema>) => {
     startTransition(() => {
-      ChangeCountry(values).then((data) => {
-        if (data.success) {
-          toast({
-            title: 'Country Change',
-            description: 'Country has changed successfully!',
-          });
-        }
+      ChangePhoneNumber(values)
+        .then((data) => {
+          if (data.success) {
+            toast({
+              title: 'Phone Number Change',
+              description: 'Your phone number has been successfully changed',
+            });
+          }
 
-        if (data.error) {
+          if (data.error) {
+            toast({
+              title: 'Phone Number Change',
+              description: data.error,
+            });
+          }
+        })
+        .catch((error) => {
           toast({
-            title: 'Country Change',
-            description: data.error,
+            title: 'Phone Number Change',
+            description: error,
           });
-        }
-      });
+        });
     });
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Country</CardTitle>
+        <CardTitle>Primary Mobile Number</CardTitle>
         <CardDescription>
-          Please select the country you are currently residing in.
+          Please enter your current mobile number.
         </CardDescription>
       </CardHeader>
 
@@ -93,43 +84,36 @@ export function CountryChangeForm({ UserCountry }: any) {
           <CardContent>
             <FormField
               control={form.control}
-              name="name"
+              name="number"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only" htmlFor="country">
-                    Country
+                  <FormLabel className="sr-only" htmlFor="email">
+                    Phone Number
                   </FormLabel>
 
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your country" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Countries</SelectLabel>
-                        {!isFetching &&
-                          countries.sort().map((country: string) => (
-                            <SelectItem value={country} key={country}>
-                              {country}
-                            </SelectItem>
-                          ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input
+                      key="inside"
+                      {...field}
+                      variant="bordered"
+                      autoCapitalize="none"
+                      autoComplete="email"
+                      autoCorrect="off"
+                      placeholder="+1 (000)-000-0000"
+                      radius="sm"
+                      disabled={isPending}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
 
                   <FormMessage />
                 </FormItem>
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-between border-t px-6 py-3">
+          <CardFooter className="flex justify-between gap-2 border-t px-6 py-3">
             <CardDescription>
-              This will help us provide you with the best experience.
+              Please provide your phone number along with your country code.
             </CardDescription>
             <Button disabled={isPending} type="submit">
               {isPending && (
