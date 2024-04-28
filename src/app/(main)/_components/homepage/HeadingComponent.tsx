@@ -11,7 +11,7 @@ export const HeadingComponent = ({}) => {
   return (
     <div className="w-full bg-foreground-100">
       <div className="container xl:flex xl:justify-between grid place-items-center">
-        <div className="flex items-center justify-start sm:w-[560px] w-full xl:py-20 pb-20 max-xl:pt-12 max-md:pt-8 max-sm:pt-4">
+        <div className="flex items-center justify-start sm:w-[560px] w-full xl:py-20 xl:pb-20 max-xl:pt-16 max-xl:pb-12 max-md:pt-8 max-md:pb-4 max-sm:pt-4">
           <div className="space-y-6">
             <div className="space-y-6">
               <div className="space-y-4">
@@ -31,8 +31,8 @@ export const HeadingComponent = ({}) => {
               </Button>
             </div>
 
-            <div className="h-20 flex items-center sm:justify-start justify-center gap-6 w-min max-sm:flex-wrap">
-              <div className="h-20 flex items-center justify-start sm:gap-6 gap-4">
+            <div className="flex items-center sm:justify-start justify-center gap-6 w-min max-sm:flex-wrap">
+              <div className="flex items-center justify-start sm:gap-6 gap-4">
                 <div>
                   <h2 className="xl:text-4xl md:text-3xl text-[27px] font-semibold">
                     200+
@@ -70,7 +70,8 @@ export const HeadingComponent = ({}) => {
             </div>
           </div>
         </div>
-        <div className="self-end relative">
+
+        <div className="max-xl:hidden relative">
           <Image
             src="https://utfs.io/f/17792b27-4584-4d62-980e-49c3eee470fb-kzhaym.webp"
             alt="HeadingImage"

@@ -4,15 +4,18 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 import { Icons } from '@/components/utils/Icons';
-import { NavbarPages } from './NavbarPages';
+import { Input } from '@/components/ui/Input';
+import { AvatarIcon } from '@nextui-org/shared-icons';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Search, ShoppingCartIcon } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const AccountDropdown = dynamic(() =>
   import('./AccountDropdown').then((mod) => mod.AccountDropdown)
 );
 
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { User2Icon } from 'lucide-react';
 import { Button as NextButton } from '@nextui-org/button';
 import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
 
@@ -22,112 +25,98 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/navbar';
-import { ScrollShadow } from '@nextui-org/react';
 
-export const NavbarComponent = ({ user }: any) => {
+export const NavbarComponent = () => {
+  const user = useCurrentUser();
+
   return (
-    <Navbar
-      isBlurred={false}
-      maxWidth="2xl"
-      className="xl:border-b-2 p-0"
-      classNames={{
-        wrapper: 'p-0 xl:h-14 max-xl:flex-col h-full max-xl:pt-2 max-xl:gap-2',
-        base: 'p-0',
-      }}
-    >
-      <div className="flex items-center justify-between w-full container">
-        <NavbarContent className="flex max-w-min items-center gap-4">
-          <NavbarBrand>
-            <Link
-              href="/"
-              className="text-inherit text-4xl drop-shadow-md max-sm:text-[26px]"
-            >
-              <Icons.logo />
-            </Link>
-          </NavbarBrand>
-        </NavbarContent>
-
-        <NavbarContent
-          className="xl:flex gap-0 font-medium hidden"
-          justify="center"
-        >
-          <NavbarPages />
-        </NavbarContent>
-
-        <NavbarContent className="max-w-min gap-1">
-          <NavbarItem className="sm:pr-1">
-            <NextButton
-              className="w-52 h-10 sm:flex hidden items-center hover:cursor-pointer rounded-full justify-start px-3 text-default-500 bg-default-400/20 dark:bg-default-500/20 font-normal text-[14px]"
-              disabled
-            >
-              <Search size={20} />
-              <span className="ml-2">Click to search...</span>
-            </NextButton>
-
-            <NextButton
-              isIconOnly
-              className="bg-transparent hover:bg-gray-100/80 sm:hidden"
-            >
-              <Search size={26} height={26} />
-            </NextButton>
-          </NavbarItem>
-
-          {user && (
-            <NavbarItem>
-              <Link href={'/cart'}>
-                <NextButton
-                  isIconOnly
-                  className="bg-transparent hover:bg-gray-100/80"
-                >
-                  <ShoppingCartIcon size={26} height={26} />
-                </NextButton>
-              </Link>
-            </NavbarItem>
-          )}
-
-          {user ? (
-            <Dropdown
-              radius="sm"
-              classNames={{
-                base: 'before:bg-default-200 mt-4', // change arrow background
-                content: 'p-0 border-divider bg-background',
-              }}
-              placement="bottom-end"
-            >
-              <DropdownTrigger>
-                <NextButton
-                  isIconOnly
-                  className="bg-transparent hover:bg-gray-100/80"
-                >
-                  <User2Icon size={26} height={26} />
-                </NextButton>
-              </DropdownTrigger>
-              <AccountDropdown user={user} />
-            </Dropdown>
-          ) : (
-            <NavbarItem>
-              <Button asChild variant={'outline'} className="font-medium h-9">
-                <Link prefetch className="font-medium" href="/auth/login">
-                  Sign In
-                </Link>
-              </Button>
-            </NavbarItem>
-          )}
-        </NavbarContent>
-      </div>
-
+    <Navbar isBlurred={false} maxWidth="full" className="xl:border-b-2">
       <NavbarContent
-        className="bg-[#0a0a0a]/80 w-full xl:hidden"
+        className="flex max-w-min items-center gap-4"
         justify="start"
       >
-        <div className="container">
-          <ScrollShadow
-            orientation="horizontal"
-            className="gap-0 font-medium flex max-md:overflow-x-scroll scrollbar-hide scroll-smooth"
+        <NavbarBrand>
+          <Link
+            href="/"
+            className="text-inherit text-4xl drop-shadow-md max-sm:text-[26px]"
           >
-            <NavbarPages />
-          </ScrollShadow>
-        </div>
+            <Icons.logo />
+          </Link>
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent
+        className="hidden sm:flex md:w-[600px] flex-grow gap-4 relative"
+        justify="center"
+      >
+        <Input
+          className={cn(
+            'rounded-md text-base h-10 w-full pl-5 tracking-wide focus-visible:ring-[#39ccc0]'
+          )}
+          placeholder="Search StyleZ"
+        />
+
+        <button className="absolute h-10 w-10  flex items-center justify-center right-0 rounded-r-md bg-[#39cccc]">
+          <Search size={20} height={20} />
+        </button>
+      </NavbarContent>
+
+      <NavbarContent className="max-w-min gap-1" justify="end">
+        <NavbarItem className="sm:hidden">
+          <NextButton
+            isIconOnly
+            className="bg-transparent hover:bg-gray-100/80"
+          >
+            <Search size={26} height={26} />
+          </NextButton>
+        </NavbarItem>
+
+        {user && (
+          <NavbarItem className="relative pr-2">
+            <Link href={'/cart'}>
+              <NextButton
+                isIconOnly
+                className="bg-transparent hover:bg-gray-100/80"
+              >
+                <ShoppingCartIcon size={26} height={26} />
+              </NextButton>
+            </Link>
+            <span className="absolute top-1 right-2 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-xs text-white">
+              0
+            </span>
+          </NavbarItem>
+        )}
+
+        {user ? (
+          <Dropdown
+            radius="sm"
+            classNames={{
+              base: 'before:bg-default-200 mt-4', // change arrow background
+              content: 'p-0 border-divider bg-background',
+            }}
+            placement="bottom-end"
+          >
+            <DropdownTrigger>
+              <NextButton disableRipple isIconOnly className="bg-transparent">
+                <Avatar className="w-9 h-9">
+                  <AvatarImage src={user?.image as string} />
+                  <AvatarFallback>
+                    <AvatarIcon className="w-6 h-6" />
+                  </AvatarFallback>
+                </Avatar>
+              </NextButton>
+            </DropdownTrigger>
+            <AccountDropdown user={user} />
+          </Dropdown>
+        ) : (
+          <NavbarItem>
+            <Button asChild variant={'outline'} className="font-medium h-9">
+              <Link prefetch className="font-medium" href="/auth/login">
+                Sign In
+              </Link>
+            </Button>
+          </NavbarItem>
+        )}
       </NavbarContent>
     </Navbar>
   );
