@@ -94,7 +94,7 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="flex flex-col pt-16">
+    <div className="flex flex-col pt-16 bg-muted/40">
       <div className="relative">
         <NewsletterComponent />
         <div className="bg-foreground-100 w-full absolute top-1/2 h-1/2" />

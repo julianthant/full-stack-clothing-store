@@ -49,13 +49,13 @@ export const AccountDropdown = ({ user }: any) => {
 
         <DropdownItem
           key="dashboard"
-          onClick={() => router.push('/settings/account/profile')}
+          onClick={() => router.push('/settings/orders')}
         >
           <p className="w-full h-full">Profile</p>
         </DropdownItem>
         <DropdownItem
           key="dashboard"
-          onClick={() => router.push('/settings/dashboard/overview')}
+          onClick={() => router.push('/settings/dashboard')}
         >
           <p>Dashboard</p>
         </DropdownItem>
@@ -64,9 +64,9 @@ export const AccountDropdown = ({ user }: any) => {
       <DropdownSection aria-label="Preferences" showDivider>
         <DropdownItem
           key="orders"
-          onClick={() => router.push('/settings/orders/order-history')}
+          onClick={() => router.push('/settings/general')}
         >
-          <p>Orders</p>
+          <p>Settings</p>
         </DropdownItem>
         <DropdownItem
           isReadOnly

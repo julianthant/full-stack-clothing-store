@@ -15,8 +15,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
     <>
       <NavbarComponent user={user} />
       <NavbarPages />
-
-      {children}
+      <div className="bg-muted/40">{children}</div>
 
       <Footer />
     </>
