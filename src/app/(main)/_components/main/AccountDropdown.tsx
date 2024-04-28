@@ -51,7 +51,7 @@ export const AccountDropdown = ({ user }: any) => {
           key="dashboard"
           onClick={() => router.push('/settings/orders')}
         >
-          <p className="w-full h-full">Profile</p>
+          <p className="w-full h-full">Orders</p>
         </DropdownItem>
         <DropdownItem
           key="dashboard"

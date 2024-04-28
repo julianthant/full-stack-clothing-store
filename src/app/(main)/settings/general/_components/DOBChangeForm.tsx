@@ -57,7 +57,7 @@ export function DOBChangeForm({ UserDOB }: any) {
       ChangeDOB(values).then((data) => {
         if (data.success) {
           toast({
-            title: 'Date of birth Change',
+            title: 'Date of Birth Change',
             description: 'Date of birth has changed successfully!',
           });
         }
