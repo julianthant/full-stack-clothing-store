@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-const DeleteAccountForm = () => {
+export const DeleteAccountForm = () => {
   const [isPending, startTransition] = useTransition();
 
   const { toast } = useToast();
@@ -75,5 +75,3 @@ const DeleteAccountForm = () => {
     </Card>
   );
 };
-
-export default DeleteAccountForm;

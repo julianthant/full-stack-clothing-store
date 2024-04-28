@@ -17,7 +17,7 @@ import { CountryChangeForm } from '../general/_components/CountryChangeForm';
 import { GenderChangeForm } from '../general/_components/GenderChangeForm';
 import { DOBChangeForm } from '../general/_components/DOBChangeForm';
 import { PhoneNumberChangeForm } from '../general/_components/PhoneNumberChangeForm';
-import DeleteAccountForm from '../general/_components/DeleteAccountForm';
+import { DeleteAccountForm } from '../general/_components/DeleteAccountForm';
 
 import { currentUser } from '@/lib/server-auth';
 
