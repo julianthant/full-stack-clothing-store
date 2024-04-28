@@ -2,9 +2,7 @@ import { ClothesGalleryComponent } from '@/components/shop/ClothesGalleryCompone
 import { FilterClothes } from '@/components/shop/FilterClothes';
 import { FC } from 'react';
 
-interface pageProps {}
-
-const page: FC<pageProps> = ({}) => {
+const page: FC = () => {
   return (
     <div className="flex gap-6">
       <div className="max-lg:hidden">

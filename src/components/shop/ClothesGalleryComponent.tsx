@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ClothesComponent } from '../utils/ClothesComponent';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -38,7 +38,6 @@ import { FilterClothes } from './FilterClothes';
 export const ClothesGalleryComponent = () => {
   const router = useRouter();
   const params = useSearchParams();
-  const queryClient = useQueryClient();
 
   const cid = params.get('cid') ?? '3602';
   const page = params.get('page') ?? '1';
@@ -49,12 +48,12 @@ export const ClothesGalleryComponent = () => {
 
   const [open, setOpen] = useState(false);
   const [currentSort, setCurrentSort] = useState(sort);
-  const [refetchData, setRefetchData] = useState(false);
 
   const {
     data: clothes,
     refetch,
-    isLoading,
+    isFetching,
+    isRefetching,
   } = useQuery({
     queryFn: async () => {
       const options = {
@@ -85,7 +84,6 @@ export const ClothesGalleryComponent = () => {
   useEffect(() => {
     (async () => {
       await refetch();
-      setRefetchData(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSort]);
@@ -99,7 +97,7 @@ export const ClothesGalleryComponent = () => {
 
   return (
     <div className="space-y-4 w-full">
-      {(isLoading || refetchData) && (
+      {(isFetching || isRefetching) && (
         <div className="fixed inset-0 flex items-center justify-center bg-foreground-50/80 z-50">
           <Spinner size="lg" />
         </div>
@@ -163,7 +161,6 @@ export const ClothesGalleryComponent = () => {
                                   `/shop?page=${page}&per_page=${per_page}&cid=${cid}&sort=${currentSort}`
                                 );
                                 setCurrentSort(currentSort);
-                                setRefetchData(true);
                                 setOpen(false);
                               }}
                             >

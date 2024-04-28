@@ -1,6 +1,6 @@
 import { Icons } from '@/components/utils/Icons';
 
-export const BrandsComponent = ({}) => {
+export const BrandsComponent = () => {
   return (
     <div className="bg-black lg:h-24 py-4 flex items-center">
       <div className="container max-lg:px-0 max-sm:px-4 max-lg:max-w-[520px]">
