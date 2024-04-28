@@ -119,11 +119,7 @@ export function CountryChangeForm({ UserCountry }: any) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Countries</SelectLabel>
-<<<<<<< HEAD
                         {isFetched &&
-=======
-                        {!isFetched &&
->>>>>>> eb3dafaf33c4288a0c72f298281296ebb5706b72
                           countries.sort().map((country: string) => (
                             <SelectItem value={country} key={country}>
                               {country}

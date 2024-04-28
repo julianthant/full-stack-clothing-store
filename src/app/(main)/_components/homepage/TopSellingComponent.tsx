@@ -41,7 +41,7 @@ export const TopSellingComponent = () => {
         TOP SELLING
       </h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 min-[400px]:grid-cols-2 gap-4">
-        {!isFetched &&
+        {isFetched &&
           clothes.products.map((product: any) => (
             <ClothesComponent
               key={product.id}
