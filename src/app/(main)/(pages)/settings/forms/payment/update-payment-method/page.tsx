@@ -1,9 +1,7 @@
 import { FC } from 'react';
 import { PaymentEditForm } from '../_components/PaymentEditForm';
 
-interface pageProps {}
-
-const page: FC<pageProps> = ({}) => {
+const page: FC = () => {
   return (
     <div>
       <PaymentEditForm />

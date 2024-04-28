@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic';
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
 import { AvatarIcon } from '@nextui-org/shared-icons';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Search, ShoppingCartIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -14,7 +13,6 @@ const AccountDropdown = dynamic(() =>
   import('./AccountDropdown').then((mod) => mod.AccountDropdown)
 );
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Button as NextButton } from '@nextui-org/button';
 import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
@@ -25,10 +23,9 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/navbar';
+import { cn } from '@/lib/utils';
 
-export const NavbarComponent = () => {
-  const user = useCurrentUser();
-
+export const NavbarComponent = ({ user }: any) => {
   return (
     <Navbar isBlurred={false} maxWidth="full" className="xl:border-b-2">
       <NavbarContent

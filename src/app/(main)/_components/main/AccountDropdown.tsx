@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 import { SignOut } from '@/server/actions/authentication/signout';
+import { useRouter } from 'next/navigation';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';
 
@@ -18,6 +18,8 @@ const UserComponent = dynamic(
 );
 
 export const AccountDropdown = ({ user }: any) => {
+  const router = useRouter();
+
   return (
     <DropdownMenu
       aria-label="Custom item styles"
@@ -44,19 +46,27 @@ export const AccountDropdown = ({ user }: any) => {
         >
           <UserComponent user={user} page="Navbar" />
         </DropdownItem>
-        <DropdownItem key="dashboard" href="/settings/account/profile">
-          <Link className="size-full" href="/settings/account/profile">
-            Profile
-          </Link>
+
+        <DropdownItem
+          key="dashboard"
+          onClick={() => router.push('/settings/account/profile')}
+        >
+          <p className="w-full h-full">Profile</p>
         </DropdownItem>
-        <DropdownItem key="dashboard" href="/settings/dashboard/overview">
-          <Link href="/settings/dashboard/overview">Dashboard</Link>
+        <DropdownItem
+          key="dashboard"
+          onClick={() => router.push('/settings/dashboard/overview')}
+        >
+          <p>Dashboard</p>
         </DropdownItem>
       </DropdownSection>
 
       <DropdownSection aria-label="Preferences" showDivider>
-        <DropdownItem key="orders" href="/settings/orders/order-history">
-          <Link href="/settings/orders/order-history">Orders</Link>
+        <DropdownItem
+          key="orders"
+          onClick={() => router.push('/settings/orders/order-history')}
+        >
+          <p>Orders</p>
         </DropdownItem>
         <DropdownItem
           isReadOnly
@@ -69,26 +79,18 @@ export const AccountDropdown = ({ user }: any) => {
       </DropdownSection>
 
       <DropdownSection aria-label="Help & Feedback">
-        <DropdownItem key="help_and_feedback" href="/customer_support">
-          Help & Feedback
-        </DropdownItem>
+        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
         <DropdownItem key="logout" className="p-0">
-          {!!user ? (
-            <form
-              onSubmit={async (event) => {
-                event.preventDefault();
-                await SignOut();
-              }}
-            >
-              <button className="px-2 py-1.5 w-full text-left" type="submit">
-                Sign Out
-              </button>
-            </form>
-          ) : (
-            <Link href="/auth/login">
-              <button className="px-2 py-1.5 w-full text-left">Sign In</button>
-            </Link>
-          )}
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
+              await SignOut();
+            }}
+          >
+            <button className="px-2 py-1.5 w-full text-left" type="submit">
+              Sign Out
+            </button>
+          </form>
         </DropdownItem>
       </DropdownSection>
     </DropdownMenu>
