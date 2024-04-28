@@ -31,7 +31,7 @@ export const NavbarComponent = ({ user }: any) => {
       isBlurred={false}
       maxWidth="full"
       className="border-b-2"
-      classNames={{ wrapper: 'px-4' }}
+      classNames={{ wrapper: 'px-4 main-container' }}
     >
       <NavbarContent
         className="flex max-w-min items-center gap-4"
