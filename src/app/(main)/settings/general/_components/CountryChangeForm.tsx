@@ -54,7 +54,7 @@ export function CountryChangeForm({ UserCountry }: any) {
     },
   });
 
-  const { data: countries, isFetching } = useQuery({
+  const { data: countries, isFetched } = useQuery({
     queryFn: async () => await getCountries(),
     queryKey: ['countries'],
   });
@@ -119,7 +119,7 @@ export function CountryChangeForm({ UserCountry }: any) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Countries</SelectLabel>
-                        {!isFetching &&
+                        {!isFetched &&
                           countries.sort().map((country: string) => (
                             <SelectItem value={country} key={country}>
                               {country}
