@@ -8,7 +8,7 @@ import axios from 'axios';
 import { cn } from '@/lib/utils';
 
 export const NewArrivalsComponent = () => {
-  const { data: clothes, isFetching } = useQuery({
+  const { data: clothes, isFetched } = useQuery({
     queryFn: async () => {
       const options = {
         method: 'GET',
@@ -41,7 +41,7 @@ export const NewArrivalsComponent = () => {
         NEW ARRIVALS
       </h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3  min-[400px]:grid-cols-2 gap-4">
-        {!isFetching &&
+        {isFetched &&
           clothes.products.map((product: any) => (
             <ClothesComponent
               key={product.id}

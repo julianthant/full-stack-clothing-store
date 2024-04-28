@@ -63,7 +63,7 @@ export const AddressComponent = () => {
         </Link>
       </Card>
 
-      {!isFetched ? (
+      {isFetched ? (
         <AddressComponentSkeleton />
       ) : (
         <AddressCards addresses={addresses} />
