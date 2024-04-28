@@ -39,7 +39,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
   const form = useForm<z.infer<typeof PhoneNumberSchema>>({
     resolver: zodResolver(PhoneNumberSchema),
     defaultValues: {
-      number: UserNumber || '',
+      number: UserNumber,
     },
   });
 
@@ -100,7 +100,6 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
                       autoCorrect="off"
                       placeholder="+1 (000)-000-0000"
                       disabled={isPending}
-                      onChange={field.onChange}
                     />
                   </FormControl>
 

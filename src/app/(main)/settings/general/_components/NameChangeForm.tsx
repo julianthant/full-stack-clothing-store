@@ -39,7 +39,7 @@ export function NameChangeForm({ UserName }: any) {
   const form = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
     defaultValues: {
-      name: UserName || '',
+      name: UserName,
     },
   });
 

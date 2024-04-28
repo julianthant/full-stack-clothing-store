@@ -50,7 +50,7 @@ export function CountryChangeForm({ UserCountry }: any) {
   const form = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
     defaultValues: {
-      name: UserCountry || null,
+      name: UserCountry,
     },
   });
 

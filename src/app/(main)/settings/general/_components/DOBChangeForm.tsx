@@ -48,7 +48,7 @@ export function DOBChangeForm({ UserDOB }: any) {
   const form = useForm<z.infer<typeof dateSchema>>({
     resolver: zodResolver(dateSchema),
     defaultValues: {
-      date: UserDOB || null,
+      date: UserDOB,
     },
   });
 

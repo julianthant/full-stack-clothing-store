@@ -48,7 +48,7 @@ export function GenderChangeForm({ UserGender }: any) {
   const form = useForm<z.infer<typeof genderSchema>>({
     resolver: zodResolver(genderSchema),
     defaultValues: {
-      gender: UserGender || null,
+      gender: UserGender,
     },
   });
 

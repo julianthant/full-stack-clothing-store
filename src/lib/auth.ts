@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import authConfig from './auth.config';
 
-import {db} from '@/server/database/db';
+import { db } from '@/server/database/db';
 import { UserRole } from '@prisma/client';
 import { getUserById } from '@/server/data/user';
 import { PrismaAdapter } from '@auth/prisma-adapter';
@@ -54,15 +54,15 @@ export const {
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email as string;
-    
-        session.user.country = token.country as string | undefined;
-        session.user.gender = token.gender as string | undefined;
-        session.user.phoneNumber = token.phoneNumber as string | undefined;
-        session.user.dateOfBirth = token.dateOfBirth as Date | undefined;
+
+        session.user.country = token.country as string;
+        session.user.gender = token.gender as string;
+        session.user.phoneNumber = token.phoneNumber as string;
+        session.user.dateOfBirth = token.dateOfBirth as Date;
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.is2FAEnabled = token.is2FAEnabled as boolean;
       }
-      
+
       return session;
     },
 
@@ -76,13 +76,13 @@ export const {
       const existingAccount = await getAccountByUserId(existingUser.id);
 
       token.name = existingUser.name;
-      token.email = existingUser.email; 
-      token.country = existingUser.country;
-      token.phoneNumber = existingUser.phoneNumber;
+      token.email = existingUser.email;
+      token.country = existingUser.country ?? '';
+      token.phoneNumber = existingUser.phoneNumber ?? '';
 
-      token.dateOfBirth = existingUser.dateOfBirth;
+      token.dateOfBirth = existingUser.dateOfBirth ?? '';
       token.role = existingUser.role;
-      token.gender = existingUser.gender;
+      token.gender = existingUser.gender ?? '';
 
       token.isOAuth = !!existingAccount;
       token.is2FAEnabled = existingUser.is2FAEnabled;
