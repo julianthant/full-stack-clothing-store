@@ -61,7 +61,7 @@ const page = async () => {
 
       <DOBChangeForm UserDOB={user?.dateOfBirth} />
 
-      <PhoneNumberChangeForm UserPhone={user?.phoneNumber} />
+      <PhoneNumberChangeForm UserPhoneNumber={user?.phoneNumber} />
 
       <DeleteAccountForm />
     </div>

@@ -6,12 +6,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 import { PhoneNumberSchema } from '@/schemas';
-import { ChangePhoneNumber } from '@/server/actions/accountProfile/change-phone-number';
 
 import { Icons } from '@/components/utils/Icons';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 import {
   Form,
@@ -31,19 +29,23 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-export function PhoneNumberChangeForm({ UserNumber }: any) {
+export function PhoneNumberChangeForm({ UserPhoneNumber }: any) {
   const [isPending, startTransition] = useTransition();
-
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof PhoneNumberSchema>>({
     resolver: zodResolver(PhoneNumberSchema),
     defaultValues: {
-      number: UserNumber,
+      number: UserPhoneNumber,
     },
   });
 
-  const onSubmit = (values: z.infer<typeof PhoneNumberSchema>) => {
+  const onSubmit = async (values: z.infer<typeof PhoneNumberSchema>) => {
+    const toast = (await import('@/components/ui/use-toast')).toast;
+
+    const ChangePhoneNumber = await import(
+      '@/server/actions/accountProfile/change-phone-number'
+    ).then((mod) => mod.ChangePhoneNumber);
+
     startTransition(() => {
       ChangePhoneNumber(values)
         .then((data) => {
@@ -58,6 +60,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
             toast({
               title: 'Phone Number Change',
               description: data.error,
+              variant: 'destructive',
             });
           }
         })
@@ -65,6 +68,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
           toast({
             title: 'Phone Number Change',
             description: error,
+            variant: 'destructive',
           });
         });
     });

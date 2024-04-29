@@ -4,14 +4,12 @@ import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { NameSchema } from '@/schemas';
-import { ChangeName } from '@/server/actions/accountProfile/change-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 
 import { Input } from '@nextui-org/react';
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 import {
   Form,
@@ -34,8 +32,6 @@ import {
 export function NameChangeForm({ UserName }: any) {
   const [isPending, startTransition] = useTransition();
 
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
     defaultValues: {
@@ -43,7 +39,13 @@ export function NameChangeForm({ UserName }: any) {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NameSchema>) => {
+  const onSubmit = async (values: z.infer<typeof NameSchema>) => {
+    const toast = (await import('@/components/ui/use-toast')).toast;
+
+    const ChangeName = await import(
+      '@/server/actions/accountProfile/change-name'
+    ).then((mod) => mod.ChangeName);
+
     startTransition(() => {
       ChangeName(values)
         .then((data) => {
@@ -58,6 +60,7 @@ export function NameChangeForm({ UserName }: any) {
             toast({
               title: 'Name Change',
               description: data.error,
+              variant: 'destructive',
             });
           }
         })
@@ -65,6 +68,7 @@ export function NameChangeForm({ UserName }: any) {
           toast({
             title: 'Name Change',
             description: error,
+            variant: 'destructive',
           });
         });
     });

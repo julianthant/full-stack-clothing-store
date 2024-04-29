@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 const AddPaymentMethodDialog = dynamic(
   () =>
@@ -12,7 +14,18 @@ const AddPaymentMethodDialog = dynamic(
     ),
   {
     ssr: false,
-    loading: () => <Button variant="outline">Add new card</Button>,
+    loading: () => <Button className="max-sm:hidden">Add new card</Button>,
+  }
+);
+
+const AddPaymentMethodDrawer = dynamic(
+  () =>
+    import('./AddPaymentMethodDrawer').then(
+      (mod) => mod.AddPaymentMethodDrawer
+    ),
+  {
+    ssr: false,
+    loading: () => <Button className="sm:hidden">Add new card</Button>,
   }
 );
 
@@ -25,6 +38,10 @@ import {
 } from '@/components/ui/card';
 
 export const AddPaymentMethodComponent = ({ user }: any) => {
+  const [open, setOpen] = useState(false);
+
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 640px)' });
+
   return (
     <Card>
       <CardHeader>
@@ -36,7 +53,11 @@ export const AddPaymentMethodComponent = ({ user }: any) => {
       <CardFooter
         className={cn('border-t px-6 py-3 rounded-b-xl flex justify-end')}
       >
-        <AddPaymentMethodDialog user={user} />
+        {isSmallScreen ? (
+          <AddPaymentMethodDrawer user={user} open={open} setOpen={setOpen} />
+        ) : (
+          <AddPaymentMethodDialog user={user} open={open} setOpen={setOpen} />
+        )}
       </CardFooter>
     </Card>
   );

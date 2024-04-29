@@ -16,7 +16,7 @@ export const NavbarPages = () => {
   ];
 
   return (
-    <div className="bg-[#0a0a0a]/80 w-full pr-6">
+    <div className="bg-[#0a0a0a]/80 w-full pr-6 min-[1530px]:pl-4">
       <div
         className={cn(
           'gap-0 font-medium flex overflow-x-scroll scrollbar-hide scroll-smooth mx-auto max-w-[1500px]'

@@ -3,7 +3,6 @@
 import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
-import { ChangeDOB } from '@/server/actions/accountProfile/change-dateOfBirth';
 import { dateSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
@@ -14,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { useToast } from '@/components/ui/use-toast';
 
 import {
   Form,
@@ -43,16 +41,20 @@ import {
 export function DOBChangeForm({ UserDOB }: any) {
   const [isPending, startTransition] = useTransition();
 
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof dateSchema>>({
     resolver: zodResolver(dateSchema),
     defaultValues: {
-      date: UserDOB,
+      date: new Date(UserDOB),
     },
   });
 
-  const onSubmit = (values: z.infer<typeof dateSchema>) => {
+  const onSubmit = async (values: z.infer<typeof dateSchema>) => {
+    const toast = (await import('@/components/ui/use-toast')).toast;
+
+    const ChangeDOB = await import(
+      '@/server/actions/accountProfile/change-dateOfBirth'
+    ).then((mod) => mod.ChangeDOB);
+
     startTransition(() => {
       ChangeDOB(values)
         .then((data) => {
@@ -67,6 +69,7 @@ export function DOBChangeForm({ UserDOB }: any) {
             toast({
               title: 'Date of Birth Change',
               description: data.error,
+              variant: 'destructive',
             });
           }
         })
@@ -74,6 +77,7 @@ export function DOBChangeForm({ UserDOB }: any) {
           toast({
             title: 'Date of Birth Change',
             description: error,
+            variant: 'destructive',
           });
         });
     });
@@ -122,7 +126,7 @@ export function DOBChangeForm({ UserDOB }: any) {
                         mode="single"
                         onSelect={field.onChange}
                         selected={field.value}
-                        defaultMonth={UserDOB}
+                        defaultMonth={new Date(UserDOB)}
                         disabled={(date) =>
                           date > new Date() || date < new Date('1900-01-01')
                         }

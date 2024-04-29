@@ -7,11 +7,9 @@ import { useQuery } from '@tanstack/react-query';
 import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
-import { ChangeCountry } from '@/server/actions/accountProfile/change-country';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 import {
   Form,
@@ -45,8 +43,6 @@ import { getCountries } from '@/server/data/getStateAndCountries';
 export function CountryChangeForm({ UserCountry }: any) {
   const [isPending, startTransition] = useTransition();
 
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
     defaultValues: {
@@ -59,7 +55,13 @@ export function CountryChangeForm({ UserCountry }: any) {
     queryKey: ['countries'],
   });
 
-  const onSubmit = (values: z.infer<typeof NameSchema>) => {
+  const onSubmit = async (values: z.infer<typeof NameSchema>) => {
+    const toast = (await import('@/components/ui/use-toast')).toast;
+
+    const ChangeCountry = await import(
+      '@/server/actions/accountProfile/change-country'
+    ).then((mod) => mod.ChangeCountry);
+
     startTransition(() => {
       ChangeCountry(values)
         .then((data) => {
@@ -74,6 +76,7 @@ export function CountryChangeForm({ UserCountry }: any) {
             toast({
               title: 'Country Change',
               description: data.error,
+              variant: 'destructive',
             });
           }
         })
@@ -81,6 +84,7 @@ export function CountryChangeForm({ UserCountry }: any) {
           toast({
             title: 'Country Change',
             description: error,
+            variant: 'destructive',
           });
         });
     });

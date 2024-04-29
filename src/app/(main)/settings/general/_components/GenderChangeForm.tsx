@@ -4,13 +4,11 @@ import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangeGender } from '@/server/actions/accountProfile/change-gender';
 import { genderSchema } from '@/schemas';
 import { useTransition } from 'react';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 import {
   Form,
@@ -43,8 +41,6 @@ import {
 export function GenderChangeForm({ UserGender }: any) {
   const [isPending, startTransition] = useTransition();
 
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof genderSchema>>({
     resolver: zodResolver(genderSchema),
     defaultValues: {
@@ -52,7 +48,13 @@ export function GenderChangeForm({ UserGender }: any) {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof genderSchema>) => {
+  const onSubmit = async (values: z.infer<typeof genderSchema>) => {
+    const toast = (await import('@/components/ui/use-toast')).toast;
+
+    const ChangeGender = await import(
+      '@/server/actions/accountProfile/change-gender'
+    ).then((mod) => mod.ChangeGender);
+
     startTransition(() => {
       ChangeGender(values)
         .then((data) => {
@@ -67,6 +69,7 @@ export function GenderChangeForm({ UserGender }: any) {
             toast({
               title: 'Gender Change',
               description: data.error,
+              variant: 'destructive',
             });
           }
         })
@@ -74,6 +77,7 @@ export function GenderChangeForm({ UserGender }: any) {
           toast({
             title: 'Gender Change',
             description: error,
+            variant: 'destructive',
           });
         });
     });

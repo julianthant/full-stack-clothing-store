@@ -2,10 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { DeleteAccount } from '@/server/actions/accountProfile/delete-account';
-
 import { Icons } from '@/components/utils/Icons';
-import { useToast } from '@/components/ui/use-toast';
 import { useTransition } from 'react';
 
 import {
@@ -19,9 +16,13 @@ import {
 export const DeleteAccountForm = () => {
   const [isPending, startTransition] = useTransition();
 
-  const { toast } = useToast();
+  const SubmitDeleteAccount = async () => {
+    const toast = (await import('@/components/ui/use-toast')).toast;
 
-  const SubmitDeleteAccount = () => {
+    const DeleteAccount = await import(
+      '@/server/actions/accountProfile/delete-account'
+    ).then((mod) => mod.DeleteAccount);
+
     startTransition(() => {
       DeleteAccount()
         .then((data) => {
@@ -36,6 +37,7 @@ export const DeleteAccountForm = () => {
             toast({
               title: 'Permanent Account Deletion',
               description: data.error,
+              variant: 'destructive',
             });
           }
         })
@@ -43,6 +45,7 @@ export const DeleteAccountForm = () => {
           toast({
             title: 'Permanent Account Deletion',
             description: error,
+            variant: 'destructive',
           });
         });
     });

@@ -12,15 +12,15 @@ import { Button } from '@/components/ui/button';
 import { Divider } from '@nextui-org/react';
 
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from '@/components/ui/dialog';
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 
 import {
   Form,
@@ -31,7 +31,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
+export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
@@ -134,18 +134,18 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="max-sm:hidden">Add new card</Button>
-      </DialogTrigger>
-      <DialogContent className={cn('px-0 pt-6 pb-0 gap-0 max-sm:hidden')}>
-        <DialogHeader className="px-6 pb-6">
-          <DialogTitle>Add a Card</DialogTitle>
-          <DialogDescription>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button className="sm:hidden">Add new card</Button>
+      </DrawerTrigger>
+      <DrawerContent className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden')}>
+        <DrawerHeader className="px-6 pb-6">
+          <DrawerTitle>Add a Card</DrawerTitle>
+          <DrawerDescription>
             Add a payment method for{' '}
             <span className="font-bold">{user && user?.name}</span>
-          </DialogDescription>
-        </DialogHeader>
+          </DrawerDescription>
+        </DrawerHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -249,12 +249,12 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
 
             <Divider className="h-[1px]" />
 
-            <DialogFooter
+            <DrawerFooter
               className={cn(
-                'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50'
+                'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50 flex-row'
               )}
             >
-              <DialogClose>
+              <DrawerClose>
                 <Button
                   variant={'outline'}
                   className={cn('hover:bg-gray-100 shadow-none')}
@@ -262,7 +262,7 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
                 >
                   Cancel
                 </Button>
-              </DialogClose>
+              </DrawerClose>
 
               <Button disabled={isPending} type="submit">
                 {isPending && (
@@ -272,10 +272,10 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
                 )}
                 Continue
               </Button>
-            </DialogFooter>
+            </DrawerFooter>
           </form>
         </Form>
-      </DialogContent>
-    </Dialog>
+      </DrawerContent>
+    </Drawer>
   );
 }
