@@ -42,10 +42,12 @@ export const AddPaymentMethod = async (
 
   const firstCard = existingCards?.length === 0;
 
+  const formattedCardNumber = cardNumber.replace(/\s/g, '');
+
   if (existingCards) {
     let cardMatch = false;
     for (const card of existingCards) {
-      cardMatch = await bcrypt.compare(cardNumber, card.cardNumber);
+      cardMatch = await bcrypt.compare(formattedCardNumber, card.cardNumber);
       if (cardMatch) {
         break;
       }
@@ -56,7 +58,7 @@ export const AddPaymentMethod = async (
     }
   }
 
-  const [expiryMonth, expiryYear] = expiryDate.split('/');
+  const [expiryMonth, expiryYear] = expiryDate.replace(/\s/g, '').split('/');
 
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
@@ -69,29 +71,29 @@ export const AddPaymentMethod = async (
     return { error: 'Card has expired!' };
   }
 
+  if (cvc.length < 3 || cvc.length > 4) {
+    return { error: 'Invalid CVC!' };
+  }
+
   const cardOptions = {
     method: 'POST',
     url: 'https://bin-ip-checker.p.rapidapi.com/',
-    params: { bin: cardNumber.slice(0, 6) },
+    params: { bin: formattedCardNumber.slice(0, 6) },
     headers: {
       'content-type': 'application/json',
       'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
       'X-RapidAPI-Host': 'bin-ip-checker.p.rapidapi.com',
     },
-    data: { bin: cardNumber },
+    data: { bin: formattedCardNumber.slice(0, 6) },
   };
 
   const cardInfo = await axios.request(cardOptions);
-
-  if (!cardInfo.data && !cardInfo.data.valid) {
-    return { error: 'Invalid card!' };
-  }
 
   const bankName = cardInfo.data.BIN.issuer.name;
   const cardScheme = cardInfo.data.BIN.scheme;
   const cardType = cardInfo.data.BIN.type || 'Debit';
 
-  const hashedCard = await bcrypt.hash(cardNumber, 10);
+  const hashedCard = await bcrypt.hash(formattedCardNumber, 10);
   const hashedCVC = await bcrypt.hash(cvc, 10);
 
   await db.payment.create({
@@ -102,7 +104,7 @@ export const AddPaymentMethod = async (
       cardScheme,
       cardHolder,
       cardNumber: hashedCard,
-      lastFourNumbers: cardNumber.slice(-4),
+      lastFourNumbers: formattedCardNumber.slice(-4),
       expiryMonth,
       expiryYear,
       default: firstCard,

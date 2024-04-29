@@ -48,18 +48,27 @@ export const CardEditSchema = z.object({
 });
 
 export const cardAddSchema = z.object({
-  cardHolder: z.string().min(1, { message: 'Name is required' }),
+  cardHolder: z
+    .string()
+    .min(1, { message: 'Name is required' })
+    .max(32, { message: 'Name is too long' }),
   cardNumber: z
     .string()
-    .min(15, { message: 'Card must be at least 15 numbers' })
-    .max(16, { message: 'Card cannot exceed 16 numbers' })
+    .min(18, { message: 'Card must be at least 15 numbers' })
+    .max(19, { message: 'Card cannot exceed 16 numbers' })
     .trim(),
-  expiryDate: z.string().length(5, { message: 'Invalid expiry date' }),
-  cvc: z.string().length(3, { message: 'Invalid CVC' }),
+  expiryDate: z.string().length(7, { message: 'Invalid expiry date' }),
+  cvc: z
+    .string()
+    .min(3, { message: 'Invalid CVC' })
+    .max(4, { message: 'Invalid CVC' }),
 });
 
 export const addressSchema = z.object({
-  fullName: z.string().min(1, { message: 'Name is required' }),
+  fullName: z
+    .string()
+    .min(1, { message: 'Name is required' })
+    .max(32, { message: 'Name is too long' }),
   streetAddress: z.string().min(1, { message: 'Address is required' }),
   streetOptional: z.string().optional(),
   city: z.string().min(1, { message: 'City is required' }),

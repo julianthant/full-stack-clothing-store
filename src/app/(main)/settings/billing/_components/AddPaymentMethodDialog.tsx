@@ -2,14 +2,15 @@ import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition } from 'react';
 import { cardAddSchema } from '@/schemas';
 import { AddPaymentMethod } from '@/server/actions/accountPayments/add-payment-method';
+import { useState, useTransition } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/Input';
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
+import { Divider } from '@nextui-org/react';
 import { useToast } from '@/components/ui/use-toast';
 
 import {
@@ -32,54 +33,105 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import { Divider } from '@nextui-org/react';
-
 export function AddPaymentMethodDialog({ user }: any) {
+  const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
     resolver: zodResolver(cardAddSchema),
+    defaultValues: {
+      cardNumber: '',
+      expiryDate: '',
+      cvc: '',
+      cardHolder: '',
+    },
   });
 
   const onSubmit = (values: z.infer<typeof cardAddSchema>) => {
+    if (expiredDate(values.expiryDate)) {
+      toast({
+        title: 'Card Expiry',
+        description: 'Your card has expired!',
+      });
+
+      return;
+    }
+
     startTransition(() => {
       AddPaymentMethod(values)
         .then((data) => {
           if (data.success) {
             toast({
-              title: 'Name Change',
-              description: 'Your name has been successfully changed!',
+              title: 'Payment Method',
+              description: 'Your card has been successfully added!',
             });
+            setOpen(false);
           }
 
           if (data.error) {
             toast({
-              title: 'Name Change',
+              title: 'Payment Method',
               description: data.error,
             });
+            setOpen(false);
           }
         })
         .catch((error) => {
           toast({
-            title: 'Name Change',
+            title: 'Payment Method',
             description: error,
           });
+        })
+        .finally(() => {
+          form.reset();
         });
     });
   };
 
-  const handleInputChange = (event: any) => {
+  const cardNumberFormat = (event: any) => {
+    const cursorPosition = event.target.selectionStart;
     const value = event.target.value
       .replace(/\s/g, '')
       .replace(/(.{4})/g, '$1 ')
       .trim();
     event.target.value = value;
+    event.target.setSelectionRange(cursorPosition, cursorPosition);
+  };
+
+  const expiryDateFormat = (event: any) => {
+    let value = event.target.value;
+
+    if (value.length === 1 && value > 1) {
+      value = `0${value} / `;
+    } else if (value.length > 1 && value > 12) {
+      value = '01';
+    }
+
+    if (value.length === 5 && event.inputType === 'deleteContentBackward') {
+      value = value.slice(0, -3);
+    }
+    event.target.value = value;
+  };
+
+  const expiredDate = (expiryDate: string) => {
+    if (expiryDate.length < 7) return false;
+
+    const [expiryMonth, expiryYear] = expiryDate.split('/');
+
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
+    const hasExpired =
+      Number(expiryYear) <= Number(currentYear.toString().slice(2, 4)) &&
+      Number(expiryMonth) < currentMonth;
+
+    return hasExpired;
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Add new card</Button>
       </DialogTrigger>
@@ -109,7 +161,8 @@ export function AddPaymentMethodDialog({ user }: any) {
                         placeholder="1234 1234 1234 1234"
                         {...field}
                         className={cn('shadow-none')}
-                        onInput={handleInputChange}
+                        onInput={cardNumberFormat}
+                        maxLength={19}
                       />
                     </FormControl>
 
@@ -131,7 +184,11 @@ export function AddPaymentMethodDialog({ user }: any) {
                       <Input
                         placeholder="MM/YY"
                         {...field}
-                        className={cn('shadow-none')}
+                        className={cn('shadow-none', {
+                          'text-red-400': expiredDate(field.value),
+                        })}
+                        onInput={expiryDateFormat}
+                        maxLength={7}
                       />
                     </FormControl>
 
@@ -154,6 +211,7 @@ export function AddPaymentMethodDialog({ user }: any) {
                         placeholder="CVC"
                         {...field}
                         className={cn('shadow-none')}
+                        maxLength={4}
                       />
                     </FormControl>
 
@@ -177,6 +235,7 @@ export function AddPaymentMethodDialog({ user }: any) {
                       placeholder="John Doe"
                       {...field}
                       className={cn('shadow-none')}
+                      maxLength={32}
                     />
                   </FormControl>
 
@@ -184,35 +243,35 @@ export function AddPaymentMethodDialog({ user }: any) {
                 </FormItem>
               )}
             />
+
+            <Divider className="h-[1px]" />
+
+            <DialogFooter
+              className={cn(
+                'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50'
+              )}
+            >
+              <DialogClose>
+                <Button
+                  variant={'outline'}
+                  className={cn('hover:bg-gray-100 shadow-none')}
+                  type="button"
+                >
+                  Cancel
+                </Button>
+              </DialogClose>
+
+              <Button disabled={isPending} type="submit">
+                {isPending && (
+                  <Icons.spinner
+                    className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
+                  />
+                )}
+                Continue
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
-
-        <Divider className="h-[1px]" />
-
-        <DialogFooter
-          className={cn(
-            'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50'
-          )}
-        >
-          <DialogClose>
-            <Button
-              variant={'outline'}
-              className={cn('hover:bg-gray-100 shadow-none')}
-              type="button"
-            >
-              Cancel
-            </Button>
-          </DialogClose>
-
-          <Button disabled={isPending} type="submit">
-            {isPending && (
-              <Icons.spinner
-                className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
-              />
-            )}
-            Continue
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
