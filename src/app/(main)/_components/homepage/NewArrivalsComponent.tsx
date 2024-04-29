@@ -1,11 +1,12 @@
 'use client';
 
-import { ClothesComponent } from '@/components/utils/ClothesComponent';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { useQuery } from '@tanstack/react-query';
+import { ClothesComponent } from '@/components/utils/ClothesComponent';
 
 export const NewArrivalsComponent = () => {
   const { data: clothes, isLoading } = useQuery({

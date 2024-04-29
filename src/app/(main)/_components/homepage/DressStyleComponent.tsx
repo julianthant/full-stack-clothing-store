@@ -1,5 +1,6 @@
-import { IntegralCF } from '@/app/fonts/fonts';
 import Image from 'next/image';
+
+import { IntegralCF } from '@/app/fonts/fonts';
 
 export const DressStyleComponent = () => {
   return (

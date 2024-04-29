@@ -1,10 +1,14 @@
 import './globals.css';
 
+import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 
 import { Satoshi } from './fonts/fonts';
 import { Providers, QueryProvider } from './providers';
-import { Toaster } from '@/components/ui/toaster';
+
+const DynamicToaster = dynamic(() =>
+  import('@/components/ui/toaster').then((mod) => mod.Toaster)
+);
 
 export const metadata: Metadata = {
   title: 'StyleZ - The only fashion store you need',
@@ -27,7 +31,7 @@ export default function RootLayout({
         <Providers>
           <QueryProvider>
             {children}
-            <Toaster />
+            <DynamicToaster />
           </QueryProvider>
         </Providers>
       </body>
