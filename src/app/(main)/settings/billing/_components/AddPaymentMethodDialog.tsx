@@ -20,6 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from '@/components/ui/dialog';
 
 import {
@@ -193,13 +194,16 @@ export function AddPaymentMethodDialog({ user }: any) {
             'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50'
           )}
         >
-          <Button
-            variant={'outline'}
-            className={cn('hover:bg-gray-100 shadow-none')}
-            type="button"
-          >
-            Cancel
-          </Button>
+          <DialogClose>
+            <Button
+              variant={'outline'}
+              className={cn('hover:bg-gray-100 shadow-none')}
+              type="button"
+            >
+              Cancel
+            </Button>
+          </DialogClose>
+
           <Button disabled={isPending} type="submit">
             {isPending && (
               <Icons.spinner
