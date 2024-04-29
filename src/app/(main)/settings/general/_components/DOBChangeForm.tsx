@@ -112,7 +112,7 @@ export function DOBChangeForm({ UserDOB }: any) {
                             !field.value && 'text-muted-foreground'
                           )}
                         >
-                          {field.value ? (
+                          {field.value.getUTCDay() ? (
                             format(field.value, 'PPP')
                           ) : (
                             <span>Pick a date</span>
@@ -126,7 +126,7 @@ export function DOBChangeForm({ UserDOB }: any) {
                         mode="single"
                         onSelect={field.onChange}
                         selected={field.value}
-                        defaultMonth={new Date(UserDOB)}
+                        defaultMonth={UserDOB}
                         disabled={(date) =>
                           date > new Date() || date < new Date('1900-01-01')
                         }

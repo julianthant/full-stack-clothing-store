@@ -48,7 +48,7 @@ export const AccountDropdown = ({ user }: any) => {
         </DropdownItem>
 
         <DropdownItem
-          key="dashboard"
+          key="orders"
           onClick={() => router.push('/settings/orders')}
         >
           <p className="w-full h-full">Orders</p>
