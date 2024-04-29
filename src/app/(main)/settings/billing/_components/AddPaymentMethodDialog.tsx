@@ -19,7 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from '@/components/ui/dialog';
 
 import {
@@ -112,8 +111,6 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
 
   const expiryDateFormat = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
-
-    console.log(wasDelete);
 
     if (value.length === 5 && wasDelete) {
       value = value.slice(0, -3);
@@ -277,15 +274,14 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
                 'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50'
               )}
             >
-              <DialogClose>
-                <Button
-                  variant={'outline'}
-                  className={cn('hover:bg-gray-100 shadow-none')}
-                  type="button"
-                >
-                  Cancel
-                </Button>
-              </DialogClose>
+              <Button
+                variant={'outline'}
+                className={cn('hover:bg-gray-100 shadow-none')}
+                type="button"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
 
               <Button disabled={isPending} type="submit">
                 {isPending && (
