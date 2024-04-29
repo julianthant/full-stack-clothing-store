@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/Input';
@@ -33,6 +33,7 @@ import {
 
 export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
+  const [wasDelete, setWasDelete] = useState(false);
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
     resolver: zodResolver(cardAddSchema),
@@ -103,19 +104,40 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
     event.target.setSelectionRange(cursorPosition, cursorPosition);
   };
 
-  const expiryDateFormat = (event: any) => {
+  const expiryDateFormatDeleted = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    setWasDelete(event.key === 'Backspace');
+  };
+
+  const expiryDateFormat = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
 
-    if (value.length === 1 && value > 1) {
-      value = `0${value} / `;
-    } else if (value.length > 1 && value > 12) {
-      value = '01';
-    }
+    console.log(wasDelete);
 
-    if (value.length === 5 && event.inputType === 'deleteContentBackward') {
+    if (value.length === 5 && wasDelete) {
       value = value.slice(0, -3);
     }
+
+    if (value.length === 3 && !wasDelete) {
+      value = value.slice(0, 2) + ' / ' + value.slice(2);
+    }
+
+    if (value.length === 1 && Number(value) > 1) {
+      value = `0${value} / `;
+    } else if (value.length === 2 && Number(value) > 12) {
+      value = '01 / ';
+    } else if (
+      value.length === 2 &&
+      Number(value) >= 10 &&
+      Number(value) <= 12
+    ) {
+      value = `${value} / `;
+    }
+
     event.target.value = value;
+
+    setWasDelete(false);
   };
 
   const expiredDate = (expiryDate: string) => {
@@ -191,6 +213,7 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
                           'text-red-400': expiredDate(field.value),
                         })}
                         onInput={expiryDateFormat}
+                        onKeyDown={expiryDateFormatDeleted}
                         maxLength={7}
                       />
                     </FormControl>
