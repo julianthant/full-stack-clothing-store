@@ -87,7 +87,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
               name="number"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only" htmlFor="email">
+                  <FormLabel className="sr-only" htmlFor="number">
                     Phone Number
                   </FormLabel>
 
@@ -95,8 +95,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
                     <Input
                       key="inside"
                       {...field}
-                      autoCapitalize="none"
-                      autoComplete="email"
+                      autoComplete="phone-number"
                       autoCorrect="off"
                       placeholder="+1 (000)-000-0000"
                       disabled={isPending}
@@ -108,6 +107,7 @@ export function PhoneNumberChangeForm({ UserNumber }: any) {
               )}
             />
           </CardContent>
+
           <CardFooter className="flex justify-between gap-2 border-t px-6 py-3">
             <CardDescription>
               Please provide your phone number along with your country code.

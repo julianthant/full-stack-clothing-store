@@ -1,39 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import axios from 'axios';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
+import { getClothes } from '@/server/data/getClothes';
 import { ClothesComponent } from '@/components/utils/ClothesComponent';
 
 export const NewArrivalsComponent = () => {
   const { data: clothes, isLoading } = useQuery({
-    queryFn: async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://asos2.p.rapidapi.com/products/v2/list',
-        params: {
-          store: 'US',
-          offset: 0,
-          categoryId: 6993,
-          limit: 8,
-          country: 'US',
-          sort: 'freshness',
-          currency: 'USD',
-          sizeSchema: 'US',
-          lang: 'en-US',
-        },
-        headers: {
-          'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
-          'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
-        },
-      };
-
-      return axios.request(options).then((res) => res.data);
-    },
+    queryFn: async () => getClothes(0, 6993, 8, 'freshness'),
     queryKey: ['landing-page-new-arrivals'],
+    refetchOnReconnect: false,
   });
 
   return (

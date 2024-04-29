@@ -60,7 +60,7 @@ export const DeleteAccountForm = () => {
       </CardHeader>
       <CardFooter
         className={cn(
-          'border-t border-red-400 px-6 py-3 bg-red-100 rounded-b-xl'
+          'border-t border-red-400 px-6 py-3 bg-red-100 rounded-b-xl flex justify-end'
         )}
       >
         <form onSubmit={() => SubmitDeleteAccount()}>

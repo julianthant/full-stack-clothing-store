@@ -30,30 +30,26 @@ export const ChangePhoneNumber = async (
     return { error: 'Invalid number!' };
   }
 
-  const { code, number } = validatedFields.data;
+  const { number } = validatedFields.data;
 
   if (/[a-zA-Z]/.test(number)) {
     return { error: 'Invalid number!' };
   }
 
-  let countryCode = code.replace(/[^0-9]/g, '');
-
-  if (countryCode.length === 4) {
-    countryCode = countryCode.slice(0, 1) + ' ' + countryCode.slice(1, 4);
+  if ('+' !== number[0]) {
+    return { error: 'Number must include country code!' };
   }
-
-  const phoneNumber = '+' + countryCode + ' ' + number;
 
   await db.user.update({
     where: { id: dbUser.id },
     data: {
-      phoneNumber: phoneNumber,
+      phoneNumber: number,
     },
   });
 
   unstable_update({
     user: {
-      phoneNumber: phoneNumber,
+      phoneNumber: number,
     },
   });
 

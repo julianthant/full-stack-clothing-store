@@ -29,7 +29,6 @@ export const NameSchema = z.object({
 });
 
 export const PhoneNumberSchema = z.object({
-  code: z.string().min(1, { message: 'Country code is required' }),
   number: z.string().min(1, { message: 'Phone number is required' }),
 });
 
@@ -49,18 +48,13 @@ export const CardEditSchema = z.object({
 });
 
 export const cardAddSchema = z.object({
-  paymentType: z.string().min(1, { message: 'Payment type is required' }),
   cardHolder: z.string().min(1, { message: 'Name is required' }),
   cardNumber: z
     .string()
     .min(15, { message: 'Card must be at least 15 numbers' })
     .max(16, { message: 'Card cannot exceed 16 numbers' })
     .trim(),
-  expiryMonth: z
-    .string()
-    .min(1, { message: 'Expiry month is required' })
-    .max(2),
-  expiryYear: z.string().length(4, { message: 'Invalid year' }),
+  expiryDate: z.string().length(5, { message: 'Invalid expiry date' }),
   cvc: z.string().length(3, { message: 'Invalid CVC' }),
 });
 

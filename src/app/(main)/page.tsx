@@ -5,23 +5,40 @@ import { NewArrivalsComponent } from './_components/homepage/NewArrivalsComponen
 import { TopSellingComponent } from './_components/homepage/TopSellingComponent';
 
 import { Divider } from '@nextui-org/react';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
-export default function Home() {
+import { getClothes } from '@/server/data/getClothes';
+
+export default async function Home() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryFn: async () => getClothes(0, 6993, 8, 'freshness'),
+    queryKey: ['landing-page-new-arrivals'],
+    staleTime: Infinity,
+  });
+
   return (
-    <section className="grid gap-16">
-      <div>
-        <HeadingComponent />
-        <BrandsComponent />
-      </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <section className="grid gap-16">
+        <div>
+          <HeadingComponent />
+          <BrandsComponent />
+        </div>
 
-      <NewArrivalsComponent />
+        <NewArrivalsComponent />
 
-      <div className="main-container">
-        <Divider />
-      </div>
+        <div className="main-container">
+          <Divider />
+        </div>
 
-      <TopSellingComponent />
-      <DressStyleComponent />
-    </section>
+        <TopSellingComponent />
+        <DressStyleComponent />
+      </section>
+    </HydrationBoundary>
   );
 }

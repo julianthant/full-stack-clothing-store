@@ -32,16 +32,7 @@ export const AddPaymentMethod = async (
     return { error: 'Invalid fields!' };
   }
 
-  const { paymentType, cardHolder, cardNumber, expiryMonth, expiryYear, cvc } =
-    validatedFields.data;
-
-  if (
-    paymentType !== 'card' &&
-    paymentType !== 'paypal' &&
-    paymentType !== 'apple'
-  ) {
-    return { error: 'Invalid payment type!' };
-  }
+  const { cardHolder, cardNumber, expiryDate, cvc } = validatedFields.data;
 
   if (!cardNumber.startsWith('4') && !cardNumber.startsWith('5')) {
     return { error: 'Mastercard and Visa only!' };
@@ -65,24 +56,17 @@ export const AddPaymentMethod = async (
     }
   }
 
+  const [expiryMonth, expiryYear] = expiryDate.split('/');
+
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
 
   const hasExpired =
-    Number(expiryYear) <= currentYear && Number(expiryMonth) < currentMonth;
+    Number(expiryYear) <= Number(currentYear.toString().slice(2, 4)) &&
+    Number(expiryMonth) < currentMonth;
 
   if (hasExpired) {
     return { error: 'Card has expired!' };
-  }
-
-  let paymentTitle = '';
-
-  if (paymentType === 'apple') {
-    paymentTitle = 'Apple';
-  }
-
-  if (paymentType === 'paypal') {
-    paymentTitle = 'Paypal';
   }
 
   const cardOptions = {
@@ -107,10 +91,6 @@ export const AddPaymentMethod = async (
   const cardScheme = cardInfo.data.BIN.scheme;
   const cardType = cardInfo.data.BIN.type || 'Debit';
 
-  if (paymentType === 'card') {
-    paymentTitle = cardScheme;
-  }
-
   const hashedCard = await bcrypt.hash(cardNumber, 10);
   const hashedCVC = await bcrypt.hash(cvc, 10);
 
@@ -119,7 +99,7 @@ export const AddPaymentMethod = async (
       userId: dbUser.id,
       bankName,
       cardType,
-      cardScheme: paymentTitle,
+      cardScheme,
       cardHolder,
       cardNumber: hashedCard,
       lastFourNumbers: cardNumber.slice(-4),
