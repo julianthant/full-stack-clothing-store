@@ -23,6 +23,7 @@ export const NewArrivalsComponent = () => {
       <div className="grid lg:grid-cols-4 md:grid-cols-3  min-[400px]:grid-cols-2 gap-4">
         {!isLoading &&
           clothes.products &&
+          clothes.products.length > 0 &&
           clothes.products.map((product: any) => (
             <ClothesComponent
               key={product.id}
