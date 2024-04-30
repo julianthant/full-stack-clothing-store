@@ -9,7 +9,11 @@ import { getClothes } from '@/server/data/getClothes';
 import { ClothesComponent } from '@/components/utils/ClothesComponent';
 
 export const TopSellingComponent = () => {
-  const { data: clothes, isLoading } = useQuery({
+  const {
+    data: clothes,
+    isLoading,
+    isError,
+  } = useQuery({
     queryFn: async () => getClothes(0, 6993, 8, 'freshness'),
     queryKey: ['landing-page-new-arrivals'],
     refetchOnReconnect: false,
@@ -22,8 +26,7 @@ export const TopSellingComponent = () => {
       </h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 min-[400px]:grid-cols-2 gap-4">
         {!isLoading &&
-          clothes.products &&
-          clothes.products.length > 0 &&
+          !isError &&
           clothes.products.map((product: any) => (
             <ClothesComponent
               key={product.id}
