@@ -249,6 +249,7 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
                           onInput={expiryDateFormat}
                           maxLength={7}
                           onKeyDown={expiryDateFormatDeleted}
+                          type="date"
                         />
                       </FormControl>
 
