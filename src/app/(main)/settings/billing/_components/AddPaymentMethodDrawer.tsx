@@ -190,37 +190,115 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
         <Button className="sm:hidden">Add new card</Button>
       </DrawerTrigger>
       <DrawerContent
-        className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden')}
+        className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden max-h-[50%]')}
         id="drawer-content"
         style={drawerStyle}
       >
-        <DrawerHeader className="px-6 pb-6">
-          <DrawerTitle>Add a Card</DrawerTitle>
-          <DrawerDescription>
-            Add a payment method for{' '}
-            <span className="font-bold">{user && user?.name}</span>
-          </DrawerDescription>
-        </DrawerHeader>
+        <div className="overflow-x-auto scroll-smooth">
+          <DrawerHeader className="px-6 pb-6">
+            <DrawerTitle>Add a Card</DrawerTitle>
+            <DrawerDescription>
+              Add a payment method for{' '}
+              <span className="font-bold">{user && user?.name}</span>
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="sm:flex grid px-6 sm:gap-6 gap-y-2 pb-2">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="sm:flex grid px-6 sm:gap-6 gap-y-2 pb-2">
+                <FormField
+                  control={form.control}
+                  name="cardNumber"
+                  render={({ field }) => (
+                    <FormItem className="flex-grow w-full space-y-1.5">
+                      <FormLabel className={cn('font-light tracking-wider')}>
+                        Card Number
+                      </FormLabel>
+
+                      <FormControl>
+                        <Input
+                          placeholder="1234 1234 1234 1234"
+                          {...field}
+                          className={cn('shadow-none')}
+                          onInput={cardNumberFormat}
+                          maxLength={19}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex gap-6">
+                  <FormField
+                    control={form.control}
+                    name="expiryDate"
+                    render={({ field }) => (
+                      <FormItem className="space-y-1.5 w-full">
+                        <FormLabel className={cn('font-light tracking-wider')}>
+                          Expires
+                        </FormLabel>
+
+                        <FormControl>
+                          <Input
+                            placeholder="MM / YY"
+                            {...field}
+                            className={cn('shadow-none', {
+                              'text-red-400': expiredDate(field.value),
+                            })}
+                            onInput={expiryDateFormat}
+                            maxLength={7}
+                            onKeyDown={expiryDateFormatDeleted}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="cvc"
+                    render={({ field }) => (
+                      <FormItem className="space-y-1.5 w-full">
+                        <FormLabel className={cn('font-light tracking-wider')}>
+                          CVC
+                        </FormLabel>
+
+                        <FormControl>
+                          <Input
+                            placeholder="CVC"
+                            {...field}
+                            className={cn('shadow-none')}
+                            maxLength={4}
+                            type="number"
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+
               <FormField
                 control={form.control}
-                name="cardNumber"
+                name="cardHolder"
                 render={({ field }) => (
-                  <FormItem className="flex-grow w-full space-y-1.5">
+                  <FormItem className="px-6 space-y-1.5 pb-7">
                     <FormLabel className={cn('font-light tracking-wider')}>
-                      Card Number
+                      Card Holder
                     </FormLabel>
 
                     <FormControl>
                       <Input
-                        placeholder="1234 1234 1234 1234"
+                        placeholder="John Doe"
                         {...field}
                         className={cn('shadow-none')}
-                        onInput={cardNumberFormat}
-                        maxLength={19}
+                        maxLength={32}
                       />
                     </FormControl>
 
@@ -229,111 +307,34 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
                 )}
               />
 
-              <div className="flex gap-6">
-                <FormField
-                  control={form.control}
-                  name="expiryDate"
-                  render={({ field }) => (
-                    <FormItem className="space-y-1.5 w-full">
-                      <FormLabel className={cn('font-light tracking-wider')}>
-                        Expires
-                      </FormLabel>
+              <Divider className="h-[1px]" />
 
-                      <FormControl>
-                        <Input
-                          placeholder="MM / YY"
-                          {...field}
-                          className={cn('shadow-none', {
-                            'text-red-400': expiredDate(field.value),
-                          })}
-                          onInput={expiryDateFormat}
-                          maxLength={7}
-                          onKeyDown={expiryDateFormatDeleted}
-                          type="date"
-                        />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="cvc"
-                  render={({ field }) => (
-                    <FormItem className="space-y-1.5 w-full">
-                      <FormLabel className={cn('font-light tracking-wider')}>
-                        CVC
-                      </FormLabel>
-
-                      <FormControl>
-                        <Input
-                          placeholder="CVC"
-                          {...field}
-                          className={cn('shadow-none')}
-                          maxLength={4}
-                          type="number"
-                        />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-
-            <FormField
-              control={form.control}
-              name="cardHolder"
-              render={({ field }) => (
-                <FormItem className="px-6 space-y-1.5 pb-7">
-                  <FormLabel className={cn('font-light tracking-wider')}>
-                    Card Holder
-                  </FormLabel>
-
-                  <FormControl>
-                    <Input
-                      placeholder="John Doe"
-                      {...field}
-                      className={cn('shadow-none')}
-                      maxLength={32}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Divider className="h-[1px]" />
-
-            <DrawerFooter
-              className={cn(
-                'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50 flex-row'
-              )}
-            >
-              <Button
-                variant={'outline'}
-                className={cn('hover:bg-gray-100 shadow-none')}
-                type="button"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </Button>
-
-              <Button disabled={isPending} type="submit">
-                {isPending && (
-                  <Icons.spinner
-                    className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
-                  />
+              <DrawerFooter
+                className={cn(
+                  'flex items-center justify-between w-full sm:justify-between px-6 py-4 bg-muted/50 flex-row'
                 )}
-                Continue
-              </Button>
-            </DrawerFooter>
-          </form>
-        </Form>
+              >
+                <Button
+                  variant={'outline'}
+                  className={cn('hover:bg-gray-100 shadow-none')}
+                  type="button"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+
+                <Button disabled={isPending} type="submit">
+                  {isPending && (
+                    <Icons.spinner
+                      className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
+                    />
+                  )}
+                  Continue
+                </Button>
+              </DrawerFooter>
+            </form>
+          </Form>
+        </div>
       </DrawerContent>
     </Drawer>
   );
