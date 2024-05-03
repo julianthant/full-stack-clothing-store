@@ -258,7 +258,7 @@ export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
                 onClick={() => removePaymentMethod()}
                 type="button"
               >
-                {isLoading && (
+                {isPending && (
                   <Icons.spinner
                     className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
                   />
