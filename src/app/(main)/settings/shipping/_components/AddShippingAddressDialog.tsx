@@ -53,8 +53,6 @@ export function AddShippingAddressDialog({ user, open, setOpen }: any) {
     queryKey: ['countries-and-states'],
   });
 
-  const { countries, states } = data || {};
-
   const form = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
@@ -156,7 +154,8 @@ export function AddShippingAddressDialog({ user, open, setOpen }: any) {
                         <SelectGroup>
                           <SelectLabel>Countries</SelectLabel>
                           {isFetched &&
-                            countries
+                            data?.countries &&
+                            data.countries
                               ?.toSorted((a, b) => a.localeCompare(b))
                               ?.map((country) => (
                                 <SelectItem value={country} key={country}>
@@ -301,7 +300,8 @@ export function AddShippingAddressDialog({ user, open, setOpen }: any) {
                             <SelectGroup>
                               <SelectLabel>Countries</SelectLabel>
                               {isFetched &&
-                                states
+                                data?.states &&
+                                data.states
                                   ?.toSorted((a, b) => a.localeCompare(b))
                                   ?.map((state) => (
                                     <SelectItem value={state} key={state}>
