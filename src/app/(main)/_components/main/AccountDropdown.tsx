@@ -62,10 +62,7 @@ export const AccountDropdown = ({ user }: any) => {
       </DropdownSection>
 
       <DropdownSection aria-label="Preferences" showDivider>
-        <DropdownItem
-          key="orders"
-          onClick={() => router.push('/settings/general')}
-        >
+        <DropdownItem key="settings" onClick={() => router.push('/settings')}>
           <p>Settings</p>
         </DropdownItem>
         <DropdownItem
