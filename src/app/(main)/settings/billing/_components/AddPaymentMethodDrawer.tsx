@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/Input';
@@ -32,6 +32,7 @@ import {
 
 export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
+  const [drawerStyle, setDrawerStyle] = useState({});
   const [key, setKey] = useState('');
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
@@ -170,12 +171,34 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
     return hasExpired;
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      const drawerContent = document.getElementById('drawer-content');
+      if (drawerContent) {
+        const viewportHeight = window.innerHeight;
+        const drawerHeight = drawerContent.offsetHeight;
+        const bottomSpace = viewportHeight - drawerHeight;
+        setDrawerStyle({ bottom: bottomSpace > 0 ? '0' : `${bottomSpace}px` });
+      }
+    };
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button className="sm:hidden">Add new card</Button>
       </DrawerTrigger>
-      <DrawerContent className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden')}>
+      <DrawerContent
+        className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden')}
+        id="drawer-content"
+        style={drawerStyle}
+      >
         <DrawerHeader className="px-6 pb-6">
           <DrawerTitle>Add a Card</DrawerTitle>
           <DrawerDescription>
