@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${Satoshi.className}`}>
+      <body className={`antialiased ${Satoshi.className} min-h-dvh`}>
         <Providers>
           <QueryProvider>
             {children}
