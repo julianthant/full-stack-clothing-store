@@ -108,7 +108,7 @@ export function DOBChangeForm({ UserDOB }: any) {
                         <Button
                           variant={'outline'}
                           className={cn(
-                            'w-[full] pl-3 text-left font-normal',
+                            'w-[full] h-10 shadow-none pl-3 text-left text-base font-normal',
                             !field.value && 'text-muted-foreground'
                           )}
                         >
