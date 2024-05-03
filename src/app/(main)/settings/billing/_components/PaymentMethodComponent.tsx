@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/card';
 
 export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, startTransition] = useTransition();
   const [key, setKey] = useState('');
 
   const queryClient = useQueryClient();
@@ -46,7 +46,7 @@ export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
     },
   });
 
-  const { mutateAsync: removePaymentMethod } = useMutation({
+  const { mutateAsync: removePaymentMethod, isPending } = useMutation({
     mutationFn: () => RemovePaymentMethod(paymentMethod.id),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
@@ -253,15 +253,21 @@ export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
             </CardDescription>
             <div className="flex items-center justify-end gap-3">
               <Button
+                disabled={isPending}
                 variant={'destructive'}
                 onClick={() => removePaymentMethod()}
                 type="button"
               >
+                {isLoading && (
+                  <Icons.spinner
+                    className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
+                  />
+                )}
                 Remove
               </Button>
 
-              <Button disabled={isPending} variant={'outline'} type="submit">
-                {isPending && (
+              <Button disabled={isLoading} variant={'outline'} type="submit">
+                {isLoading && (
                   <Icons.spinner
                     className={cn('mr-2 h-4 w-4 animate-spin shadow-none')}
                   />
