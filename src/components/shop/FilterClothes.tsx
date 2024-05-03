@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { Divider } from '@nextui-org/react';
-import { Icons } from '../utils/Icons';
-import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-react';
 import Link from 'next/link';
-import { Slider } from '@nextui-org/react';
-import { Button } from '../ui/button';
+
+import { useState } from 'react';
+
 import { cn } from '@/lib/utils';
+import { Icons } from '../utils/Icons';
+import { Button } from '../ui/button';
+import { Divider, Slider } from '@nextui-org/react';
+import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-react';
 
 export const FilterClothes = () => {
   const [isSliderVisible, setIsSliderVisible] = useState(true);
