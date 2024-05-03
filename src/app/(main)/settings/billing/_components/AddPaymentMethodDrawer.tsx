@@ -222,7 +222,7 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
 
                     <FormControl>
                       <Input
-                        placeholder="MM/YY"
+                        placeholder="MM / YY"
                         {...field}
                         className={cn('shadow-none', {
                           'text-red-400': expiredDate(field.value),
