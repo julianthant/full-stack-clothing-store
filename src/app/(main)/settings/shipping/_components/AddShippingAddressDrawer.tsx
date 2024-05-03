@@ -135,7 +135,7 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
   return (
     <Drawer open={open} onOpenChange={setOpen} preventScrollRestoration>
       <DrawerTrigger asChild>
-        <Button className="sm:hidden">Add new card</Button>
+        <Button className="sm:hidden">Add new address</Button>
       </DrawerTrigger>
       <DrawerContent
         className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden max-h-[50%]')}
