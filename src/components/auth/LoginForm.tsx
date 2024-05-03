@@ -199,7 +199,6 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                           autoCorrect="off"
                           placeholder="name@example.com"
                           disabled={isPending}
-                          className="shadow-none text-base h-10"
                         />
                       </FormControl>
 
@@ -225,7 +224,6 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                             autoCorrect="off"
                             disabled={isPending}
                             placeholder="password"
-                            className="shadow-none text-base h-10"
                           />
                         </FormControl>
 

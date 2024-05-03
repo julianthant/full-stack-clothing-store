@@ -89,7 +89,6 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                       autoCorrect="off"
                       placeholder="name@example.com"
                       disabled={isPending}
-                      className="shadow-none text-base h-10"
                     />
                   </FormControl>
 
@@ -115,7 +114,6 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                       autoCorrect="off"
                       placeholder="name@example.com"
                       disabled={isPending}
-                      className="shadow-none text-base h-10"
                     />
                   </FormControl>
 
@@ -141,7 +139,6 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                         autoCorrect="off"
                         disabled={isPending}
                         placeholder="password"
-                        className="shadow-none text-base h-10"
                       />
                     </FormControl>
 
