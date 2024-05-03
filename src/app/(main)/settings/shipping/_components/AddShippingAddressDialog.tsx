@@ -85,7 +85,9 @@ export function AddShippingAddressDialog({ user, open, setOpen }: any) {
               description: 'Your shipping address has been successfully added!',
             });
 
-            queryClient.invalidateQueries({ queryKey: ['addresses'] });
+            queryClient.invalidateQueries({
+              queryKey: ['addresses', user?.id],
+            });
             setOpen(false);
           }
 

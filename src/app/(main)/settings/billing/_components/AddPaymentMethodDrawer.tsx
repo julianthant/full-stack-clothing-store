@@ -3,6 +3,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState, useTransition, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -35,6 +36,8 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
 
   const [drawerStyle, setDrawerStyle] = useState({});
   const [key, setKey] = useState('');
+
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
     resolver: zodResolver(cardAddSchema),
@@ -69,6 +72,9 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
             toast({
               title: 'Payment Method',
               description: 'Your card has been successfully added!',
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['payment-methods', user?.id],
             });
             setOpen(false);
           }

@@ -48,6 +48,7 @@ export function ShippingAddressComponent({
   refetch,
   index,
   userName,
+  userId,
 }: any) {
   const [isLoading, startTransition] = useTransition();
 
@@ -77,7 +78,7 @@ export function ShippingAddressComponent({
   const { mutateAsync: removeShippingAddress, isPending } = useMutation({
     mutationFn: () => RemoveAddress(shippingAddress.id),
     onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ['addresses'] });
+      queryClient.invalidateQueries({ queryKey: ['addresses', userId] });
 
       const toast = (await import('@/components/ui/use-toast')).toast;
 
@@ -158,7 +159,12 @@ export function ShippingAddressComponent({
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="country">Country/Region</FormLabel>
+                  <FormLabel
+                    className={cn('font-light tracking-wider')}
+                    htmlFor="country"
+                  >
+                    Country/Region
+                  </FormLabel>
 
                   <Select
                     onValueChange={field.onChange}
@@ -197,7 +203,12 @@ export function ShippingAddressComponent({
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="name">Full Name</FormLabel>
+                  <FormLabel
+                    className={cn('font-light tracking-wider')}
+                    htmlFor="name"
+                  >
+                    Full Name
+                  </FormLabel>
                   <Input
                     id="fullName"
                     placeholder="First and Last name"
@@ -214,7 +225,12 @@ export function ShippingAddressComponent({
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="number">Phone Number</FormLabel>
+                  <FormLabel
+                    className={cn('font-light tracking-wider')}
+                    htmlFor="number"
+                  >
+                    Phone Number
+                  </FormLabel>
                   <Input
                     id="phoneNumber"
                     onChange={field.onChange}
@@ -231,7 +247,12 @@ export function ShippingAddressComponent({
                 name="streetAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="address">Address</FormLabel>
+                    <FormLabel
+                      className={cn('font-light tracking-wider')}
+                      htmlFor="address"
+                    >
+                      Address
+                    </FormLabel>
                     <Input
                       id="streetAddress"
                       placeholder="Street address or P.O. Box"
@@ -269,7 +290,12 @@ export function ShippingAddressComponent({
                 name="city"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel htmlFor="city">City</FormLabel>
+                    <FormLabel
+                      className={cn('font-light tracking-wider')}
+                      htmlFor="city"
+                    >
+                      City
+                    </FormLabel>
                     <Input
                       id="city"
                       onChange={field.onChange}
@@ -286,7 +312,12 @@ export function ShippingAddressComponent({
                   name="states"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel htmlFor="states">States</FormLabel>
+                      <FormLabel
+                        className={cn('font-light tracking-wider')}
+                        htmlFor="states"
+                      >
+                        States
+                      </FormLabel>
 
                       <Select
                         onValueChange={field.onChange}
@@ -326,7 +357,12 @@ export function ShippingAddressComponent({
                 name="zipCode"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel htmlFor="zipcode">ZIP Code</FormLabel>
+                    <FormLabel
+                      className={cn('font-light tracking-wider')}
+                      htmlFor="zipcode"
+                    >
+                      ZIP Code
+                    </FormLabel>
                     <Input
                       id="zipCode"
                       onChange={field.onChange}
@@ -343,7 +379,10 @@ export function ShippingAddressComponent({
               name="deliveryInstructions"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="zipcode">
+                  <FormLabel
+                    className={cn('font-light tracking-wider')}
+                    htmlFor="zipcode"
+                  >
                     Delivery Instructions (optional)
                   </FormLabel>
                   <Input

@@ -17,7 +17,7 @@ export const ShowShippingAddressesComponent = ({ userId, userName }: any) => {
         .get(`/api/addresses/getAll/${userId}`)
         .then((res) => res.data);
     },
-    queryKey: ['payment-methods', userId],
+    queryKey: ['addresses', userId],
     staleTime: Infinity,
   });
 
@@ -34,6 +34,7 @@ export const ShowShippingAddressesComponent = ({ userId, userName }: any) => {
               refetch={refetch}
               index={index}
               userName={userName}
+              userId={userId}
             />
           </Suspense>
         ))}

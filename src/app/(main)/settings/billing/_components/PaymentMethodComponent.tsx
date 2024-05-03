@@ -31,7 +31,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
+export function PaymentMethodComponent({
+  paymentMethod,
+  refetch,
+  userId,
+}: any) {
   const [isLoading, startTransition] = useTransition();
   const [key, setKey] = useState('');
 
@@ -49,7 +53,7 @@ export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
   const { mutateAsync: removePaymentMethod, isPending } = useMutation({
     mutationFn: () => RemovePaymentMethod(paymentMethod.id),
     onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
+      queryClient.invalidateQueries({ queryKey: ['payment-methods', userId] });
 
       const toast = (await import('@/components/ui/use-toast')).toast;
 

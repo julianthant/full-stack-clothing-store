@@ -29,6 +29,7 @@ export const ShowPaymentMethodsComponent = ({ userId }: any) => {
             <PaymentMethodComponent
               paymentMethod={paymentMethod}
               refetch={refetch}
+              userId={userId}
             />
           </Suspense>
         ))}

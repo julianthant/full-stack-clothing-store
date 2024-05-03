@@ -88,7 +88,9 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
               description: 'Your card has been successfully added!',
             });
 
-            queryClient.invalidateQueries({ queryKey: ['addresses'] });
+            queryClient.invalidateQueries({
+              queryKey: ['addresses', user?.id],
+            });
             setOpen(false);
           }
 

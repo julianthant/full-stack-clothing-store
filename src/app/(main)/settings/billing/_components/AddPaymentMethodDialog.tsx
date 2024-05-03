@@ -71,7 +71,9 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
               title: 'Payment Method',
               description: 'Your card has been successfully added!',
             });
-            queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
+            queryClient.invalidateQueries({
+              queryKey: ['payment-methods', user?.id],
+            });
             setOpen(false);
           }
 
