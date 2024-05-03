@@ -257,6 +257,7 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
                         {...field}
                         className={cn('shadow-none')}
                         maxLength={4}
+                        type="number"
                       />
                     </FormControl>
 
