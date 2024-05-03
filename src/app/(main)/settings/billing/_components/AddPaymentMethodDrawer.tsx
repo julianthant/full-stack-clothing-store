@@ -204,7 +204,7 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex px-6 gap-6 pb-2">
+            <div className="sm:flex grid px-6 sm:gap-6 gap-y-2 pb-2">
               <FormField
                 control={form.control}
                 name="cardNumber"
@@ -229,55 +229,58 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="expiryDate"
-                render={({ field }) => (
-                  <FormItem className="space-y-1.5">
-                    <FormLabel className={cn('font-light tracking-wider')}>
-                      Expires
-                    </FormLabel>
+              <div className="flex gap-6">
+                <FormField
+                  control={form.control}
+                  name="expiryDate"
+                  render={({ field }) => (
+                    <FormItem className="space-y-1.5 w-full">
+                      <FormLabel className={cn('font-light tracking-wider')}>
+                        Expires
+                      </FormLabel>
 
-                    <FormControl>
-                      <Input
-                        placeholder="MM / YY"
-                        {...field}
-                        className={cn('shadow-none', {
-                          'text-red-400': expiredDate(field.value),
-                        })}
-                        onInput={expiryDateFormat}
-                        maxLength={7}
-                        onKeyDown={expiryDateFormatDeleted}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          placeholder="MM / YY"
+                          {...field}
+                          className={cn('shadow-none', {
+                            'text-red-400': expiredDate(field.value),
+                          })}
+                          onInput={expiryDateFormat}
+                          maxLength={7}
+                          onKeyDown={expiryDateFormatDeleted}
+                        />
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="cvc"
-                render={({ field }) => (
-                  <FormItem className="space-y-1.5">
-                    <FormLabel className={cn('font-light tracking-wider')}>
-                      CVC
-                    </FormLabel>
+                <FormField
+                  control={form.control}
+                  name="cvc"
+                  render={({ field }) => (
+                    <FormItem className="space-y-1.5 w-full">
+                      <FormLabel className={cn('font-light tracking-wider')}>
+                        CVC
+                      </FormLabel>
 
-                    <FormControl>
-                      <Input
-                        placeholder="CVC"
-                        {...field}
-                        className={cn('shadow-none')}
-                        maxLength={4}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          placeholder="CVC"
+                          {...field}
+                          className={cn('shadow-none')}
+                          maxLength={4}
+                          type="number"
+                        />
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
 
             <FormField
