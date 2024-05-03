@@ -15,7 +15,7 @@ import { FormSuccess } from '../utils/Form.Success';
 import { cn } from '@/lib/utils';
 import { Icons } from '../utils/Icons';
 import { Button } from '../ui/button';
-import { Input, Link } from '@nextui-org/react';
+import { Input } from '../ui/Input';
 
 import {
   Form,
@@ -82,16 +82,14 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
 
                   <FormControl>
                     <Input
-                      key="inside"
                       {...field}
                       type="name"
-                      variant="bordered"
                       autoCapitalize="none"
-                      autoComplete="name"
+                      autoComplete="email"
                       autoCorrect="off"
-                      placeholder="John Doe"
-                      radius="sm"
+                      placeholder="name@example.com"
                       disabled={isPending}
+                      className="shadow-none text-base h-10"
                     />
                   </FormControl>
 
@@ -110,16 +108,14 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
 
                   <FormControl>
                     <Input
-                      key="inside"
                       {...field}
                       type="email"
-                      variant="bordered"
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
                       placeholder="name@example.com"
-                      radius="sm"
                       disabled={isPending}
+                      className="shadow-none text-base h-10"
                     />
                   </FormControl>
 
@@ -135,34 +131,32 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                   <FormLabel className="sr-only" htmlFor="password">
                     Password
                   </FormLabel>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type={isVisible ? 'text' : 'password'}
+                        autoCapitalize="none"
+                        autoComplete="Password"
+                        autoCorrect="off"
+                        disabled={isPending}
+                        placeholder="password"
+                        className="shadow-none text-base h-10"
+                      />
+                    </FormControl>
 
-                  <FormControl>
-                    <Input
-                      key="inside"
-                      {...field}
-                      type={isVisible ? 'text' : 'password'}
-                      variant="bordered"
-                      autoCapitalize="none"
-                      autoComplete="password"
-                      autoCorrect="off"
-                      disabled={isPending}
-                      placeholder="Password"
-                      radius="sm"
-                      endContent={
-                        <button
-                          className="focus:outline-none"
-                          type="button"
-                          onClick={toggleVisibility}
-                        >
-                          {isVisible ? (
-                            <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                          ) : (
-                            <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                          )}
-                        </button>
-                      }
-                    />
-                  </FormControl>
+                    <button
+                      className="absolute top-0 right-0 h-full flex items-center pr-3 focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                    >
+                      {isVisible ? (
+                        <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                      ) : (
+                        <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                      )}
+                    </button>
+                  </div>
 
                   <FormMessage />
                 </FormItem>
