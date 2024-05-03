@@ -44,14 +44,16 @@ export const UpdatePaymentMethod = async (
     return { error: 'Invalid fields!' };
   }
 
-  const { cardHolder, expiryMonth, expiryYear, defaultCard } =
-    validatedFields.data;
+  const { cardHolder, expiryDate, defaultCard } = validatedFields.data;
+
+  const [expiryMonth, expiryYear] = expiryDate.replace(/\s/g, '').split('/');
 
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
 
   const hasExpired =
-    Number(expiryYear) <= currentYear && Number(expiryMonth) < currentMonth;
+    Number(expiryYear) <= Number(currentYear.toString().slice(2, 4)) &&
+    Number(expiryMonth) < currentMonth;
 
   if (hasExpired) {
     return { error: 'Card has expired!' };

@@ -3,6 +3,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cardAddSchema } from '@/schemas';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState, useTransition } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -33,6 +34,8 @@ import {
 export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
   const [wasDelete, setWasDelete] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof cardAddSchema>>({
     resolver: zodResolver(cardAddSchema),
@@ -68,6 +71,7 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
               title: 'Payment Method',
               description: 'Your card has been successfully added!',
             });
+            queryClient.invalidateQueries({ queryKey: ['payment-methods'] });
             setOpen(false);
           }
 

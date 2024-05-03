@@ -38,7 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getCountries } from '@/server/data/getStateAndCountries';
+import { getCountries } from '@/server/data/get-state-and-countries';
 
 export function CountryChangeForm({ UserCountry }: any) {
   const [isPending, startTransition] = useTransition();
@@ -124,6 +124,7 @@ export function CountryChangeForm({ UserCountry }: any) {
                       <SelectGroup>
                         <SelectLabel>Countries</SelectLabel>
                         {isFetched &&
+                          countries.length > 0 &&
                           countries.sort().map((country: string) => (
                             <SelectItem value={country} key={country}>
                               {country}

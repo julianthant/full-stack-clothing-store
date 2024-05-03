@@ -30,7 +30,6 @@ export function QueryProvider({
             refetchOnWindowFocus: false,
             refetchOnMount: false,
             staleTime: Infinity,
-            retry: 0,
           },
         },
       })

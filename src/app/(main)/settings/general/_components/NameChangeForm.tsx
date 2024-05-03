@@ -7,7 +7,7 @@ import { NameSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 
-import { Input } from '@nextui-org/react';
+import { Input } from '@/components/ui/Input';
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
 
@@ -98,15 +98,12 @@ export function NameChangeForm({ UserName }: any) {
 
                   <FormControl>
                     <Input
-                      key="inside"
                       {...field}
                       type="name"
-                      variant="bordered"
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
                       placeholder="John Doe"
-                      radius="sm"
                       disabled={isPending}
                     />
                   </FormControl>

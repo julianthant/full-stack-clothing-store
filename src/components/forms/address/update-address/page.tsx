@@ -1,4 +1,4 @@
-import { getStateAndCountries } from '@/server/data/getStateAndCountries';
+import { getStateAndCountries } from '@/server/data/get-state-and-countries';
 import { UpdateAddressForm } from '../_components/UpdateAddressForm';
 
 const page = async () => {

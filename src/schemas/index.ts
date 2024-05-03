@@ -37,14 +37,9 @@ export const TwoFASchema = z.object({
 });
 
 export const CardEditSchema = z.object({
-  cardHolder: z.string().min(1, { message: 'Name is required' }).optional(),
-  expiryMonth: z
-    .string()
-    .min(1, { message: 'Expiry month is required' })
-    .max(2, { message: 'Invalid month' })
-    .optional(),
-  expiryYear: z.string().length(4, { message: 'Invalid year' }).optional(),
-  defaultCard: z.boolean().default(false).optional(),
+  cardHolder: z.string().min(1, { message: 'Name is required' }),
+  expiryDate: z.string().length(7, { message: 'Invalid expiry date' }),
+  defaultCard: z.boolean().default(false),
 });
 
 export const cardAddSchema = z.object({
@@ -70,7 +65,7 @@ export const addressSchema = z.object({
     .min(1, { message: 'Name is required' })
     .max(32, { message: 'Name is too long' }),
   streetAddress: z.string().min(1, { message: 'Address is required' }),
-  streetOptional: z.string().optional(),
+  streetOptional: z.string(),
   city: z.string().min(1, { message: 'City is required' }),
   country: z.string().min(1, { message: 'Country is required' }),
   states: z.string().optional(),

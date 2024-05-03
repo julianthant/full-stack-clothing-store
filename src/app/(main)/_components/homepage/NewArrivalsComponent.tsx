@@ -1,14 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import { useMediaQuery } from 'react-responsive';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
-import { getClothes } from '@/server/data/getClothes';
+import { getClothes } from '@/server/data/get-clothes';
 import { ClothesComponent } from '@/components/utils/ClothesComponent';
 
 export const NewArrivalsComponent = () => {
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+
   const {
     data: clothes,
     isLoading,
@@ -19,6 +22,10 @@ export const NewArrivalsComponent = () => {
     refetchOnReconnect: false,
   });
 
+  const formattedClothes = isSmallScreen
+    ? clothes.products.slice(0, 6)
+    : clothes.products;
+
   return (
     <div className="main-container lg:space-y-10 space-y-7 flex flex-col lg:mt-5">
       <h1 className="lg:text-3xl md:text-4xl text-3xl font-bold text-center tracking-wide">
@@ -27,7 +34,7 @@ export const NewArrivalsComponent = () => {
       <div className="grid lg:grid-cols-4 md:grid-cols-3  min-[400px]:grid-cols-2 gap-4">
         {!isLoading &&
           !isError &&
-          clothes.products.map((product: any) => (
+          formattedClothes.map((product: any) => (
             <ClothesComponent
               key={product.id}
               ID={product.id}

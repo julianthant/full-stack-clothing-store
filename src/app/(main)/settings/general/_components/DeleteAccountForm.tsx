@@ -52,7 +52,7 @@ export const DeleteAccountForm = () => {
   };
 
   return (
-    <Card className="border-red-400 ">
+    <Card className="border-red-400">
       <CardHeader>
         <CardTitle>Delete Account</CardTitle>
         <CardDescription>

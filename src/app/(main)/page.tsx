@@ -11,7 +11,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { getClothes } from '@/server/data/getClothes';
+import { getClothes } from '@/server/data/get-clothes';
 
 export default async function Home() {
   const queryClient = new QueryClient();

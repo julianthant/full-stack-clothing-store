@@ -98,7 +98,7 @@ export function GenderChangeForm({ UserGender }: any) {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only" htmlFor="country">
+                  <FormLabel className="sr-only" htmlFor="gender">
                     Gender
                   </FormLabel>
 
@@ -108,7 +108,7 @@ export function GenderChangeForm({ UserGender }: any) {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select your country" />
+                        <SelectValue placeholder="Select your gender" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

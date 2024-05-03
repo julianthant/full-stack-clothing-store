@@ -6,6 +6,8 @@ import { db } from '@/server/database/db';
 import { currentUser } from '@/lib/server-auth';
 
 export const RemovePaymentMethod = async (paymentMethodId: string) => {
+  console.log(paymentMethodId);
+
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -21,6 +23,10 @@ export const RemovePaymentMethod = async (paymentMethodId: string) => {
   const paymentMethod = await getPaymentMethodById(paymentMethodId);
 
   if (!paymentMethod) {
+    throw Error;
+  }
+
+  if (paymentMethod.userId !== dbUser.id) {
     throw Error;
   }
 

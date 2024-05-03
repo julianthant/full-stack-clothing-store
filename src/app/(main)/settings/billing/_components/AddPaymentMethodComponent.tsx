@@ -45,9 +45,9 @@ export const AddPaymentMethodComponent = ({ user }: any) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Payment Method</CardTitle>
+        <CardTitle>Payment Methods</CardTitle>
         <CardDescription>
-          You have not yet added any cards. Click the button below to add one.
+          To add a new payment method, please click the button below.
         </CardDescription>
       </CardHeader>
       <CardFooter

@@ -1,3 +1,5 @@
+'use server';
+
 import { cache } from 'react';
 
 export const getStateAndCountries = cache(async () => {
@@ -19,11 +21,11 @@ export const getStateAndCountries = cache(async () => {
   return { countryNames, states };
 });
 
-export const getCountries = async () => {
+export const getCountries = cache(async () => {
   const response = await fetch('https://restcountries.com/v3.1/all');
   const countriesRaw = await response.json();
 
   return countriesRaw.map(
     (country: { name: { common: string } }) => country.name.common
   );
-};
+});

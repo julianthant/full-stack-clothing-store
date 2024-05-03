@@ -1,10 +1,7 @@
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 import { currentUser } from '@/lib/server-auth';
 import { SettingsCardSkeleton } from '@/components/skeleton/SettingsCardsSkeleton';
-
-import { ChevronLeft } from 'lucide-react';
 
 const AvatarChangeForm = dynamic(
   () =>
@@ -56,35 +53,24 @@ const DeleteAccountForm = dynamic(
   { ssr: false, loading: () => <SettingsCardSkeleton /> }
 );
 
-const page = async () => {
+export const SettingsDesktopPage = async () => {
   const user = await currentUser();
 
   return (
-    <div className="space-y-6">
-      <Link
-        className="md:hidden py-6 flex items-center gap-2 border-b px-10 tracking-wide font-medium"
-        href="/settings"
-      >
-        <ChevronLeft className="w-5 h-5" /> <span>Settings</span>
-      </Link>
+    <div className="md:grid gap-6 hidden">
+      <AvatarChangeForm UserAvatar={user?.image} />
 
-      <div className="grid gap-6 max-md:px-10">
-        <AvatarChangeForm UserAvatar={user?.image} />
+      <NameChangeForm UserName={user?.name} />
 
-        <NameChangeForm UserName={user?.name} />
+      <CountryChangeForm UserCountry={user?.country} />
 
-        <CountryChangeForm UserCountry={user?.country} />
+      <GenderChangeForm UserGender={user?.gender} />
 
-        <GenderChangeForm UserGender={user?.gender} />
+      <DOBChangeForm UserDOB={user?.dateOfBirth} />
 
-        <DOBChangeForm UserDOB={user?.dateOfBirth} />
+      <PhoneNumberChangeForm UserPhoneNumber={user?.phoneNumber} />
 
-        <PhoneNumberChangeForm UserPhoneNumber={user?.phoneNumber} />
-
-        <DeleteAccountForm />
-      </div>
+      <DeleteAccountForm />
     </div>
   );
 };
-
-export default page;

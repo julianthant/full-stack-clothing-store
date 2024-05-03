@@ -97,11 +97,11 @@ export function PhoneNumberChangeForm({ UserPhoneNumber }: any) {
 
                   <FormControl>
                     <Input
-                      key="inside"
                       {...field}
-                      autoComplete="phone-number"
+                      autoCapitalize="none"
+                      autoComplete="number"
                       autoCorrect="off"
-                      placeholder="+1 (000)-000-0000"
+                      placeholder="+1 (123) 456-7890"
                       disabled={isPending}
                     />
                   </FormControl>

@@ -1,3 +1,5 @@
+'use server';
+
 import axios from 'axios';
 
 export const getClothes = async (
@@ -21,10 +23,15 @@ export const getClothes = async (
       lang: 'en-US',
     },
     headers: {
-      'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY_1,
       'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
     },
   };
 
-  return await axios.request(options).then((res) => res.data);
+  try {
+    return await axios.request(options).then((res) => res.data);
+  } catch (error) {
+    options.headers['X-RapidAPI-Key'] = process.env.RAPIDAPI_KEY_2;
+    return await axios.request(options).then((res) => res.data);
+  }
 };

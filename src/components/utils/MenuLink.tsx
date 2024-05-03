@@ -16,7 +16,7 @@ export const MenuLink = ({ title }: MenuLinkProps) => {
 
   return (
     <Link
-      className={cn({
+      className={cn('hover:bg-muted px-3 py-2.5 rounded-lg', {
         'font-semibold text-primary': link === pathname,
       })}
       href={link}
