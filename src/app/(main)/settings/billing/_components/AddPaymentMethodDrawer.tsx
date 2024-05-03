@@ -32,6 +32,8 @@ import {
 
 export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
+
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [drawerStyle, setDrawerStyle] = useState({});
   const [key, setKey] = useState('');
 
@@ -173,21 +175,38 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
 
   useEffect(() => {
     const handleResize = () => {
-      const drawerContent = document.getElementById('drawer-content');
-      if (drawerContent) {
-        const viewportHeight = window.innerHeight;
-        const drawerHeight = drawerContent.offsetHeight;
-        const bottomSpace = viewportHeight - drawerHeight;
-        setDrawerStyle({ bottom: bottomSpace > 0 ? '0' : `${bottomSpace}px` });
-      }
+      const viewportHeight = window.innerHeight;
+      const drawerHeight =
+        document.getElementById('drawer-content')?.offsetHeight || 0;
+      const bottomSpace = viewportHeight - drawerHeight;
+      const bottom = isKeyboardVisible
+        ? '0'
+        : bottomSpace > 0
+        ? '0'
+        : `${bottomSpace}px`;
+      setDrawerStyle({ bottom });
     };
+
     handleResize();
 
     window.addEventListener('resize', handleResize);
+    window.addEventListener('keyboardDidShow', () =>
+      setIsKeyboardVisible(true)
+    );
+    window.addEventListener('keyboardDidHide', () =>
+      setIsKeyboardVisible(false)
+    );
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('keyboardDidShow', () =>
+        setIsKeyboardVisible(true)
+      );
+      window.removeEventListener('keyboardDidHide', () =>
+        setIsKeyboardVisible(false)
+      );
     };
-  }, []);
+  }, [isKeyboardVisible]);
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
