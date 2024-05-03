@@ -137,8 +137,12 @@ export function PaymentMethodComponent({ paymentMethod, refetch }: any) {
       value = value.slice(0, -1);
     }
 
-    if (value.length === 5 && wasDelete) {
-      value = '0';
+    if (value.length === 4) {
+      value = value.slice(0, 2);
+    }
+
+    if (value.length === 3 && wasDelete) {
+      value = value.slice(0, 2);
     }
 
     if (value.length === 3 && !wasDelete && !wasSlash) {
