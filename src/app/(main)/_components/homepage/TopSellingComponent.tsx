@@ -23,8 +23,8 @@ export const TopSellingComponent = () => {
   });
 
   const formattedClothes = isSmallScreen
-    ? clothes.products.slice(0, 6)
-    : clothes.products;
+    ? clothes?.products.slice(0, 6)
+    : clothes?.products;
 
   return (
     <div className="main-container lg:space-y-10 space-y-7 flex flex-col lg:mt-5">
@@ -34,7 +34,7 @@ export const TopSellingComponent = () => {
       <div className="grid lg:grid-cols-4 md:grid-cols-3 min-[400px]:grid-cols-2 gap-4">
         {!isLoading &&
           !isError &&
-          formattedClothes.map((product: any) => (
+          formattedClothes?.map((product: any) => (
             <ClothesComponent
               key={product.id}
               ID={product.id}
