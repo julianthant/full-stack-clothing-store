@@ -20,7 +20,7 @@ import { FormSuccess } from '../utils/Form.Success';
 import { cn } from '@/lib/utils';
 import { Icons } from '../utils/Icons';
 import { Button } from '../ui/button';
-import { Input } from '@nextui-org/input';
+import { Input } from '../ui/Input';
 
 import {
   Form,
@@ -192,16 +192,14 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
                       <FormControl>
                         <Input
-                          key="inside"
                           {...field}
                           type="email"
-                          variant="bordered"
                           autoCapitalize="none"
                           autoComplete="email"
                           autoCorrect="off"
                           placeholder="name@example.com"
-                          radius="sm"
                           disabled={isPending}
+                          className="shadow-none"
                         />
                       </FormControl>
 
@@ -217,34 +215,32 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                       <FormLabel className="sr-only" htmlFor="password">
                         Password
                       </FormLabel>
+                      <div className="relative">
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type={isVisible ? 'text' : 'password'}
+                            autoCapitalize="none"
+                            autoComplete="Password"
+                            autoCorrect="off"
+                            disabled={isPending}
+                            placeholder="password"
+                            className="shadow-none"
+                          />
+                        </FormControl>
 
-                      <FormControl>
-                        <Input
-                          key="inside"
-                          {...field}
-                          type={isVisible ? 'text' : 'password'}
-                          variant="bordered"
-                          autoCapitalize="none"
-                          autoComplete="Password"
-                          autoCorrect="off"
-                          disabled={isPending}
-                          placeholder="password"
-                          radius="sm"
-                          endContent={
-                            <button
-                              className="focus:outline-none"
-                              type="button"
-                              onClick={toggleVisibility}
-                            >
-                              {isVisible ? (
-                                <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                              ) : (
-                                <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                              )}
-                            </button>
-                          }
-                        />
-                      </FormControl>
+                        <button
+                          className="absolute top-0 right-0 h-full flex items-center pr-3 focus:outline-none"
+                          type="button"
+                          onClick={toggleVisibility}
+                        >
+                          {isVisible ? (
+                            <Icons.eyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <Icons.eyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
+                      </div>
 
                       <FormMessage />
                     </FormItem>

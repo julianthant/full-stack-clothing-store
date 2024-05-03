@@ -8,7 +8,7 @@ import { ChevronLeft } from 'lucide-react';
 
 const AddPaymentMethodComponent = dynamic(
   () =>
-    import('../billing/_components/AddPaymentMethodComponent').then(
+    import('./_components/AddPaymentMethodComponent').then(
       (mod) => mod.AddPaymentMethodComponent
     ),
   { ssr: false, loading: () => <SettingsCardSkeleton /> }
@@ -16,7 +16,7 @@ const AddPaymentMethodComponent = dynamic(
 
 const ShowPaymentMethodsComponent = dynamic(
   () =>
-    import('../billing/_components/ShowPaymentMethodsComponent').then(
+    import('./_components/ShowPaymentMethodsComponent').then(
       (mod) => mod.ShowPaymentMethodsComponent
     ),
   { ssr: false, loading: () => <SettingsCardSkeleton /> }

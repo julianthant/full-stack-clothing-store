@@ -11,21 +11,23 @@ export const getStateAndCountries = cache(async () => {
   const countriesRaw = await countriesResponse.json();
   const statesRaw = await statesResponse.json();
 
-  const countryNames = countriesRaw.map(
+  const countries: string[] = countriesRaw.map(
     (country: { name: { common: string } }) => country.name.common
   );
 
   statesRaw.shift();
-  const states = statesRaw.map((stateData: string) => stateData[0]);
+  const states: string[] = statesRaw.map((stateData: string) => stateData[0]);
 
-  return { countryNames, states };
+  return { countries, states };
 });
 
 export const getCountries = cache(async () => {
   const response = await fetch('https://restcountries.com/v3.1/all');
   const countriesRaw = await response.json();
 
-  return countriesRaw.map(
+  const countries: string[] = countriesRaw.map(
     (country: { name: { common: string } }) => country.name.common
   );
+
+  return countries;
 });
