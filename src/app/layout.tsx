@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${Satoshi.className} min-h-dvh`}>
+      <body className={`antialiased ${Satoshi.className} min-h-screen`}>
         <Providers>
           <QueryProvider>
             {children}
