@@ -1,7 +1,5 @@
 'use client';
 
-import axios from 'axios';
-
 import { useQuery } from '@tanstack/react-query';
 import { ClothesComponent } from '../utils/ClothesComponent';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -34,6 +32,7 @@ import { Check, ChevronDown } from 'lucide-react';
 import { CommandList } from 'cmdk';
 import { Icons } from '../utils/Icons';
 import { FilterClothes } from './FilterClothes';
+import { getClothes } from '@/server/data/get-clothes';
 
 export const ClothesGalleryComponent = () => {
   const router = useRouter();
@@ -55,30 +54,10 @@ export const ClothesGalleryComponent = () => {
     isFetching,
     isRefetching,
   } = useQuery({
-    queryFn: async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://asos2.p.rapidapi.com/products/v2/list',
-        params: {
-          store: 'US',
-          offset: offset,
-          categoryId: cid,
-          limit: per_page,
-          country: 'US',
-          sort: currentSort,
-          currency: 'USD',
-          sizeSchema: 'US',
-          lang: 'en-US',
-        },
-        headers: {
-          'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
-          'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
-        },
-      };
-
-      return axios.request(options).then((res) => res.data);
-    },
+    queryFn: async () =>
+      await getClothes(offset, parseInt(cid), parseInt(cid), currentSort),
     queryKey: ['clothes'],
+    refetchOnReconnect: false,
   });
 
   useEffect(() => {

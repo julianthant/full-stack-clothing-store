@@ -1,7 +1,6 @@
 'use server';
 
 import * as z from 'zod';
-import axios from 'axios';
 import bcrypt from 'bcryptjs';
 
 import { db } from '@/server/database/db';
@@ -10,6 +9,7 @@ import { getPaymentMethodsByUserId } from '../../data/get-payment-method';
 
 import { currentUser } from '@/lib/server-auth';
 import { cardAddSchema } from '@/schemas';
+import { GetCardBin } from './get-card-bin';
 
 export const AddPaymentMethod = async (
   values: z.infer<typeof cardAddSchema>
@@ -75,23 +75,15 @@ export const AddPaymentMethod = async (
     return { error: 'Invalid CVC!' };
   }
 
-  const cardOptions = {
-    method: 'POST',
-    url: 'https://bin-ip-checker.p.rapidapi.com/',
-    params: { bin: formattedCardNumber.slice(0, 6) },
-    headers: {
-      'content-type': 'application/json',
-      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY_1,
-      'X-RapidAPI-Host': 'bin-ip-checker.p.rapidapi.com',
-    },
-    data: { bin: formattedCardNumber.slice(0, 6) },
-  };
+  const cardInfo = await GetCardBin(formattedCardNumber.slice(0, 6));
 
-  const cardInfo = await axios.request(cardOptions);
+  if (!cardInfo) {
+    return { error: 'Invalid card number!' };
+  }
 
-  const bankName = cardInfo.data.BIN.issuer.name;
-  const cardScheme = cardInfo.data.BIN.scheme;
-  const cardType = cardInfo.data.BIN.type || 'Debit';
+  const bankName = cardInfo.data.BIN.issuer.name ?? 'Unknown';
+  const cardScheme = cardInfo.data.BIN.scheme ?? 'Unknown';
+  const cardType = cardInfo.data.BIN.type ?? 'Debit';
 
   const hashedCard = await bcrypt.hash(formattedCardNumber, 10);
   const hashedCVC = await bcrypt.hash(cvc, 10);

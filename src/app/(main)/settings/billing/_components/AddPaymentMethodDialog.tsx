@@ -33,7 +33,7 @@ import {
 
 export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
-  const [wasDelete, setWasDelete] = useState(false);
+  const [key, setKey] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -110,18 +110,33 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
   const expiryDateFormatDeleted = (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    setWasDelete(event.key === 'Backspace');
+    setKey(event.key);
   };
 
   const expiryDateFormat = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
+    const wasDelete = key === 'Backspace';
+    const wasSlash = key === '/';
+    const lastChar = value.slice(-1);
 
-    if (value.length === 5 && wasDelete) {
-      value = value.slice(0, -3);
+    // If the last character is not a number or a slash, remove it
+    if (
+      !/^\d$/.test(lastChar) ||
+      (lastChar === '/' && (value.length !== 2 || wasDelete))
+    ) {
+      value = value.slice(0, -1);
     }
 
-    if (value.length === 3 && !wasDelete) {
+    if (value.length === 5 && wasDelete) {
+      value = '0';
+    }
+
+    if (value.length === 3 && !wasDelete && !wasSlash) {
       value = value.slice(0, 2) + ' / ' + value.slice(2);
+    }
+
+    if (value.length === 2 && wasSlash) {
+      value = value.slice(0, 2) + ' / ';
     }
 
     if (value.length === 1 && Number(value) > 1) {
@@ -131,14 +146,13 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
     } else if (
       value.length === 2 &&
       Number(value) >= 10 &&
-      Number(value) <= 12
+      Number(value) <= 12 &&
+      !wasDelete
     ) {
-      value = `${value} / `;
+      value = `${value.slice(0, 2)} / `;
     }
 
     event.target.value = value;
-
-    setWasDelete(false);
   };
 
   const expiredDate = (expiryDate: string) => {
