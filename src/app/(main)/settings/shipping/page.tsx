@@ -14,6 +14,14 @@ const AddShippingAddressComponent = dynamic(
   { ssr: false, loading: () => <SettingsCardSkeleton /> }
 );
 
+const ShowShippingAddressesComponent = dynamic(
+  () =>
+    import('./_components/ShowShippingAddressesComponent').then(
+      (mod) => mod.ShowShippingAddressesComponent
+    ),
+  { ssr: false, loading: () => <SettingsCardSkeleton /> }
+);
+
 const page = async () => {
   const user = await currentUser();
 
@@ -28,6 +36,10 @@ const page = async () => {
 
       <div className="max-md:px-10 space-y-4">
         <AddShippingAddressComponent user={user} />
+        <ShowShippingAddressesComponent
+          userId={user?.id}
+          userName={user?.name}
+        />
       </div>
     </div>
   );

@@ -298,7 +298,7 @@ export function AddShippingAddressDialog({ user, open, setOpen }: any) {
                           </FormControl>
                           <SelectContent>
                             <SelectGroup>
-                              <SelectLabel>Countries</SelectLabel>
+                              <SelectLabel>States</SelectLabel>
                               {isFetched &&
                                 data?.states &&
                                 data.states
