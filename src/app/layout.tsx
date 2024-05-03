@@ -1,7 +1,7 @@
 import './globals.css';
 
 import dynamic from 'next/dynamic';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { Satoshi } from './fonts/fonts';
 import { Providers, QueryProvider } from './providers';
@@ -18,7 +18,12 @@ export const metadata: Metadata = {
     apple: ['/favicon.ico'],
     shortcut: ['./favicon.ico'],
   },
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
