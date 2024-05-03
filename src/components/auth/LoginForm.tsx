@@ -199,7 +199,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                           autoCorrect="off"
                           placeholder="name@example.com"
                           disabled={isPending}
-                          className="shadow-none"
+                          className="shadow-none text-base h-10"
                         />
                       </FormControl>
 
@@ -225,7 +225,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                             autoCorrect="off"
                             disabled={isPending}
                             placeholder="password"
-                            className="shadow-none"
+                            className="shadow-none text-base h-10"
                           />
                         </FormControl>
 
@@ -260,7 +260,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                 Forgot Password?
               </NextLink>
 
-              <Button disabled={isPending} className="mt-1" type="submit">
+              <Button disabled={isPending} className="mt-1 h-10" type="submit">
                 {isPending && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
@@ -288,7 +288,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
           variant="outline"
           type="button"
           disabled={isPending}
-          className="w-full"
+          className="w-full h-10"
           onClick={() => {
             startTransition(() => {
               SignIn('google');
@@ -307,7 +307,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
           variant="outline"
           type="button"
           disabled={isPending}
-          className="w-full"
+          className="w-full h-10"
           onClick={() => {
             startTransition(() => {
               SignIn('facebook');
