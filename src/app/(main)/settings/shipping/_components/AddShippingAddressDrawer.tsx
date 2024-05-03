@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addressSchema } from '@/schemas';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTransition } from 'react';
+import { useTransition, useState, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/Input';
@@ -45,6 +45,7 @@ import { getStateAndCountries } from '@/server/data/get-state-and-countries';
 
 export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
+  const [drawerStyle, setDrawerStyle] = useState({});
 
   const queryClient = useQueryClient();
 
@@ -112,6 +113,25 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
         });
     });
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const drawerContent = document.getElementById('drawer-content');
+      if (drawerContent) {
+        const viewportHeight = window.innerHeight;
+        const drawerHeight = drawerContent.offsetHeight;
+        const bottomSpace = viewportHeight - drawerHeight;
+        setDrawerStyle({ bottom: bottomSpace > 0 ? '0' : `${bottomSpace}px` });
+      }
+    };
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <Drawer open={open} onOpenChange={setOpen} preventScrollRestoration>
       <DrawerTrigger asChild>
@@ -119,6 +139,8 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
       </DrawerTrigger>
       <DrawerContent
         className={cn('px-0 pt-6 pb-0 gap-0 sm:hidden max-h-[50%]')}
+        id="drawer-content"
+        style={drawerStyle}
       >
         <div className="overflow-x-auto scroll-smooth">
           <DrawerHeader className="px-6 pb-6">
