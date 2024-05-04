@@ -2,27 +2,14 @@
 
 import * as z from 'zod';
 
-import { useForm } from 'react-hook-form';
-import { PasswordSchema } from '@/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
+import { PasswordSchema } from '@/schemas';
 
-import { Input } from '@/components/ui/Input';
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
 
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-
-import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,

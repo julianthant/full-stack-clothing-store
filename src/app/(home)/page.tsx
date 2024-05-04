@@ -1,8 +1,8 @@
-import { BrandsComponent } from './_components/homepage/BrandsComponent';
-import { HeadingComponent } from './_components/homepage/HeadingComponent';
-import { DressStyleComponent } from './_components/homepage/DressStyleComponent';
-import { NewArrivalsComponent } from './_components/homepage/NewArrivalsComponent';
-import { TopSellingComponent } from './_components/homepage/TopSellingComponent';
+import { BrandsComponent } from './_components/homepage-components/BrandsComponent';
+import { HeadingComponent } from './_components/homepage-components/HeadingComponent';
+import { DressStyleComponent } from './_components/homepage-components/DressStyleComponent';
+import { NewArrivalsComponent } from './_components/homepage-components/NewArrivalsComponent';
+import { TopSellingComponent } from './_components/homepage-components/TopSellingComponent';
 
 import { Divider } from '@nextui-org/react';
 import {

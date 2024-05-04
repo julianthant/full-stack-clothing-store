@@ -1,10 +1,9 @@
+import Link from 'next/link';
 import Image from 'next/image';
 
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
 import { Divider } from '@nextui-org/react';
-
-import Link from 'next/link';
 import { IntegralCF } from '@/fonts/fonts.config';
 
 export const HeadingComponent = () => {

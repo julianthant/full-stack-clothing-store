@@ -1,9 +1,9 @@
 import { currentUser } from '@/lib/server-auth';
 import { FC, ReactNode } from 'react';
 
-import { Footer } from './_components/main/Footer';
-import { NavbarPages } from './_components/main/NavbarPages';
-import { NavbarComponent } from './_components/main/Navbar';
+import { Footer } from './_components/main-layout-components/Footer';
+import { NavbarPages } from './_components/main-layout-components/NavbarPages';
+import { NavbarComponent } from './_components/main-layout-components/Navbar';
 
 interface LayoutProps {
   children: ReactNode;

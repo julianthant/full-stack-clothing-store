@@ -8,15 +8,13 @@ import { ChevronLeft } from 'lucide-react';
 
 const EmailResetForm = dynamic(
   () =>
-    import('../../forms/_components/EmailResetForm').then(
-      (mod) => mod.EmailResetForm
-    ),
+    import('./_components/EmailResetForm').then((mod) => mod.EmailResetForm),
   { ssr: false, loading: () => <SettingsCardSkeleton /> }
 );
 
 const PasswordResetForm = dynamic(
   () =>
-    import('../../forms/_components/PasswordResetForm').then(
+    import('./_components/PasswordResetForm').then(
       (mod) => mod.PasswordResetForm
     ),
   { ssr: false, loading: () => <SettingsCardSkeleton /> }
