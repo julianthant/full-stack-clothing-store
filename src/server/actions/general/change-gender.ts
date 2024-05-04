@@ -3,13 +3,13 @@
 import * as z from 'zod';
 
 import { db } from '@/server/database/db';
-import { genderSchema } from '@/schemas';
+import { GenderSchema } from '@/schemas';
 import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { unstable_update } from '@/lib/auth';
 
-export const ChangeGender = async (values: z.infer<typeof genderSchema>) => {
+export const ChangeGender = async (values: z.infer<typeof GenderSchema>) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -22,7 +22,7 @@ export const ChangeGender = async (values: z.infer<typeof genderSchema>) => {
     return { error: 'Unauthorized' };
   }
 
-  const validatedFields = genderSchema.safeParse(values);
+  const validatedFields = GenderSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Invalid gender!' };

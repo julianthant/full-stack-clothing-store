@@ -6,9 +6,9 @@ import { db } from '../../database/db';
 import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
-import { addressSchema } from '@/schemas';
+import { AddressSchema } from '@/schemas';
 
-export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
+export const AddAddress = async (values: z.infer<typeof AddressSchema>) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -21,7 +21,7 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     return { error: 'Unauthorized' };
   }
 
-  const validatedFields = addressSchema.safeParse(values);
+  const validatedFields = AddressSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Invalid fields!' };

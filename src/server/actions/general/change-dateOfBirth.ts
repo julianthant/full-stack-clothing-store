@@ -3,13 +3,13 @@
 import * as z from 'zod';
 
 import { db } from '@/server/database/db';
-import { dateSchema } from '@/schemas';
+import { DateSchema } from '@/schemas';
 import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { unstable_update } from '@/lib/auth';
 
-export const ChangeDOB = async (values: z.infer<typeof dateSchema>) => {
+export const ChangeDOB = async (values: z.infer<typeof DateSchema>) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -22,7 +22,7 @@ export const ChangeDOB = async (values: z.infer<typeof dateSchema>) => {
     return { error: 'Unauthorized' };
   }
 
-  const validatedFields = dateSchema.safeParse(values);
+  const validatedFields = DateSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Invalid name!' };

@@ -3,7 +3,7 @@
 import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
-import { dateSchema } from '@/schemas';
+import { DateSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 
@@ -41,14 +41,14 @@ import {
 export function DOBChangeForm({ UserDOB }: any) {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof dateSchema>>({
-    resolver: zodResolver(dateSchema),
+  const form = useForm<z.infer<typeof DateSchema>>({
+    resolver: zodResolver(DateSchema),
     defaultValues: {
       date: new Date(UserDOB),
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof dateSchema>) => {
+  const onSubmit = async (values: z.infer<typeof DateSchema>) => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangeDOB = await import(

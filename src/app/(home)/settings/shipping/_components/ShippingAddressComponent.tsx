@@ -6,7 +6,7 @@ import { useTransition } from 'react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addressSchema } from '@/schemas';
+import { AddressSchema } from '@/schemas';
 import { RemoveAddress } from '@/server/actions/address/remove-address';
 import { getStateAndCountries } from '@/server/get-user-data/get-state-and-countries';
 
@@ -59,8 +59,8 @@ export function ShippingAddressComponent({
     queryKey: ['countries-and-states'],
   });
 
-  const form = useForm<z.infer<typeof addressSchema>>({
-    resolver: zodResolver(addressSchema),
+  const form = useForm<z.infer<typeof AddressSchema>>({
+    resolver: zodResolver(AddressSchema),
     defaultValues: {
       country: shippingAddress?.country,
       fullName: shippingAddress?.fullName,
@@ -100,7 +100,7 @@ export function ShippingAddressComponent({
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof addressSchema>) => {
+  const onSubmit = async (values: z.infer<typeof AddressSchema>) => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const UpdateAddress = await import(

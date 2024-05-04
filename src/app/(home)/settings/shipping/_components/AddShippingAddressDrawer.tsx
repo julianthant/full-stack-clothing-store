@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addressSchema } from '@/schemas';
+import { AddressSchema } from '@/schemas';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTransition, useState, useEffect } from 'react';
 
@@ -56,8 +56,8 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
 
   const { countries, states } = data || {};
 
-  const form = useForm<z.infer<typeof addressSchema>>({
-    resolver: zodResolver(addressSchema),
+  const form = useForm<z.infer<typeof AddressSchema>>({
+    resolver: zodResolver(AddressSchema),
     defaultValues: {
       fullName: '',
       streetAddress: '',
@@ -72,7 +72,7 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof addressSchema>) => {
+  const onSubmit = async (values: z.infer<typeof AddressSchema>) => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const AddAddress = (

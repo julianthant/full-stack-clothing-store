@@ -8,11 +8,11 @@ import { getUserById } from '@/server/get-user-data/user';
 import { getPaymentMethodsByUserId } from '../../get-user-data/get-payment-method';
 
 import { currentUser } from '@/lib/server-auth';
-import { cardAddSchema } from '@/schemas';
+import { CardAddSchema } from '@/schemas';
 import { GetCardBin } from './get-card-bin';
 
 export const AddPaymentMethod = async (
-  values: z.infer<typeof cardAddSchema>
+  values: z.infer<typeof CardAddSchema>
 ) => {
   const user = await currentUser();
 
@@ -26,7 +26,7 @@ export const AddPaymentMethod = async (
     return { error: 'Unauthorized' };
   }
 
-  const validatedFields = cardAddSchema.safeParse(values);
+  const validatedFields = CardAddSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Invalid fields!' };

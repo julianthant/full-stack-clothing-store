@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cardAddSchema } from '@/schemas';
+import { CardAddSchema } from '@/schemas';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState, useTransition, useEffect } from 'react';
 
@@ -39,8 +39,8 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
 
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof cardAddSchema>>({
-    resolver: zodResolver(cardAddSchema),
+  const form = useForm<z.infer<typeof CardAddSchema>>({
+    resolver: zodResolver(CardAddSchema),
     defaultValues: {
       cardNumber: '',
       expiryDate: '',
@@ -49,7 +49,7 @@ export function AddPaymentMethodDrawer({ user, open, setOpen }: any) {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof cardAddSchema>) => {
+  const onSubmit = async (values: z.infer<typeof CardAddSchema>) => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const AddPaymentMethod = (

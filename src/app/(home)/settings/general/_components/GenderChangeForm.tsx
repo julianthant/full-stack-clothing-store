@@ -4,7 +4,7 @@ import * as z from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { genderSchema } from '@/schemas';
+import { GenderSchema } from '@/schemas';
 import { useTransition } from 'react';
 
 import { Icons } from '@/components/utils/Icons';
@@ -41,14 +41,14 @@ import {
 export function GenderChangeForm({ UserGender }: any) {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof genderSchema>>({
-    resolver: zodResolver(genderSchema),
+  const form = useForm<z.infer<typeof GenderSchema>>({
+    resolver: zodResolver(GenderSchema),
     defaultValues: {
       gender: UserGender,
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof genderSchema>) => {
+  const onSubmit = async (values: z.infer<typeof GenderSchema>) => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangeGender = await import(

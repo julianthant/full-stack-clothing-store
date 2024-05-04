@@ -6,11 +6,11 @@ import { db } from '@/server/database/db';
 import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
-import { addressSchema } from '@/schemas';
+import { AddressSchema } from '@/schemas';
 import { getAddressById } from '@/server/get-user-data/get-address';
 
 export const UpdateAddress = async (
-  values: z.infer<typeof addressSchema>,
+  values: z.infer<typeof AddressSchema>,
   id: string
 ) => {
   const user = await currentUser();
@@ -35,7 +35,7 @@ export const UpdateAddress = async (
     return { error: 'Invalid Address ID!' };
   }
 
-  const validatedFields = addressSchema.safeParse(values);
+  const validatedFields = AddressSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Invalid fields!' };
