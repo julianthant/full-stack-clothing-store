@@ -124,8 +124,7 @@ export function CountryChangeForm({ UserCountry }: any) {
                       <SelectGroup>
                         <SelectLabel>Countries</SelectLabel>
                         {isFetched &&
-                          countries.length > 0 &&
-                          countries.sort().map((country: string) => (
+                          countries?.sort()?.map((country: string) => (
                             <SelectItem value={country} key={country}>
                               {country}
                             </SelectItem>

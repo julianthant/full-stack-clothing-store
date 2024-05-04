@@ -42,12 +42,12 @@ export function EmailResetForm({ UserEmail, UserIsOAuth }: any) {
   const onSubmit = async (values: z.infer<typeof EmailSchema>) => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
-    const SendEmailChangeToken = await import(
+    const SendEmailResetToken = await import(
       '@/server/actions/security/new-email'
-    ).then((mod) => mod.SendEmailChangeToken);
+    ).then((mod) => mod.SendEmailResetToken);
 
     startTransition(() => {
-      SendEmailChangeToken(values)
+      SendEmailResetToken(values)
         .then((data) => {
           if (data.success) {
             toast({
