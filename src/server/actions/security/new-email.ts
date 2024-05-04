@@ -12,7 +12,7 @@ import { generateVerificationToken } from '@/lib/token';
 import { sendLoggedInVerficationEmail } from '@/lib/mail';
 import { getAccountByUserId } from '@/server/get-user-data/account';
 
-export const SendEmailChangeToken = async (
+export const SendEmailResetToken = async (
   values: z.infer<typeof EmailSchema>
 ) => {
   const user = await currentUser();

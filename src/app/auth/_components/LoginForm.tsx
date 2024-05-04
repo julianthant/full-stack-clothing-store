@@ -14,13 +14,13 @@ import { Login } from '@/server/actions/login-register-auth/login';
 import { SignIn } from '@/server/actions/login-register-auth/oauth-login';
 import { LoginSchema } from '@/schemas';
 
-import { FormError } from '../../../components/utils/FormError';
-import { FormSuccess } from '../../../components/utils/Form.Success';
+import { FormError } from '@/components/utils/FormError';
+import { FormSuccess } from '@/components/utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../components/utils/Icons';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/Input';
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/Input';
 
 import {
   Form,

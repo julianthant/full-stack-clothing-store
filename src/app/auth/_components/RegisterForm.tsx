@@ -9,13 +9,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Register } from '@/server/actions/login-register-auth/register';
 import { RegisterSchema } from '@/schemas';
 
-import { FormError } from '../../../components/utils/FormError';
-import { FormSuccess } from '../../../components/utils/Form.Success';
+import { FormError } from '@/components/utils/FormError';
+import { FormSuccess } from '@/components/utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../components/utils/Icons';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/Input';
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/Input';
 
 import {
   Form,

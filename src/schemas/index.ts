@@ -13,6 +13,14 @@ const name = requiredString;
 
 const phoneNumber = requiredString;
 
+export const EmailSchema = z.object({
+  email,
+});
+
+export const PasswordSchema = z.object({
+  password,
+});
+
 // Schemas
 export const LoginSchema = z.object({
   email,

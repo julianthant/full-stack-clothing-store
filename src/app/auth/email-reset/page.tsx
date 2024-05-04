@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
 const ResetForm = dynamic(() =>
-  import('@/app/auth/_components/ResetForm').then((mod) => mod.ResetForm)
+  import('@/app/auth/_components/EmailResetForm').then((mod) => mod.ResetForm)
 );
 
 import Link from 'next/link';

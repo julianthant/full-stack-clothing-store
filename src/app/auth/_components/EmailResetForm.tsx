@@ -3,17 +3,17 @@
 import * as z from 'zod';
 import * as React from 'react';
 
-import { Reset } from '@/server/actions/login-register-auth/new-password';
 import { EmailSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SendEmailResetToken } from '@/server/actions/security/new-email';
 
-import { FormError } from '../../../components/utils/FormError';
-import { FormSuccess } from '../../../components/utils/Form.Success';
+import { FormError } from '@/components/utils/FormError';
+import { FormSuccess } from '@/components/utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../components/utils/Icons';
+import { Icons } from '@/components/utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../../components/ui/button';
+import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -27,7 +27,7 @@ import {
 
 interface ResetFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function ResetForm({ className, ...props }: ResetFormProps) {
+export function EmailResetForm({ className, ...props }: ResetFormProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 
@@ -45,7 +45,7 @@ export function ResetForm({ className, ...props }: ResetFormProps) {
     setSuccess('');
 
     startTransition(() => {
-      Reset(values).then((data) => {
+      SendEmailResetToken(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });

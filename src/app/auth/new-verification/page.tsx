@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
 const EmailVerification = dynamic(() =>
-  import('@/app/auth/_components/NewVerification').then(
+  import('@/app/auth/_components/NewUserVerificationForm').then(
     (mod) => mod.EmailVerification
   )
 );

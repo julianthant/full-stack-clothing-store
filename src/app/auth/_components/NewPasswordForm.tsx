@@ -8,15 +8,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 
 import { newPassword } from '@/server/actions/security/new-password';
-import { NewPasswordSchema } from '@/schemas';
+import { PasswordSchema } from '@/schemas';
 
-import { FormError } from '../../../components/utils/FormError';
-import { FormSuccess } from '../../../components/utils/Form.Success';
+import { FormError } from '@/components/utils/FormError';
+import { FormSuccess } from '@/components/utils/Form.Success';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '../../../components/utils/Icons';
+import { Icons } from '@/components/utils/Icons';
 import { Input } from '@nextui-org/react';
-import { Button } from '../../../components/ui/button';
+import { Button } from '@/components/ui/button';
 
 import {
   Form,
@@ -41,14 +41,14 @@ export function NewPassword({ className, ...props }: NewPasswordProps) {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
-  const form = useForm<z.infer<typeof NewPasswordSchema>>({
-    resolver: zodResolver(NewPasswordSchema),
+  const form = useForm<z.infer<typeof PasswordSchema>>({
+    resolver: zodResolver(PasswordSchema),
     defaultValues: {
       password: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+  const onSubmit = (values: z.infer<typeof PasswordSchema>) => {
     setError('');
     setSuccess('');
 
