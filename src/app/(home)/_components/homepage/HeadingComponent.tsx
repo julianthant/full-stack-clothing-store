@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Divider } from '@nextui-org/react';
 
 import Link from 'next/link';
-import { IntegralCF } from '@/app/fonts/fonts';
+import { IntegralCF } from '@/fonts/fonts.config';
 
 export const HeadingComponent = () => {
   return (

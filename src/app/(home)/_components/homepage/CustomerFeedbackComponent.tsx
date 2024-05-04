@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 import { ArrowLeftIcon, ArrowRightIcon, Check } from 'lucide-react';
-import { Icons } from '../../../../components/utils/Icons';
-import { Button } from '../../../../components/ui/button';
-import { IntegralCF } from '@/app/fonts/fonts';
+import { Icons } from '@/components/utils/Icons';
+import { Button } from '@/components/ui/button';
+import { IntegralCF } from '@/fonts/fonts.config';
 
 export const CustomerFeedbackComponent = () => {
   const [currentPage, setCurrentPage] = useState(0);

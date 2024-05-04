@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Input } from '@nextui-org/input';
 import { Icons } from '@/components/utils/Icons';
 import { Button } from '@/components/ui/button';
-import { IntegralCF } from '@/app/fonts/fonts';
+import { IntegralCF } from '@/fonts/fonts.config';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 import { useForm } from 'react-hook-form';

@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import { Icons } from '../../../../components/utils/Icons';
+import { Icons } from '@/components/utils/Icons';
 import { Divider } from '@nextui-org/react';
-import { IntegralCF } from '@/app/fonts/fonts';
+import { IntegralCF } from '@/fonts/fonts.config';
 import { NewsletterComponent } from './NewsletterComponent';
 
 export const Footer = () => {
