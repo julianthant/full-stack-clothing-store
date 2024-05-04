@@ -22,7 +22,7 @@ export const sendVerficationEmail = async (email: string, token: string) => {
     from: 'mail@julianhein.me',
     to: email,
     subject: 'Verify your email',
-    html: `<p>Click <a href="${confirmLink}">here</a> to verify email.</p>`,
+    html: `<p>Click <a href="${confirmLink}">here</a> to verify your email.</p>`,
   });
 };
 
@@ -44,8 +44,8 @@ export const sendLoggedInPasswordEmail = async (
   token: string
 ) => {
   const resendLink = localEnvironment
-    ? `http://localhost:3000/settings/edit/new-password?token=${token}`
-    : `https://${process.env.APP_URL}/settings/edit/new-password?token=${token}`;
+    ? `http://localhost:3000/forms/change-new-password-form?token=${token}`
+    : `https://${process.env.APP_URL}/forms/change-new-password-form?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
@@ -60,13 +60,13 @@ export const sendLoggedInVerficationEmail = async (
   token: string
 ) => {
   const confirmLink = localEnvironment
-    ? `http://localhost:3000/settings/edit/verify-email?token=${token}`
-    : `https://${process.env.APP_URL}/settings/edit/verify-email?token=${token}`;
+    ? `http://localhost:3000/forms/new-email-verification-form?token=${token}`
+    : `https://${process.env.APP_URL}/forms/new-email-verification-form?token=${token}`;
 
   await resend.emails.send({
     from: 'mail@julianhein.me',
     to: email,
-    subject: 'Verify your email',
-    html: `<p>Click <a href="${confirmLink}">here</a> to verify email.</p>`,
+    subject: 'Verify new email',
+    html: `<p>Click <a href="${confirmLink}">here</a> to verify your new email address.</p>`,
   });
 };

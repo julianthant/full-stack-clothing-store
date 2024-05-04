@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/auth/LoginForm';
+import { LoginForm } from '@/app/auth/_components/LoginForm';
 import { FC } from 'react';
 
 interface pageProps {}

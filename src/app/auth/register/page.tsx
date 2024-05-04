@@ -1,4 +1,4 @@
-import { RegisterForm } from '@/components/auth/RegisterForm';
+import { RegisterForm } from '@/app/auth/_components/RegisterForm';
 import { FC } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';

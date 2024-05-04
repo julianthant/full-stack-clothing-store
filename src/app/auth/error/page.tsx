@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 const ErrorForm = dynamic(() =>
-  import('@/components/auth/ErrorForm').then((mod) => mod.default)
+  import('@/app/auth/_components/ErrorForm').then((mod) => mod.default)
 );
 import { FC } from 'react';
 

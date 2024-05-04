@@ -4,7 +4,7 @@ export const EmailSchema = z.object({
   email: z.string().email(),
 });
 
-export const NewPasswordSchema = z.object({
+export const PasswordSchema = z.object({
   password: z
     .string()
     .min(8, { message: 'Password must be at least 8 characters' }),

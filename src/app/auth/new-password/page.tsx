@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
 const NewPassword = dynamic(() =>
-  import('@/components/auth/NewPassword').then((mod) => mod.NewPassword)
+  import('@/app/auth/_components/NewPassword').then((mod) => mod.NewPassword)
 );
 
 import Link from 'next/link';

@@ -10,8 +10,11 @@ import { getVerificationTokenByToken } from '@/server/data/verification-token';
 import { currentUser } from '@/lib/server-auth';
 import { generateVerificationToken } from '@/lib/token';
 import { sendLoggedInVerficationEmail } from '@/lib/mail';
+import { getAccountByUserId } from '@/server/data/account';
 
-export const newEmailToken = async (values: z.infer<typeof EmailSchema>) => {
+export const SendEmailChangeToken = async (
+  values: z.infer<typeof EmailSchema>
+) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -22,6 +25,12 @@ export const newEmailToken = async (values: z.infer<typeof EmailSchema>) => {
 
   if (!dbUser) {
     return { error: 'Unauthorized' };
+  }
+
+  const OAuthUser = await getAccountByUserId(dbUser.id);
+
+  if (OAuthUser) {
+    return { error: 'Email cannot be changed for OAuth users!' };
   }
 
   const validatedFields = EmailSchema.safeParse(values);
@@ -48,7 +57,7 @@ export const newEmailToken = async (values: z.infer<typeof EmailSchema>) => {
   return { success: 'Confirmation email sent!' };
 };
 
-export const newEmailVerification = async (token: string) => {
+export const VerifyNewEmail = async (token: string) => {
   if (!token) {
     return { error: 'Missing token!' };
   }
@@ -63,6 +72,12 @@ export const newEmailVerification = async (token: string) => {
 
   if (!dbUser) {
     return { error: 'Unauthorized' };
+  }
+
+  const OAuthUser = await getAccountByUserId(dbUser.id);
+
+  if (OAuthUser) {
+    return { error: 'Email cannot be changed for OAuth users!' };
   }
 
   const existingToken = await getVerificationTokenByToken(token);

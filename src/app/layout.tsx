@@ -3,7 +3,7 @@ import './globals.css';
 import dynamic from 'next/dynamic';
 import type { Metadata, Viewport } from 'next';
 
-import { Satoshi } from './fonts/fonts';
+import { Satoshi } from '@/fonts/fonts.config';
 import { Providers, QueryProvider } from './providers';
 
 const DynamicToaster = dynamic(() =>
