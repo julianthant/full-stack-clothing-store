@@ -1,7 +1,7 @@
 'use server';
 
-import { getPaymentMethodById } from '../../data/get-payment-method';
-import { getUserById } from '@/server/data/user';
+import { getPaymentMethodById } from '../../get-user-data/get-payment-method';
+import { getUserById } from '@/server/get-user-data/user';
 import { db } from '@/server/database/db';
 import { currentUser } from '@/lib/server-auth';
 

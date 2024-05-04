@@ -4,7 +4,7 @@ import * as z from 'zod';
 
 import { auth } from '@/lib/auth';
 import { EmailSchema } from '@/schemas';
-import { getUserByEmail } from '@/server/data/user';
+import { getUserByEmail } from '@/server/get-user-data/user';
 import { sendLoggedInPasswordEmail, sendPasswordEmail } from '@/lib/mail';
 import { generatePasswordResetToken } from '@/lib/token';
 

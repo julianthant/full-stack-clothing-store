@@ -20,7 +20,7 @@ export const DeleteAccountForm = () => {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const DeleteAccount = await import(
-      '@/server/actions/accountProfile/delete-account'
+      '@/server/actions/general/delete-account'
     ).then((mod) => mod.DeleteAccount);
 
     startTransition(() => {

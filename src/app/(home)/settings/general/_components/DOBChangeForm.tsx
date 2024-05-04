@@ -52,7 +52,7 @@ export function DOBChangeForm({ UserDOB }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangeDOB = await import(
-      '@/server/actions/accountProfile/change-dateOfBirth'
+      '@/server/actions/general/change-dateOfBirth'
     ).then((mod) => mod.ChangeDOB);
 
     startTransition(() => {

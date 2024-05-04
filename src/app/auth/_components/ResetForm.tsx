@@ -3,7 +3,7 @@
 import * as z from 'zod';
 import * as React from 'react';
 
-import { Reset } from '@/server/actions/authentication/new-password';
+import { Reset } from '@/server/actions/login-register-auth/new-password';
 import { EmailSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 

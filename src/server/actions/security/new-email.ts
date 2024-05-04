@@ -4,13 +4,13 @@ import * as z from 'zod';
 
 import { db } from '@/server/database/db';
 import { EmailSchema } from '@/schemas';
-import { getUserByEmail, getUserById } from '@/server/data/user';
-import { getVerificationTokenByToken } from '@/server/data/verification-token';
+import { getUserByEmail, getUserById } from '@/server/get-user-data/user';
+import { getVerificationTokenByToken } from '@/server/get-user-data/verification-token';
 
 import { currentUser } from '@/lib/server-auth';
 import { generateVerificationToken } from '@/lib/token';
 import { sendLoggedInVerficationEmail } from '@/lib/mail';
-import { getAccountByUserId } from '@/server/data/account';
+import { getAccountByUserId } from '@/server/get-user-data/account';
 
 export const SendEmailChangeToken = async (
   values: z.infer<typeof EmailSchema>

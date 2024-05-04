@@ -2,13 +2,17 @@
 
 import * as z from 'zod';
 
-import { db } from '../../database/db';
-import { getUserById } from '@/server/data/user';
+import { db } from '@/server/database/db';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { addressSchema } from '@/schemas';
+import { getAddressById } from '@/server/get-user-data/get-address';
 
-export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
+export const UpdateAddress = async (
+  values: z.infer<typeof addressSchema>,
+  id: string
+) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -19,6 +23,16 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
 
   if (!dbUser) {
     return { error: 'Unauthorized' };
+  }
+
+  if (!id) {
+    return { error: 'Invalid Address ID!' };
+  }
+
+  const address = await getAddressById(id);
+
+  if (!address) {
+    return { error: 'Invalid Address ID!' };
   }
 
   const validatedFields = addressSchema.safeParse(values);
@@ -55,8 +69,18 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     return { error: 'State is required!' };
   }
 
-  if (country !== 'United States' && states) {
+  if (
+    country !== 'United States' &&
+    address.country !== 'United States' &&
+    states
+  ) {
     return { error: 'State is not required!' };
+  }
+
+  let stateCheck = states;
+
+  if (address.country === 'United States' && country !== 'United States') {
+    stateCheck = '';
   }
 
   if (states) {
@@ -66,14 +90,14 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     const statesRaw = await response.json();
 
     statesRaw.shift();
-    const statesList = statesRaw.map((stateData: string) => stateData[0]);
+    const statesList = statesRaw.map((stateData: String) => stateData[0]);
 
     if (!statesList.includes(states)) {
       return { error: 'Invalid state!' };
     }
   }
 
-  if (!RegExp(/^\d{5}(?:[-\s]\d{4})?$/).exec(zipCode)) {
+  if (!zipCode.match(/^\d{5}(?:[-\s]\d{4})?$/)) {
     return { error: 'Invalid zip code!' };
   }
 
@@ -93,7 +117,8 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     });
   }
 
-  await db.address.create({
+  await db.address.update({
+    where: { id: id, userId: dbUser.id },
     data: {
       userId: dbUser.id,
       fullName,
@@ -101,7 +126,7 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
       streetOptional,
       city,
       country,
-      states,
+      states: stateCheck,
       zipCode,
       phoneNumber,
       deliveryInstructions,
@@ -109,5 +134,5 @@ export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
     },
   });
 
-  return { success: 'Address added!' };
+  return { success: 'Address updated!' };
 };

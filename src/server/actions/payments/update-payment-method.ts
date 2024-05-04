@@ -3,14 +3,14 @@
 import * as z from 'zod';
 
 import { db } from '@/server/database/db';
-import { getUserById } from '@/server/data/user';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { CardEditSchema } from '@/schemas';
 import {
   getPaymentMethodById,
   getDefaultPaymentMethodByUserId,
-} from '@/server/data/get-payment-method';
+} from '@/server/get-user-data/get-payment-method';
 
 export const UpdatePaymentMethod = async (
   values: z.infer<typeof CardEditSchema>,

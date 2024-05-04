@@ -41,7 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getStateAndCountries } from '@/server/data/get-state-and-countries';
+import { getStateAndCountries } from '@/server/get-user-data/get-state-and-countries';
 
 export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
   const [isPending, startTransition] = useTransition();
@@ -76,7 +76,7 @@ export function AddShippingAddressDrawer({ user, open, setOpen }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const AddAddress = (
-      await import('@/server/actions/accountAddresses/add-new-address')
+      await import('@/server/actions/address/add-new-address')
     ).AddAddress;
 
     startTransition(() => {

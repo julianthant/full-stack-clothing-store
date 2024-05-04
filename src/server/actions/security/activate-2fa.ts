@@ -4,12 +4,12 @@ import * as z from 'zod';
 
 import { db } from '@/server/database/db';
 import { TwoFASchema } from '@/schemas';
-import { getUserById } from '@/server/data/user';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { unstable_update } from '@/lib/auth';
-import { getTwoFactorTokenByEmail } from '@/server/data/two-factor-token';
-import { getTwoFactorConfirmationByUserId } from '@/server/data/two-factor-confirmation';
+import { getTwoFactorTokenByEmail } from '@/server/get-user-data/two-factor-token';
+import { getTwoFactorConfirmationByUserId } from '@/server/get-user-data/two-factor-confirmation';
 
 export const Validate2FACode = async (
   values: z.infer<typeof TwoFASchema>,

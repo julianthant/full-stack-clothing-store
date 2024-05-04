@@ -36,7 +36,7 @@ export function PasswordResetForm({ UserEmail, UserIsOAuth }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const SendPasswordResetToken = await import(
-      '@/server/actions/authentication/new-password'
+      '@/server/actions/login-register-auth/new-password'
     ).then((mod) => mod.SendPasswordResetToken);
 
     startTransition(() => {

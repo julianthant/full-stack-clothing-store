@@ -43,7 +43,7 @@ export function EmailResetForm({ UserEmail, UserIsOAuth }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const SendEmailChangeToken = await import(
-      '@/server/actions/accountSecurity/new-email'
+      '@/server/actions/security/new-email'
     ).then((mod) => mod.SendEmailChangeToken);
 
     startTransition(() => {

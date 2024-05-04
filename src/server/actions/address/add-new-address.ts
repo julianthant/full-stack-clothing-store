@@ -2,17 +2,13 @@
 
 import * as z from 'zod';
 
-import { db } from '@/server/database/db';
-import { getUserById } from '@/server/data/user';
+import { db } from '../../database/db';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { addressSchema } from '@/schemas';
-import { getAddressById } from '@/server/data/get-address';
 
-export const UpdateAddress = async (
-  values: z.infer<typeof addressSchema>,
-  id: string
-) => {
+export const AddAddress = async (values: z.infer<typeof addressSchema>) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -23,16 +19,6 @@ export const UpdateAddress = async (
 
   if (!dbUser) {
     return { error: 'Unauthorized' };
-  }
-
-  if (!id) {
-    return { error: 'Invalid Address ID!' };
-  }
-
-  const address = await getAddressById(id);
-
-  if (!address) {
-    return { error: 'Invalid Address ID!' };
   }
 
   const validatedFields = addressSchema.safeParse(values);
@@ -69,18 +55,8 @@ export const UpdateAddress = async (
     return { error: 'State is required!' };
   }
 
-  if (
-    country !== 'United States' &&
-    address.country !== 'United States' &&
-    states
-  ) {
+  if (country !== 'United States' && states) {
     return { error: 'State is not required!' };
-  }
-
-  let stateCheck = states;
-
-  if (address.country === 'United States' && country !== 'United States') {
-    stateCheck = '';
   }
 
   if (states) {
@@ -90,14 +66,14 @@ export const UpdateAddress = async (
     const statesRaw = await response.json();
 
     statesRaw.shift();
-    const statesList = statesRaw.map((stateData: String) => stateData[0]);
+    const statesList = statesRaw.map((stateData: string) => stateData[0]);
 
     if (!statesList.includes(states)) {
       return { error: 'Invalid state!' };
     }
   }
 
-  if (!zipCode.match(/^\d{5}(?:[-\s]\d{4})?$/)) {
+  if (!RegExp(/^\d{5}(?:[-\s]\d{4})?$/).exec(zipCode)) {
     return { error: 'Invalid zip code!' };
   }
 
@@ -117,8 +93,7 @@ export const UpdateAddress = async (
     });
   }
 
-  await db.address.update({
-    where: { id: id, userId: dbUser.id },
+  await db.address.create({
     data: {
       userId: dbUser.id,
       fullName,
@@ -126,7 +101,7 @@ export const UpdateAddress = async (
       streetOptional,
       city,
       country,
-      states: stateCheck,
+      states,
       zipCode,
       phoneNumber,
       deliveryInstructions,
@@ -134,5 +109,5 @@ export const UpdateAddress = async (
     },
   });
 
-  return { success: 'Address updated!' };
+  return { success: 'Address added!' };
 };

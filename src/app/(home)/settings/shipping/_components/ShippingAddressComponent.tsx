@@ -7,8 +7,8 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addressSchema } from '@/schemas';
-import { RemoveAddress } from '@/server/actions/accountAddresses/remove-address';
-import { getStateAndCountries } from '@/server/data/get-state-and-countries';
+import { RemoveAddress } from '@/server/actions/address/remove-address';
+import { getStateAndCountries } from '@/server/get-user-data/get-state-and-countries';
 
 import { Input } from '@/components/ui/Input';
 import { Icons } from '@/components/utils/Icons';
@@ -104,7 +104,7 @@ export function ShippingAddressComponent({
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const UpdateAddress = await import(
-      '@/server/actions/accountAddresses/update-address'
+      '@/server/actions/address/update-address'
     ).then((mod) => mod.UpdateAddress);
 
     startTransition(() => {

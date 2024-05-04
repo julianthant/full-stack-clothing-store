@@ -43,7 +43,7 @@ export function PhoneNumberChangeForm({ UserPhoneNumber }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangePhoneNumber = await import(
-      '@/server/actions/accountProfile/change-phone-number'
+      '@/server/actions/general/change-phone-number'
     ).then((mod) => mod.ChangePhoneNumber);
 
     startTransition(() => {

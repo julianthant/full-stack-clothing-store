@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-import { SignOut } from '@/server/actions/authentication/signout';
+import { SignOut } from '@/server/actions/login-register-auth/signout';
 import { useRouter } from 'next/navigation';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { UserComponentSkeleton } from '@/components/skeleton/UserComponentSkeleton';

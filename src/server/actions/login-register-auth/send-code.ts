@@ -1,6 +1,6 @@
 'use server';
 
-import { getUserByEmail } from '@/server/data/user';
+import { getUserByEmail } from '@/server/get-user-data/user';
 import { sendTwoFAEmail } from '@/lib/mail';
 
 import { generateTwoFAToken } from '@/lib/token';

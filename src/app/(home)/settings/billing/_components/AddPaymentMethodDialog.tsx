@@ -51,7 +51,7 @@ export function AddPaymentMethodDialog({ user, open, setOpen }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const AddPaymentMethod = (
-      await import('@/server/actions/accountPayments/add-payment-method')
+      await import('@/server/actions/payments/add-payment-method')
     ).AddPaymentMethod;
 
     if (expiredDate(values.expiryDate)) {

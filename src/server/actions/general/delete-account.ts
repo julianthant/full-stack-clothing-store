@@ -3,7 +3,7 @@
 import * as z from 'zod';
 
 import { db } from '@/server/database/db';
-import { getUserById } from '@/server/data/user';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { signOut } from '@/lib/auth';

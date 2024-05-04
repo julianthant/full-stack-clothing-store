@@ -32,7 +32,7 @@ import { Check, ChevronDown } from 'lucide-react';
 import { CommandList } from 'cmdk';
 import { Icons } from '../utils/Icons';
 import { FilterClothes } from './FilterClothes';
-import { getClothes } from '@/server/data/get-clothes';
+import { getClothes } from '@/server/get-user-data/get-clothes';
 
 export const ClothesGalleryComponent = () => {
   const router = useRouter();

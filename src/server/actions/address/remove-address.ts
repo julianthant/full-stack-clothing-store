@@ -1,7 +1,7 @@
 'use server';
 
-import { getAddressById } from '../../data/get-address';
-import { getUserById } from '@/server/data/user';
+import { getAddressById } from '../../get-user-data/get-address';
+import { getUserById } from '@/server/get-user-data/user';
 import { db } from '@/server/database/db';
 import { currentUser } from '@/lib/server-auth';
 

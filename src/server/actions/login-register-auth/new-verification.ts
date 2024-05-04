@@ -1,8 +1,8 @@
 'use server';
 
 import { db } from '@/server/database/db';
-import { getUserByEmail } from '@/server/data/user';
-import { getVerificationTokenByToken } from '@/server/data/verification-token';
+import { getUserByEmail } from '@/server/get-user-data/user';
+import { getVerificationTokenByToken } from '@/server/get-user-data/verification-token';
 
 export const newVerification = async (token: string) => {
   if (!token) {

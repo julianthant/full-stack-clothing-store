@@ -4,7 +4,7 @@ import * as z from 'zod';
 
 import { db } from '@/server/database/db';
 import { PhoneNumberSchema } from '@/schemas';
-import { getUserById } from '@/server/data/user';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { unstable_update } from '@/lib/auth';

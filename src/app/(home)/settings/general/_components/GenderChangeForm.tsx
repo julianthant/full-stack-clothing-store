@@ -52,7 +52,7 @@ export function GenderChangeForm({ UserGender }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangeGender = await import(
-      '@/server/actions/accountProfile/change-gender'
+      '@/server/actions/general/change-gender'
     ).then((mod) => mod.ChangeGender);
 
     startTransition(() => {

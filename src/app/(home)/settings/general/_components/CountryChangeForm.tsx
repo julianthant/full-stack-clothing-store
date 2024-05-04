@@ -38,7 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getCountries } from '@/server/data/get-state-and-countries';
+import { getCountries } from '@/server/get-user-data/get-state-and-countries';
 
 export function CountryChangeForm({ UserCountry }: any) {
   const [isPending, startTransition] = useTransition();
@@ -59,7 +59,7 @@ export function CountryChangeForm({ UserCountry }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangeCountry = await import(
-      '@/server/actions/accountProfile/change-country'
+      '@/server/actions/general/change-country'
     ).then((mod) => mod.ChangeCountry);
 
     startTransition(() => {

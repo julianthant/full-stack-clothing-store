@@ -43,7 +43,7 @@ export function NameChangeForm({ UserName }: any) {
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const ChangeName = await import(
-      '@/server/actions/accountProfile/change-name'
+      '@/server/actions/general/change-name'
     ).then((mod) => mod.ChangeName);
 
     startTransition(() => {

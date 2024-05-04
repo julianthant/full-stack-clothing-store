@@ -3,13 +3,13 @@
 import * as z from 'zod';
 
 import { db } from '@/server/database/db';
-import { genderSchema } from '@/schemas';
-import { getUserById } from '@/server/data/user';
+import { dateSchema } from '@/schemas';
+import { getUserById } from '@/server/get-user-data/user';
 
 import { currentUser } from '@/lib/server-auth';
 import { unstable_update } from '@/lib/auth';
 
-export const ChangeGender = async (values: z.infer<typeof genderSchema>) => {
+export const ChangeDOB = async (values: z.infer<typeof dateSchema>) => {
   const user = await currentUser();
 
   if (!user || !user.id) {
@@ -22,30 +22,29 @@ export const ChangeGender = async (values: z.infer<typeof genderSchema>) => {
     return { error: 'Unauthorized' };
   }
 
-  const validatedFields = genderSchema.safeParse(values);
+  const validatedFields = dateSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Invalid gender!' };
+    return { error: 'Invalid name!' };
   }
+  const { date } = validatedFields.data;
 
-  const { gender } = validatedFields.data;
-
-  if (gender !== 'male' && gender !== 'female') {
-    return { error: 'Invalid gender!' };
+  if (date > new Date()) {
+    return { error: 'Invalid date!' };
   }
 
   await db.user.update({
     where: { id: dbUser.id },
     data: {
-      gender: gender,
+      dateOfBirth: date,
     },
   });
 
   unstable_update({
     user: {
-      gender: gender,
+      dateOfBirth: date,
     },
   });
 
-  return { success: 'Gender Changed!' };
+  return { success: 'Date of Birth changed!' };
 };

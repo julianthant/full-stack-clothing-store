@@ -6,7 +6,7 @@ import { CardEditSchema } from '@/schemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RemovePaymentMethod } from '@/server/actions/accountPayments/remove-payment-method';
+import { RemovePaymentMethod } from '@/server/actions/payments/remove-payment-method';
 import { useTransition, useState } from 'react';
 
 import { Input } from '@/components/ui/Input';
@@ -79,7 +79,7 @@ export function PaymentMethodComponent({
     const toast = (await import('@/components/ui/use-toast')).toast;
 
     const UpdatePaymentMethod = await import(
-      '@/server/actions/accountPayments/update-payment-method'
+      '@/server/actions/payments/update-payment-method'
     ).then((mod) => mod.UpdatePaymentMethod);
 
     if (expiredDate(values.expiryDate)) {

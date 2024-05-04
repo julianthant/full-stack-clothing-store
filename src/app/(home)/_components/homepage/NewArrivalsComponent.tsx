@@ -6,7 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
-import { getClothes } from '@/server/data/get-clothes';
+import { getClothes } from '@/server/get-user-data/get-clothes';
 import { ClothesComponent } from '@/components/utils/ClothesComponent';
 
 export const NewArrivalsComponent = () => {

@@ -10,9 +10,9 @@ import { LoginSchema } from '@/schemas';
 import { signIn } from '@/lib/auth';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes/route';
 
-import { getUserByEmail } from '@/server/data/user';
-import { getTwoFactorTokenByEmail } from '@/server/data/two-factor-token';
-import { getTwoFactorConfirmationByUserId } from '@/server/data/two-factor-confirmation';
+import { getUserByEmail } from '@/server/get-user-data/user';
+import { getTwoFactorTokenByEmail } from '@/server/get-user-data/two-factor-token';
+import { getTwoFactorConfirmationByUserId } from '@/server/get-user-data/two-factor-confirmation';
 import { sendTwoFAEmail, sendVerficationEmail } from '@/lib/mail';
 
 import { generateTwoFAToken, generateVerificationToken } from '@/lib/token';

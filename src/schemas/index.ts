@@ -1,35 +1,37 @@
 import * as z from 'zod';
 
-export const EmailSchema = z.object({
-  email: z.string().email(),
-});
+// Common validations
+const requiredString = z.string().min(1, { message: 'This field is required' });
 
-export const PasswordSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters' }),
-});
+const email = requiredString.email();
 
+const password = z
+  .string()
+  .min(8, { message: 'Password must be at least 8 characters' });
+
+const name = requiredString;
+
+const phoneNumber = requiredString;
+
+// Schemas
 export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, { message: 'Password is required' }),
-  code: z.optional(z.string().length(6)),
+  email,
+  password,
+  code: z.string().length(6).optional(),
 });
 
 export const RegisterSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters' }),
+  name,
+  email,
+  password,
 });
 
 export const NameSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
+  name,
 });
 
 export const PhoneNumberSchema = z.object({
-  number: z.string().min(1, { message: 'Phone number is required' }),
+  number: phoneNumber,
 });
 
 export const TwoFASchema = z.object({
@@ -37,48 +39,41 @@ export const TwoFASchema = z.object({
 });
 
 export const CardEditSchema = z.object({
-  cardHolder: z.string().min(1, { message: 'Name is required' }),
+  cardHolder: name,
   expiryDate: z.string().length(7, { message: 'Invalid expiry date' }),
   defaultCard: z.boolean().default(false),
 });
 
-export const cardAddSchema = z.object({
-  cardHolder: z
-    .string()
-    .min(1, { message: 'Name is required' })
-    .max(32, { message: 'Name is too long' }),
+export const CardAddSchema = z.object({
+  cardHolder: name.max(32, { message: 'Name is too long' }),
   cardNumber: z
     .string()
-    .min(18, { message: 'Card must be at least 15 numbers' })
-    .max(19, { message: 'Card cannot exceed 16 numbers' })
-    .trim(),
+    .min(15, { message: 'Card number must be at least 15 characters' })
+    .max(19, { message: 'Card number cannot exceed 19 characters' }),
   expiryDate: z.string().length(7, { message: 'Invalid expiry date' }),
   cvc: z
     .string()
-    .min(3, { message: 'Invalid CVC' })
-    .max(4, { message: 'Invalid CVC' }),
+    .min(3)
+    .max(4, { message: 'CVC must be between 3 and 4 characters long' }),
 });
 
-export const addressSchema = z.object({
-  fullName: z
-    .string()
-    .min(1, { message: 'Name is required' })
-    .max(32, { message: 'Name is too long' }),
-  streetAddress: z.string().min(1, { message: 'Address is required' }),
-  streetOptional: z.string(),
-  city: z.string().min(1, { message: 'City is required' }),
-  country: z.string().min(1, { message: 'Country is required' }),
+export const AddressSchema = z.object({
+  fullName: name.max(32, { message: 'Name is too long' }),
+  streetAddress: requiredString,
+  streetOptional: z.string().optional(),
+  city: requiredString,
+  country: requiredString,
   states: z.string().optional(),
-  zipCode: z.string().min(1, { message: 'Zip is required' }).trim(),
-  phoneNumber: z.string().min(1, { message: 'Phone number is required' }),
+  zipCode: requiredString.trim(),
+  phoneNumber: phoneNumber,
   deliveryInstructions: z.string().optional(),
   defaultAddress: z.boolean().default(false).optional(),
 });
 
-export const genderSchema = z.object({
+export const GenderSchema = z.object({
   gender: z.string(),
 });
 
-export const dateSchema = z.object({
+export const DateSchema = z.object({
   date: z.date(),
 });

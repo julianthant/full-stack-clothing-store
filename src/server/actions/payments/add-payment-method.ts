@@ -4,8 +4,8 @@ import * as z from 'zod';
 import bcrypt from 'bcryptjs';
 
 import { db } from '@/server/database/db';
-import { getUserById } from '@/server/data/user';
-import { getPaymentMethodsByUserId } from '../../data/get-payment-method';
+import { getUserById } from '@/server/get-user-data/user';
+import { getPaymentMethodsByUserId } from '../../get-user-data/get-payment-method';
 
 import { currentUser } from '@/lib/server-auth';
 import { cardAddSchema } from '@/schemas';

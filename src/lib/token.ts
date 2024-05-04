@@ -1,9 +1,9 @@
 import { db } from '@/server/database/db';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getVerificationTokenByEmail } from '@/server/data/verification-token';
-import { getPasswordResetTokenByEmail } from '@/server/data/password-reset-token';
-import { getTwoFactorTokenByEmail } from '@/server/data/two-factor-token';
+import { getVerificationTokenByEmail } from '@/server/get-user-data/verification-token';
+import { getPasswordResetTokenByEmail } from '@/server/get-user-data/password-reset-token';
+import { getTwoFactorTokenByEmail } from '@/server/get-user-data/two-factor-token';
 
 import crypto from 'crypto';
 
