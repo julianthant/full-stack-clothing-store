@@ -11,7 +11,7 @@ import { FormSuccess } from '@/components/utils/Form.Success';
 
 import Link from 'next/link';
 
-export const EmailVerification = () => {
+export const NewUserVerificationForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
 

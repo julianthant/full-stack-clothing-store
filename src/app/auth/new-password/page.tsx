@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
-const NewPassword = dynamic(() =>
+const NewPasswordForm = dynamic(() =>
   import('@/app/auth/_components/NewPasswordForm').then(
-    (mod) => mod.NewPassword
+    (mod) => mod.NewPasswordForm
   )
 );
 
@@ -22,7 +22,7 @@ const page: FC<pageProps> = ({}) => {
         Login
       </Link>
 
-      <NewPassword />
+      <NewPasswordForm />
     </>
   );
 };

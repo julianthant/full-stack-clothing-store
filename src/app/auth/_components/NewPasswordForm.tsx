@@ -29,7 +29,7 @@ import {
 
 interface NewPasswordProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function NewPassword({ className, ...props }: NewPasswordProps) {
+export function NewPasswordForm({ className, ...props }: NewPasswordProps) {
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
 

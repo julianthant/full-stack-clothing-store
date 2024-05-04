@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
-const EmailVerification = dynamic(() =>
+const NewUserVerificationForm = dynamic(() =>
   import('@/app/auth/_components/NewUserVerificationForm').then(
-    (mod) => mod.EmailVerification
+    (mod) => mod.NewUserVerificationForm
   )
 );
 
@@ -22,7 +22,7 @@ const page: FC<pageProps> = ({}) => {
         Login
       </Link>
 
-      <EmailVerification />
+      <NewUserVerificationForm />
     </>
   );
 };

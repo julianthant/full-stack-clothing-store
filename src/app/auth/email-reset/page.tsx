@@ -2,8 +2,10 @@ import { FC } from 'react';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
-const ResetForm = dynamic(() =>
-  import('@/app/auth/_components/EmailResetForm').then((mod) => mod.ResetForm)
+const EmailResetForm = dynamic(() =>
+  import('@/app/auth/_components/EmailResetForm').then(
+    (mod) => mod.EmailResetForm
+  )
 );
 
 import Link from 'next/link';
@@ -20,7 +22,7 @@ const page: FC<pageProps> = ({}) => {
         Login
       </Link>
 
-      <ResetForm />
+      <EmailResetForm />
     </>
   );
 };
