@@ -1,9 +1,7 @@
 'use client';
 import axios from 'axios';
 
-import { Suspense } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { SettingsCardSkeleton } from '@/components/skeleton/SettingsCardsSkeleton';
 import { ShippingAddressComponent } from './ShippingAddressComponent';
 
 export const ShowShippingAddressesComponent = ({ userId, userName }: any) => {
@@ -25,18 +23,14 @@ export const ShowShippingAddressesComponent = ({ userId, userName }: any) => {
     <div className="space-y-4">
       {isFetched &&
         shippingAddresses?.map((shippingAddress: Address, index: number) => (
-          <Suspense
+          <ShippingAddressComponent
             key={shippingAddress.id}
-            fallback={<SettingsCardSkeleton />}
-          >
-            <ShippingAddressComponent
-              shippingAddress={shippingAddress}
-              refetch={refetch}
-              index={index}
-              userName={userName}
-              userId={userId}
-            />
-          </Suspense>
+            shippingAddress={shippingAddress}
+            refetch={refetch}
+            index={index}
+            userName={userName}
+            userId={userId}
+          />
         ))}
     </div>
   );

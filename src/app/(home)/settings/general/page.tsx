@@ -60,7 +60,7 @@ const page = async () => {
   const user = await currentUser();
 
   return (
-    <div className="space-y-6">
+    <div className="grid gap-y-6 pt-2.5">
       <Link
         className="md:hidden py-6 flex items-center gap-2 border-b px-10 tracking-wide font-medium"
         href="/settings"

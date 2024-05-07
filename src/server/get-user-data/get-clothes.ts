@@ -23,15 +23,17 @@ export const getClothes = async (
       lang: 'en-US',
     },
     headers: {
-      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY_1,
+      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY_3,
       'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
     },
   };
 
+  console.log('api called');
+
   try {
     return await axios.request(options).then((res) => res.data);
   } catch (error) {
-    options.headers['X-RapidAPI-Key'] = process.env.RAPIDAPI_KEY_2;
+    options.headers['X-RapidAPI-Key'] = process.env.RAPIDAPI_KEY_3;
     return await axios.request(options).then((res) => res.data);
   }
 };

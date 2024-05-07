@@ -5,6 +5,7 @@ import { currentUser } from '@/lib/server-auth';
 import { SettingsCardSkeleton } from '@/components/skeleton/SettingsCardsSkeleton';
 
 import { ChevronLeft } from 'lucide-react';
+import { Suspense } from 'react';
 
 const AddPaymentMethodComponent = dynamic(
   () =>
@@ -26,7 +27,7 @@ const page = async () => {
   const user = await currentUser();
 
   return (
-    <div className="space-y-6">
+    <div className="grid gap-y-6 pt-2.5">
       <Link
         className="md:hidden py-6 flex items-center gap-2 border-b px-10 tracking-wide font-medium"
         href="/settings"
@@ -36,7 +37,9 @@ const page = async () => {
 
       <div className="max-md:px-10 space-y-4">
         <AddPaymentMethodComponent user={user} />
-        <ShowPaymentMethodsComponent userId={user?.id} />
+        <Suspense fallback={<SettingsCardSkeleton />}>
+          <ShowPaymentMethodsComponent userId={user?.id} />
+        </Suspense>
       </div>
     </div>
   );

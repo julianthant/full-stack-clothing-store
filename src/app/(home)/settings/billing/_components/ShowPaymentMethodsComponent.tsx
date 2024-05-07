@@ -3,7 +3,6 @@
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 
-import { Suspense } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { SettingsCardSkeleton } from '@/components/skeleton/SettingsCardsSkeleton';
 
@@ -37,13 +36,12 @@ export const ShowPaymentMethodsComponent = ({ userId }: any) => {
     <div className="space-y-4">
       {isFetched &&
         paymentMethods?.map((paymentMethod: PaymentMethod) => (
-          <Suspense key={paymentMethod.id} fallback={<SettingsCardSkeleton />}>
-            <PaymentMethodComponent
-              paymentMethod={paymentMethod}
-              refetch={refetch}
-              userId={userId}
-            />
-          </Suspense>
+          <PaymentMethodComponent
+            key={paymentMethod.id}
+            paymentMethod={paymentMethod}
+            refetch={refetch}
+            userId={userId}
+          />
         ))}
     </div>
   );

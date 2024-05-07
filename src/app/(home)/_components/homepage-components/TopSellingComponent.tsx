@@ -1,60 +1,32 @@
-'use client';
-
 import Link from 'next/link';
-import { useMediaQuery } from 'react-responsive';
 
-import { cn } from '@/lib/utils';
+import { Suspense } from 'react';
+import { ClothesCarousel } from './ClothesCarousel';
+import { ClothesComponentSkeleton } from '@/components/skeleton/ClothesComponentSkeleton';
+
 import { Button } from '@/components/ui/button';
-import { useQuery } from '@tanstack/react-query';
-import { getClothes } from '@/server/get-user-data/get-clothes';
-import { ClothesComponent } from '@/components/utils/ClothesComponent';
+import { ArrowRight } from 'lucide-react';
 
 export const TopSellingComponent = () => {
-  const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
-
-  const {
-    data: clothes,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryFn: async () => getClothes(0, 6993, 8, 'freshness'),
-    queryKey: ['landing-page-new-arrivals'],
-    refetchOnReconnect: false,
-  });
-
-  const formattedClothes = isSmallScreen
-    ? clothes?.products.slice(0, 6)
-    : clothes?.products;
-
   return (
-    <div className="main-container lg:space-y-10 space-y-7 flex flex-col lg:mt-5">
-      <h1 className="lg:text-3xl md:text-4xl text-3xl font-bold text-center tracking-wide">
-        TOP SELLING
-      </h1>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 min-[400px]:grid-cols-2 gap-4">
-        {!isLoading &&
-          !isError &&
-          formattedClothes?.map((product: any) => (
-            <ClothesComponent
-              key={product.id}
-              ID={product.id}
-              Name={product.name}
-              Price={product.price.current.text}
-              ItemImage={`https://${product.imageUrl}`}
-              HoverImage={`https://${product.additionalImageUrls[0]}`}
-            />
-          ))}
+    <div className="w-[calc(100vw_-_2rem)] mx-auto">
+      <div className="flex justify-between items-end max-w-[1500px] mx-auto pb-6 px-4">
+        <h1 className="text-2xl font-bold text-center tracking-wide">
+          TOP SELLING
+        </h1>
+
+        <Link href={'/shop'} className="link-animation max-xs:hidden">
+          <span className="flex items-center gap-2">
+            More Products <ArrowRight className="w-4 h-4" />
+          </span>
+        </Link>
       </div>
 
-      <Button
-        asChild
-        variant={'outline'}
-        className={cn(
-          'w-40 mx-auto rounded-none border-3 border-gray-500 py-2'
-        )}
-      >
-        <Link href={'/shop'}>SEE MORE</Link>
-      </Button>
+      <Suspense fallback={<ClothesComponentSkeleton />}>
+        <ClothesCarousel />
+      </Suspense>
+
+      <Button className="xs:hidden">More Products</Button>
     </div>
   );
 };

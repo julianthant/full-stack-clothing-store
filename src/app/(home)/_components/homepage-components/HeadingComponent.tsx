@@ -25,7 +25,7 @@ export const HeadingComponent = () => {
                   to your sense of style.
                 </p>
               </div>
-              <Button asChild className="rounded-full px-12 h-12 max-sm:w-full">
+              <Button asChild className="rounded-md px-12 h-12 max-sm:w-full">
                 <Link href={'/shop'}>Shop Now</Link>
               </Button>
             </div>
@@ -60,7 +60,7 @@ export const HeadingComponent = () => {
               />
 
               <div className="max-[500px]:col-span-3">
-                <h2 className="xl:text-4xl md:text-3xl sm:text-[27px] text-[22px] font-semibold">
+                <h2 className="xl:text-4xl md:text-3xl sm:text-[27px] text-[22px] max-sm:text-center font-semibold">
                   2000+
                 </h2>
                 <p className="sm:text-base text-sm font-light text-foreground-400 text-nowrap">

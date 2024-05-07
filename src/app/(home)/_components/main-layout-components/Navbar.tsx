@@ -48,7 +48,7 @@ export const NavbarComponent = ({ user }: any) => {
       </NavbarContent>
 
       <NavbarContent
-        className="hidden sm:flex md:w-[600px] flex-grow gap-4 relative"
+        className="hidden sm:flex md:w-[600px] flex-grow gap-4 relative  max-w-[600px]"
         justify="center"
       >
         <Input
