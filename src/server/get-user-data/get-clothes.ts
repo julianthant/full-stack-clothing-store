@@ -23,7 +23,7 @@ export const getClothes = async (
       lang: 'en-US',
     },
     headers: {
-      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY_3,
+      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY_1,
       'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
     },
   };
